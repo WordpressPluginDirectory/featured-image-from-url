@@ -3,8 +3,8 @@ Contributors: marceljm
 Donate link: https://donorbox.org/fifu
 Tags: featured, image, url, video, woocommerce
 Requires at least: 5.3
-Tested up to: 6.4.2
-Stable tag: 4.5.6
+Tested up to: 6.4.3
+Stable tag: 4.5.7
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -265,14 +265,14 @@ Supports URLs from YouTube, Vimeo, Twitter, 9GAG, Cloudinary, Tumblr, Publitio, 
 
 == Changelog ==
 
+= 4.5.7 =
+* Fixed: CDN + Optimized Thumbnails (resolved conflict with CloudFront images).
+
 = 4.5.6 =
 * Fix: quick editor (possibility of fatal error when there are variable products with unused attributes).
 
 = 4.5.5 =
 * Enhancement: FIFU Shortcode (new attributes); fix: quick editor (performance issues for variable products with too many variations); fix: undefined variable notice.
-
-= 4.5.4 =
-* Fix: quick editor using too much memory; fix: deprecated messages on PHP 8.2 and later; fix: security issue reported by Wordfence.
 
 = others =
 * [more](https://fifu.app/changelog)
@@ -280,5 +280,5 @@ Supports URLs from YouTube, Vimeo, Twitter, 9GAG, Cloudinary, Tumblr, Publitio, 
 
 == Upgrade Notice ==
 
-= 4.5.6 =
-* Fix: quick editor (possibility of fatal error when there are variable products with unused attributes).
+= 4.5.7 =
+* Fixed: CDN + Optimized Thumbnails (resolved conflict with CloudFront images).

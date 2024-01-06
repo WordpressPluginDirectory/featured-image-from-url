@@ -12,6 +12,48 @@
                 <div class="box">
                     <table>
                         <tr>
+                            <td style="border-bottom:none">2024-01-04</td>
+                            <td style="border-bottom:none"><h3> Zank
+                            </h3></td>
+                            <td style="border-bottom:none">theme</td>
+                        </tr>
+                    </table>
+                    <div class="greybox" style="position: relative; top: -10px">
+                        FIFU Product gallery is not displayed:<br>
+                        1) edit "zank-child/woocommerce/content-single-product.php" and replace<br>
+                        <textarea style="width:100%;height:25px;overflow:hidden" disabled>
+                            zank_product_gallery_slider();
+                        </textarea>
+                        with<br>
+                        <textarea style="width:100%;height:25px;overflow:hidden" disabled>
+                            echo do_shortcode('[fifu_gallery]');
+                        </textarea>
+                    </div>
+                </div>
+                <div class="box">
+                    <table>
+                        <tr>
+                            <td style="border-bottom:none">2024-01-01</td>
+                            <td style="border-bottom:none"><h3> Sahifa
+                            </h3></td>
+                            <td style="border-bottom:none">theme</td>
+                        </tr>
+                    </table>
+                    <div class="greybox" style="position: relative; top: -10px">
+                        Images being displayed larger than the standard size:<br>
+                        1) access "Appearance → Customize → Additional CSS";<br>
+                        2) add:<br>
+                        <textarea style="width:100%;height:60px;overflow:hidden" disabled="">
+                        &nbsp;&nbsp;&nbsp;&nbsp;li.first-news > div > a > img {aspect-ratio: 310 / 165; object-fit: cover; width: 100%;}
+                        &nbsp;&nbsp;&nbsp;&nbsp;li.other-news > div > a > img {aspect-ratio: 110 / 75; object-fit: cover; width: 100%;}
+                        &nbsp;&nbsp;&nbsp;&nbsp;div.post-thumbnail.tie-appear > a > img {aspect-ratio: 110 / 75; object-fit: cover; max-height: 211px;}
+                        </textarea>
+                        3) publish.
+                    </div>
+                </div>
+                <div class="box">
+                    <table>
+                        <tr>
                             <td style="border-bottom:none">2023-11-23</td>
                             <td style="border-bottom:none"><h3> Rosa
                             </h3></td>
@@ -51,7 +93,7 @@
                         </textarea><br>
                         within the function 'wpqa_get_aq_resize_img_url';
                     </div>
-                </div>
+                </div>            
                 <div class="box">
                     <table>
                         <tr>
@@ -367,7 +409,7 @@
                     </table>
                     <div class="greybox" style="position: relative; top: -10px">
                         "Archive Products" widget displays a small category image when FIFU → Settings → Performance → Lazy Load is enabled:<br>
-                        1) access "Appearance → your theme → Customize → Additional CSS";<br>
+                        1) access "Appearance → Customize → Additional CSS";<br>
                         2) add:<br>
                         &nbsp;&nbsp;&nbsp;&nbsp;li.product-category>a{width:100%;}<br>
                         3) publish.
@@ -524,7 +566,7 @@
                         2) set "0" for "Play Button > z-index";<br>
                         3) set "50" for "Minimum Width";<br>
                         4) set "lightbox" for "Play Button → mode";<br>
-                        4) access "Appearance → your theme → Customize → Additional CSS";<br>
+                        4) access "Appearance → Customize → Additional CSS";<br>
                         5) add:<br>
                         &nbsp;&nbsp;&nbsp;&nbsp;.fifu_play {height: 100%;}<br>
                         &nbsp;&nbsp;&nbsp;&nbsp;.fifu_h_iframe, .fifu_wrapper {height: 100% !important;}<br>
@@ -778,7 +820,7 @@
                     <div class="greybox" style="position: relative; top: -10px">
                         Product gallery doesn't work correctly.<br>
                         1) enable "FIFU Settings → WooCommerce → FIFU Product Gallery";<br>
-                        2) access "Appearance → your theme → Customize → Additional CSS";<br>
+                        2) access "Appearance → Customize → Additional CSS";<br>
                         3) add:<br>
                         &nbsp;&nbsp;&nbsp;&nbsp;div.rey-productSummary {justify-content:unset !important}<br>
                         &nbsp;&nbsp;&nbsp;&nbsp;div.fifu-woo-gallery {padding: 20px !important}<br>
@@ -795,7 +837,7 @@
                     </table>
                     <div class="greybox" style="position: relative; top: -10px">
                         Badge is not being displayed when FIFU Product Gallery is enabled:<br>
-                        1) access "Appearance → your theme → Customize → Additional CSS";<br>
+                        1) access "Appearance → Customize → Additional CSS";<br>
                         2) add:<br>
                         &nbsp;&nbsp;&nbsp;&nbsp;.yith-wcbm-badge {z-index: 11}<br>
                         3) publish.<br>

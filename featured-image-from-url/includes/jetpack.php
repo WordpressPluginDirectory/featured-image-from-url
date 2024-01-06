@@ -31,7 +31,7 @@ function fifu_jetpack_blocked($url) {
     if (fifu_is_photon_url($url))
         return true;
 
-    $blocklist = array('localhost', 'amazon-adsystem.com', 'sapo.io', 'i.guim.co.uk', 's.yimg.com', 's1.yimg.com', 'www.washingtonpost.com', 'www.aljazeera.com', 'image.influenster.com', 'api.screenshotmachine.com', 'rackcdn.com', 'googleusercontent.com', 'drive.google.com', 'img.brownsfashion.com', 'accounts.parrotproducts.biz', 'www.dropbox.com', 'fbcdn.net', 'teespring.com', 'nitrocdn.com', 'brightspotcdn.com', 'realtysouth.com', 'tiktokcdn.com', 'img.youtube.com', 'fdcdn.akamaized.net', 'blockchainstock.azureedge.net', 'blockworks.co', 'coincodex.com', 'www.ft.com', 'cdn.sellio.net', 'twimg.com', 'cdn.fifu.app', 'cloud.fifu.app', 'images.placeholders.dev');
+    $blocklist = array('img.youtube.com', 'localhost', 'amazon-adsystem.com', 'sapo.io', 'i.guim.co.uk', 's.yimg.com', 's1.yimg.com', 'www.washingtonpost.com', 'image.influenster.com', 'api.screenshotmachine.com', 'rackcdn.com', 'googleusercontent.com', 'drive.google.com', 'img.brownsfashion.com', 'accounts.parrotproducts.biz', 'www.dropbox.com', 'fbcdn.net', 'teespring.com', 'nitrocdn.com', 'brightspotcdn.com', 'realtysouth.com', 'tiktokcdn.com', 'fdcdn.akamaized.net', 'blockchainstock.azureedge.net', 'blockworks.co', 'coincodex.com', 'www.ft.com', 'cdn.sellio.net', 'aa.com.tr', 'twimg.com', 'cloudfront.net', 'cdn.fifu.app', 'cloud.fifu.app', 'images.placeholders.dev');
     foreach ($blocklist as $domain) {
         if (strpos($url, $domain) !== false)
             return true;
