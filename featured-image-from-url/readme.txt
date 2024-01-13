@@ -4,7 +4,7 @@ Donate link: https://donorbox.org/fifu
 Tags: featured, image, url, video, woocommerce
 Requires at least: 5.3
 Tested up to: 6.4.3
-Stable tag: 4.5.7
+Stable tag: 4.5.8
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -27,7 +27,6 @@ Use an external image as featured image of your post, page or custom post type.
 * Hide featured media
 * Featured image in content
 * Auto set image title
-* Save image dimensions
 * Column for featured image
 * **[PRO]** Image search (search engine)
 * **[PRO]** Disable right-click
@@ -265,14 +264,14 @@ Supports URLs from YouTube, Vimeo, Twitter, 9GAG, Cloudinary, Tumblr, Publitio, 
 
 == Changelog ==
 
+= 4.5.8 =
+* Note: Google Drive now requires a CDN for images; Enhancement: CDN + Optimized Thumbnails (integration with Google Drive and YouTube images); Deprecated: Save Image Dimensions (replaced by CDN + Optimized Thumbnails); Deprecated: CDN + Optimized Thumbnails > cropping of featured images (automatic now).
+
 = 4.5.7 =
 * Fixed: CDN + Optimized Thumbnails (resolved conflict with CloudFront images).
 
 = 4.5.6 =
 * Fix: quick editor (possibility of fatal error when there are variable products with unused attributes).
-
-= 4.5.5 =
-* Enhancement: FIFU Shortcode (new attributes); fix: quick editor (performance issues for variable products with too many variations); fix: undefined variable notice.
 
 = others =
 * [more](https://fifu.app/changelog)
@@ -280,5 +279,5 @@ Supports URLs from YouTube, Vimeo, Twitter, 9GAG, Cloudinary, Tumblr, Publitio, 
 
 == Upgrade Notice ==
 
-= 4.5.7 =
-* Fixed: CDN + Optimized Thumbnails (resolved conflict with CloudFront images).
+= 4.5.8 =
+* Note: Google Drive now requires a CDN for images; Enhancement: CDN + Optimized Thumbnails (integration with Google Drive and YouTube images); Deprecated: Save Image Dimensions (replaced by CDN + Optimized Thumbnails); Deprecated: CDN + Optimized Thumbnails > cropping of featured images (automatic now).

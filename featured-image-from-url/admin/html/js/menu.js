@@ -60,7 +60,6 @@ jQuery(function () {
     jQuery("#tabsContentAll").tabs();
     jQuery("#tabsCli").tabs();
     jQuery("#tabsRSS").tabs();
-    jQuery("#tabsDimensions").tabs();
 
     // show settings
     window.scrollTo(0, 0);
@@ -223,46 +222,6 @@ function fifu_run_delete_all_js() {
                 jQuery("#fifu_toggle_run_delete_all").attr('class', 'toggleoff');
                 jQuery('#tabs-top').unblock();
             }, 3000);
-        },
-        timeout: 0
-    });
-}
-
-function fifu_save_dimensions_all_js() {
-    tooMany = '(' + fifuScriptVars.dimensionsSupport + ')';
-    if (parseInt(jQuery("#countdown").text()) == -1 || jQuery("#countdown").text() == tooMany) {
-        jQuery("#countdown").text(tooMany);
-        invert('save_dimensions_all');
-        return;
-    }
-
-    jQuery('#tabs-top').block({message: fifuScriptVars.dimensionsWait, css: {backgroundColor: 'none', border: 'none', color: 'white'}});
-
-    interval = setInterval(function () {
-        jQuery("#countdown").load(location.href + " #countdown");
-    }, 3000);
-
-    jQuery.ajax({
-        method: "POST",
-        url: restUrl + 'featured-image-from-url/v2/run_get_and_save_sizes_api/',
-        async: true,
-        beforeSend: function (xhr) {
-            xhr.setRequestHeader('X-WP-Nonce', fifuScriptVars.nonce);
-        },
-        success: function (data) {
-            jQuery("#countdown").load(location.href + " #countdown");
-            clearInterval(interval);
-        },
-        error: function (jqXHR, textStatus, errorThrown) {
-            console.log(jqXHR);
-            console.log(textStatus);
-            console.log(errorThrown);
-        },
-        complete: function () {
-            setTimeout(function () {
-                invert('save_dimensions_all');
-                jQuery('#tabs-top').unblock();
-            }, 1000);
         },
         timeout: 0
     });

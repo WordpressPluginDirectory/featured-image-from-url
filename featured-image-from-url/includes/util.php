@@ -68,6 +68,14 @@ function fifu_has_local_featured_image($post_id) {
     return $att_post->post_author != FIFU_AUTHOR;
 }
 
+function fifu_is_remote_image($att_id) {
+    $att_post = get_post($att_id);
+    if (!$att_post)
+        return false;
+
+    return $att_post->post_author == FIFU_AUTHOR;
+}
+
 function fifu_get_delimiter($property, $html) {
     $delimiter = explode($property . '=', $html);
     return $delimiter ? substr($delimiter[1], 0, 1) : null;

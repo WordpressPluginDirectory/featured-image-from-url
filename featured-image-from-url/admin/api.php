@@ -945,64 +945,6 @@ function fifu_api_list_all_without_dimensions(WP_REST_Request $request) {
     return fifu_db_get_all_without_dimensions();
 }
 
-function fifu_run_get_and_save_sizes_api(WP_REST_Request $request) {
-    $token = base64_encode(rand());
-    set_transient('fifu_token_for_get_and_save_sizes_api', $token, 3600 * 24 * 7);
-    $array_requests = array();
-    $results = fifu_db_get_all_without_dimensions();
-    $count = 1;
-    foreach ($results as $res) {
-        $url = $res->guid;
-        $array = array(
-            'url' => esc_url_raw(rest_url()) . 'featured-image-from-url/v2/get_and_save_sizes_api/',
-            'type' => 'POST',
-            'headers' => [
-                'Accept' => 'application/json'
-            ],
-            'data' => json_encode([
-                'att_id' => $res->ID,
-                'url' => $url,
-                'token' => $token
-            ]),
-        );
-        array_push($array_requests, $array);
-        if ($count % 10 == 0 || count($results) == $count) {
-            $requests = Requests::request_multiple($array_requests);
-            $array_requests = array();
-            $count = 1;
-        } else
-            $count++;
-    }
-    delete_transient('fifu_token_for_get_and_save_sizes_api');
-}
-
-function fifu_get_and_save_sizes_api(WP_REST_Request $request) {
-    $json = json_decode($request->get_Body());
-    $att_id = $json->att_id;
-    $token = $json->token;
-    $url = $json->url;
-    $imageSize = getImageSize($url);
-    $width = $imageSize[0];
-    $height = $imageSize[1];
-    $array = array(
-        'headers' => array('Content-Type' => 'application/json; charset=utf-8'),
-        'body' => json_encode(
-                array(
-                    'att_id' => $att_id,
-                    'width' => $width,
-                    'height' => $height,
-                    'url' => $url,
-                    'token' => $token
-                )
-        ),
-        'method' => 'POST',
-        'data_format' => 'body',
-        'blocking' => false,
-        'timeout' => 30,
-    );
-    $response = fifu_remote_post(esc_url_raw(rest_url()) . 'featured-image-from-url/v2/save_sizes_api/', $array);
-}
-
 function fifu_api_pre_deactivate(WP_REST_Request $request) {
     $email = filter_var($request['email'], FILTER_SANITIZE_EMAIL);
     $email = filter_var($email, FILTER_VALIDATE_EMAIL) ? $email : null;
@@ -1046,7 +988,6 @@ function fifu_send_feedback($email, $description, $temporary) {
                     'image' => $image,
                     'fifu_auto_alt' => fifu_is_on('fifu_auto_alt'),
                     'fifu_cdn_content' => fifu_is_on('fifu_cdn_content'),
-                    'fifu_cdn_crop' => fifu_is_on('fifu_cdn_crop'),
                     'fifu_cdn_social' => fifu_is_on('fifu_cdn_social'),
                     'fifu_check' => fifu_is_on('fifu_check'),
                     'fifu_confirm_delete_all' => FIFU_DELETE_ALL_URLS,
@@ -1132,19 +1073,6 @@ add_action('rest_api_init', function () {
         'methods' => 'POST',
         'callback' => 'fifu_api_list_all_without_dimensions',
         'permission_callback' => 'fifu_get_private_data_permissions_check',
-    ));
-    register_rest_route('featured-image-from-url/v2', '/run_get_and_save_sizes_api/', array(
-        'methods' => 'POST',
-        'callback' => 'fifu_run_get_and_save_sizes_api',
-        'permission_callback' => 'fifu_get_private_data_permissions_check',
-    ));
-    register_rest_route('featured-image-from-url/v2', '/get_and_save_sizes_api/', array(
-        'methods' => 'POST',
-        'callback' => 'fifu_get_and_save_sizes_api',
-        'permission_callback' => function ($request) {
-            $json = json_decode($request->get_Body());
-            return get_transient('fifu_token_for_get_and_save_sizes_api') == $json->token;
-        },
     ));
     register_rest_route('featured-image-from-url/v2', '/pre_deactivate/', array(
         'methods' => 'POST',

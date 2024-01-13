@@ -1829,38 +1829,6 @@
                                             <?php $fifu['tab']['metadata']() ?>
                                         </th>
                                         <th>
-                                            <?php $fifu['title']['dimensions']() ?>
-                                        </th>
-                                        <th>
-                                            <?php $fifu['word']['old']() ?>
-                                        </th>
-                                        <th>
-                                            wp fifu dimensions
-                                        </th>
-                                        <th>
-                                        </th>
-                                    </tr>
-                                    <tr class="color">
-                                        <th>
-                                            <?php $fifu['tab']['metadata']() ?>
-                                        </th>
-                                        <th>
-                                            <?php $fifu['title']['dimensions']() ?>
-                                        </th>
-                                        <th>
-                                            <?php $fifu['word']['new']() ?>
-                                        </th>
-                                        <th>
-                                            wp fifu sizes
-                                        </th>
-                                        <th>
-                                        </th>
-                                    </tr>
-                                    <tr class="color">
-                                        <th>
-                                            <?php $fifu['tab']['metadata']() ?>
-                                        </th>
-                                        <th>
                                             <?php $fifu['title']['schedule']() ?>
                                         </th>
                                         <th></th>
@@ -1900,23 +1868,6 @@
                                         </th>
                                         <th>
                                             wp fifu cdn --social &lt;toggle&gt;
-                                        </th>
-                                        <th>
-                                            on, off
-                                        </th>
-                                    </tr>
-                                    <tr class="color">
-                                        <th>
-                                            <?php $fifu['tab']['performance']() ?>
-                                        </th>
-                                        <th>
-                                            <?php $fifu['title']['jetpack']() ?>
-                                        </th>
-                                        <th>
-                                            <?php $fifu['jetpack']['toggle']['crop']() ?>
-                                        </th>
-                                        <th>
-                                            wp fifu cdn --crop &lt;toggle&gt;
                                         </th>
                                         <th>
                                             on, off
@@ -3904,66 +3855,6 @@
                 </div>
 
                 <div class="box">
-                    <div class="fifu-cloud-details"><span class="dashicons dashicons-cloud fifu-cloud-details-icon" title="<?php $fifu['cloud']['details']['dimensions']() ?>"></span></div>
-                    <h2><?php $fifu['title']['dimensions']() ?></h2>
-
-                    <div class="greybox">
-                        <?php $fifu['dimensions']['desc']() ?>
-                        <br>
-                        <b><?php $fifu['detail']['important']() ?></b>: <?php $fifu['dimensions']['gallery']() ?>
-                    </div>
-
-                    <br>
-
-                    <div id="tabsDimensions">
-                        <ul>
-                            <li><a href="#tabs-1"><?php $fifu['word']['old']() ?></a></li>
-                            <li><a href="#tabs-2"><?php $fifu['word']['new']() ?></a></li>
-                        </ul>
-                        <div id="tabs-1">
-                            <?php $fifu['dimensions']['old']['desc']() ?>  
-                            <br>
-                            <br>
-                            <table style="text-align:left">
-                                <tr>
-                                    <th>
-                                        <form
-                                            id="fifu_form_save_dimensions_all"
-                                            action="javascript:void(0)"
-                                            method="post">
-                                            <input
-                                                type="submit"
-                                                href="javascript:void(0)"
-                                                id="fifu_toggle_save_dimensions_all"
-                                                onclick="invert('save_dimensions_all');
-                                                        fifu_save_dimensions_all_js();"
-                                                name="fifu_toggle_save_dimensions_all"
-                                                class="toggleoff"
-                                                value=""
-                                                style="display:block;border:none">
-                                        </form>
-                                    </th>
-                                    <th>
-                                        <?php $fifu['dimensions']['now']() ?>
-                                    </th>
-                                    <th>
-                                        <div id="countdown"><?php echo fifu_db_missing_dimensions() ?></div>
-                                    </th>
-                                </tr>
-                            </table>
-                        </div>
-                        <div id="tabs-2">
-                            <?php $fifu['dimensions']['new']['desc']() ?>  
-                            <br>
-                            <br>
-                            <table style="text-align:left">
-
-                            </table>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="box">
                     <div class="fifu-pro"><a class="fifu-pro-link" href="https://fifu.app/" target="_blank" title="<?php $fifu['unlock']() ?>"><span class="dashicons dashicons-lock fifu-pro-icon"></span></a></div>
                     <h2><?php $fifu['title']['schedule']() ?></h2>
                     <div class="greybox" id="grad2">
@@ -5028,8 +4919,6 @@
 
                         <?php $fifu['jetpack']['desc']() ?><br><br>
 
-                        <b><?php $fifu['detail']['requirement']() ?></b>: <?php $fifu['jetpack']['requirement']() ?>
-
                     </div>
 
                     <br>
@@ -5060,32 +4949,6 @@
                                 </form>
                             </td>
                             <td><?php $fifu['jetpack']['toggle']['cdn']() ?></td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <form
-                                    id="fifu_form_cdn_crop"
-                                    action="javascript:void(0)"
-                                    method="post">
-                                        <?php wp_nonce_field(FIFU_ACTION_SETTINGS, 'nonce_fifu_form_cdn_crop'); ?>
-                                    <input
-                                        type="submit"
-                                        href="javascript:void(0)"
-                                        id="fifu_toggle_cdn_crop"
-                                        onclick="invert('cdn_crop')"
-                                        name="fifu_toggle_cdn_crop"
-                                        class="<?php echo $enable_cdn_crop; ?>"
-                                        value=""
-                                        style="display:block;border:none">
-
-                                    <input
-                                        type="hidden"
-                                        id="fifu_input_cdn_crop"
-                                        name="fifu_input_cdn_crop"
-                                        value="" >
-                                </form>
-                            </td>
-                            <td><?php $fifu['jetpack']['toggle']['crop']() ?></td>
                         </tr>
                         <tr>
                             <td>
@@ -6066,7 +5929,7 @@
                                     <i class="fas fa-plug" style="font-size:30px"></i>
                                 </td>
                                 <td style="width:33%;text-align:center;border-bottom: 1px solid #ddd !important">
-                                    <i class="far fa-object-ungroup" style="font-size:30px"></i>
+                                    <i class="fa-solid fa-rotate-right" style="font-size:30px"></i>
                                 </td>
                             </tr>
                             <tr>
@@ -6077,7 +5940,7 @@
                                     <i><?php $fifu['support']['plugin']() ?></i>
                                 </td>
                                 <td style="width:33%;text-align:center;border-bottom: 1px solid #ddd !important">
-                                    <i><?php $fifu['support']['style']() ?></i>
+                                    <i><?php $fifu['support']['others']() ?></i>
                                 </td>
                             </tr>
                             <tr>
@@ -6087,8 +5950,8 @@
                                 <td style="vertical-align: top;">
                                     <?php $fifu['support']['plugin-desc']() ?>
                                 </td>
-                                <td>
-                                    <?php $fifu['support']['style-desc']() ?>
+                                <td style="vertical-align: top;">
+                                    <?php $fifu['support']['others-desc']() ?>
                                 </td>
                             </tr>
                         </table>
@@ -6104,7 +5967,7 @@
                                     <i class="fa-solid fa-file-circle-xmark" style="font-size:30px"></i>
                                 </td>
                                 <td style="width:33%;text-align:center;border-bottom: 1px solid #ddd !important">
-                                    <i class="fa-solid fa-rotate-right" style="font-size:30px"></i>
+                                    <i class="fa-brands fa-google-drive" style="font-size:30px"></i>
                                 </td>
                             </tr>
                             <tr>
@@ -6115,7 +5978,7 @@
                                     <i><?php $fifu['support']['money']() ?></i>
                                 </td>
                                 <td style="width:33%;text-align:center;border-bottom: 1px solid #ddd !important">
-                                    <i><?php $fifu['support']['others']() ?></i>
+                                    <i><?php $fifu['support']['googledrive']() ?></i>
                                 </td>
                             </tr>
                             <tr>
@@ -6126,7 +5989,7 @@
                                     <?php $fifu['support']['money-desc']() ?>
                                 </td>
                                 <td style="vertical-align: top;">
-                                    <?php $fifu['support']['others-desc']() ?>
+                                    <?php $fifu['support']['googledrive-desc']() ?>
                                 </td>
                             </tr>
                         </table>

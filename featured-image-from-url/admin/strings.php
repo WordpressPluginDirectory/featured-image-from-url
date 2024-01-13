@@ -120,12 +120,6 @@ function fifu_get_strings_settings() {
     $fifu['word']['tags'] = function () {
         _e("Tags", FIFU_SLUG);
     };
-    $fifu['word']['old'] = function () {
-        _e("Old", FIFU_SLUG);
-    };
-    $fifu['word']['new'] = function () {
-        _e("New (coming soon)", FIFU_SLUG);
-    };
     $fifu['word']['pro'] = function () {
         _e("PRO", FIFU_SLUG);
     };
@@ -335,9 +329,6 @@ function fifu_get_strings_settings() {
     $fifu['title']['clean'] = function () {
         _e("Clear Metadata", FIFU_SLUG);
     };
-    $fifu['title']['dimensions'] = function () {
-        _e("Save Image Dimensions", FIFU_SLUG);
-    };
     $fifu['title']['schedule'] = function () {
         _e("Schedule Metadata Generation", FIFU_SLUG);
     };
@@ -454,14 +445,14 @@ function fifu_get_strings_settings() {
     $fifu['support']['plugin'] = function () {
         _e("A plugin isn't working with FIFU", FIFU_SLUG);
     };
-    $fifu['support']['style'] = function () {
-        _e("CSS issues ", FIFU_SLUG);
-    };
     $fifu['support']['facebook'] = function () {
         _e("Facebook doesn't share images", FIFU_SLUG);
     };
     $fifu['support']['money'] = function () {
         _e("Broken image icon", FIFU_SLUG);
+    };
+    $fifu['support']['googledrive'] = function () {
+        _e("Google Drive images not displayed", FIFU_SLUG);
     };
     $fifu['support']['speed'] = function () {
         _e("Issues with GTmetrix/PageSpeed", FIFU_SLUG);
@@ -472,14 +463,14 @@ function fifu_get_strings_settings() {
     $fifu['support']['plugin-desc'] = function () {
         _e("Contact us. If you are available to discuss the details and the plugin is free, we should provide an integration. Or contact its developer and ask him to use the FIFU integration functions below.", FIFU_SLUG);
     };
-    $fifu['support']['style-desc'] = function () {
-        _e("Some themes and plugins may not work well with external images. Solve it by using <b>FIFU Cloud</b> (fast) or running Metadata → Save Image Dimensions (slow).", FIFU_SLUG);
-    };
     $fifu['support']['facebook-desc'] = function () {
         _e("You probably have a plugin or theme that sets a default image as the Facebook image (og:image meta tag). Just find and disable the option. And make sure Social → Meta Tags is enabled.", FIFU_SLUG);
     };
     $fifu['support']['money-desc'] = function () {
         _e("Possibilities: a) image file deleted by owner; b) URL has changed; c) hotlink protection; d) incorrect URL. Use <b>FIFU Cloud</b> to prevent image loss or bypass hotlink protection.", FIFU_SLUG);
+    };
+    $fifu['support']['googledrive-desc'] = function () {
+        _e("Solve it by activating Performance → CDN + Optimized Thumbnails. Because Google Drive no longer allows embedding of images, except through a CDN. ", FIFU_SLUG);
     };
     $fifu['support']['speed-desc'] = function () {
         _e("Solve it by activating Performance → CDN + Optimized Thumbnails or <b>FIFU Cloud</b> (much better). Even large images hosted on slow servers should load quickly on your website.", FIFU_SLUG);
@@ -1083,29 +1074,6 @@ function fifu_get_strings_settings() {
         _e("the toggle will be automatically disabled when finished", FIFU_SLUG);
     };
 
-    // dimensions
-    $fifu['dimensions']['desc'] = function () {
-        _e("Without image dimensions, certain themes and plugins may not function correctly. This feature may help.", FIFU_SLUG);
-    };
-    $fifu['dimensions']['gallery'] = function () {
-        _e("For better solution to problems with the product gallery, refer to FIFU Settings → WooCommerce → FIFU Product Gallery.", FIFU_SLUG);
-    };
-    $fifu['dimensions']['now'] = function () {
-        _e("save the dimensions of all featured images now", FIFU_SLUG);
-    };
-    $fifu['dimensions']['old']['desc'] = function () {
-        _e("Approximately 150 images per minute are processed. This option utilizes local resources to calculate image sizes and does not rely on a scheduled event. It must be manually activated each time, which may become impractical depending on the number of images and how posts are created.", FIFU_SLUG);
-    };
-    $fifu['dimensions']['new']['desc'] = function () {
-        _e("Use a scheduled event to send your URLs to a queue on a FIFU server and retrieve image dimensions asynchronously. Our server distributes the workload equally among sites that have enabled this option to calculate sizes. This allows your site to receive all dimensions within a few minutes. However, note that your site may be used to calculate image sizes for other websites as well, although the workload is distributed equally to ensure each request uses only a few KBs of memory and each site handles one request at a time.", FIFU_SLUG);
-    };
-    $fifu['dimensions']['support'] = function () {
-        return __("it will take too much time. Please contact support for a better solution", FIFU_SLUG);
-    };
-    $fifu['dimensions']['wait'] = function () {
-        return __("Please wait. It may take several minutes...", FIFU_SLUG);
-    };
-
     // schedule
     $fifu['schedule']['desc'] = function () {
         _e("If you are setting the image URLs in a non-standard way, the images may not be displayed to visitors because additional metadata is required. Here, you can schedule an event to run every minute and check for image URLs without metadata and generate it.", FIFU_SLUG);
@@ -1126,17 +1094,11 @@ function fifu_get_strings_settings() {
     $fifu['jetpack']['desc'] = function () {
         _e("Your external images will be automatically optimized and served from a free CDN. In addition, the plugin will load the thumbnails in the exact size your site requires, further enhancing performance.", FIFU_SLUG);
     };
-    $fifu['jetpack']['requirement'] = function () {
-        _e("For images added automatically, the Lazy Load feature below should be enabled.", FIFU_SLUG);
-    };
     $fifu['jetpack']['toggle']['cdn'] = function () {
         _e("CDN + optimized thumbnails", FIFU_SLUG);
     };
     $fifu['jetpack']['toggle']['social'] = function () {
         _e("use optimized images in meta tags and media RSS tags", FIFU_SLUG);
-    };
-    $fifu['jetpack']['toggle']['crop'] = function () {
-        _e("crop featured images (to maintain the aspect ratio defined by the theme or WordPress media settings)", FIFU_SLUG);
     };
     $fifu['jetpack']['toggle']['content'] = function () {
         _e("apply to content images (requires Lazy Load)", FIFU_SLUG);
@@ -1717,9 +1679,6 @@ function fifu_get_strings_settings() {
     };
     $fifu['cloud']['details']['click'] = function () {
         _e("FIFU Cloud improves the security of your images by offering hotlink protection. With this feature, even if a bot or someone else obtains image URLs from the source code of your website, they won't be able to embed them on other websites. Instead, an error message is displayed instead of the images.", FIFU_SLUG);
-    };
-    $fifu['cloud']['details']['dimensions'] = function () {
-        _e("FIFU Cloud eliminates the need for this feature by writing the image dimensions in the image URL, eliminating waiting times and CSS issues.", FIFU_SLUG);
     };
     $fifu['cloud']['details']['library'] = function () {
         _e("FIFU Cloud can work as an alternative to the WordPress media library. Both store images, but FIFU Cloud processes them in the cloud, while the WordPress core consumes a lot of your website's resources. Additionally, FIFU Cloud is able to process and store thousands of images simultaneously in a few seconds, while the media library works with one image at a time.", FIFU_SLUG);

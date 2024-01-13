@@ -1501,10 +1501,6 @@ function fifu_db_clean_dimensions_all() {
 function fifu_db_missing_dimensions() {
     $db = new FifuDb();
 
-    // too much
-    if (fifu_db_count_urls_with_metadata() > 10000)
-        return -1;
-
     $aux = $db->get_count_posts_without_dimensions()[0];
     return $aux ? $aux->amount : -1;
 }
