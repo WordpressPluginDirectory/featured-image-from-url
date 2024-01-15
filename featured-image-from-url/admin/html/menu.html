@@ -1864,23 +1864,6 @@
                                             <?php $fifu['title']['jetpack']() ?>
                                         </th>
                                         <th>
-                                            <?php $fifu['jetpack']['toggle']['social']() ?>
-                                        </th>
-                                        <th>
-                                            wp fifu cdn --social &lt;toggle&gt;
-                                        </th>
-                                        <th>
-                                            on, off
-                                        </th>
-                                    </tr>
-                                    <tr class="color">
-                                        <th>
-                                            <?php $fifu['tab']['performance']() ?>
-                                        </th>
-                                        <th>
-                                            <?php $fifu['title']['jetpack']() ?>
-                                        </th>
-                                        <th>
                                             <?php $fifu['jetpack']['toggle']['content']() ?>
                                         </th>
                                         <th>
@@ -4917,7 +4900,7 @@
 
                     <div class="greybox">
 
-                        <?php $fifu['jetpack']['desc']() ?><br><br>
+                        <?php $fifu['jetpack']['desc']() ?>
 
                     </div>
 
@@ -4948,7 +4931,9 @@
                                         value="" >
                                 </form>
                             </td>
-                            <td><?php $fifu['jetpack']['toggle']['cdn']() ?></td>
+                            <td>
+                                <?php $fifu['jetpack']['toggle']['cdn']() ?>
+                            </td>
                         </tr>
                         <tr>
                             <td>
@@ -4974,33 +4959,9 @@
                                         value="" >
                                 </form>
                             </td>
-                            <td><?php $fifu['jetpack']['toggle']['content']() ?></td>
-                        </tr>
-                        <tr>
                             <td>
-                                <form
-                                    id="fifu_form_cdn_social"
-                                    action="javascript:void(0)"
-                                    method="post">
-                                        <?php wp_nonce_field(FIFU_ACTION_SETTINGS, 'nonce_fifu_form_cdn_social'); ?>
-                                    <input
-                                        type="submit"
-                                        href="javascript:void(0)"
-                                        id="fifu_toggle_cdn_social"
-                                        onclick="invert('cdn_social')"
-                                        name="fifu_toggle_cdn_social"
-                                        class="<?php echo $enable_cdn_social; ?>"
-                                        value=""
-                                        style="display:block;border:none">
-
-                                    <input
-                                        type="hidden"
-                                        id="fifu_input_cdn_social"
-                                        name="fifu_input_cdn_social"
-                                        value="" >
-                                </form>
+                                <?php $fifu['jetpack']['toggle']['content']() ?>
                             </td>
-                            <td><?php $fifu['jetpack']['toggle']['social']() ?></td>
                         </tr>
                     </table>
                 </div>
@@ -5235,7 +5196,7 @@
                             <div id="tabs-3">
 
                                 <iframe src="<?php echo plugins_url() ?>/featured-image-from-url/admin/html/txt/product.json"
-                                        width="100%" height="250px" ></iframe>
+                                        width="100%" height="275px" ></iframe>
 
                             </div>
 
@@ -5263,7 +5224,7 @@
                             <div id="tabs-7">
 
                                 <iframe src="<?php echo plugins_url() ?>/featured-image-from-url/admin/html/txt/product-variable.json"
-                                        width="100%" height="565px" ></iframe>
+                                        width="100%" height="590px" ></iframe>
 
                             </div>
 

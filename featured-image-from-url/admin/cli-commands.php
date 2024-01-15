@@ -252,17 +252,6 @@ class fifu_cli extends WP_CLI_Command {
     // performance
 
     function cdn($args, $assoc_args) {
-        if (!empty($assoc_args['social'])) {
-            switch ($args[0]) {
-                case 'on':
-                    update_option('fifu_cdn_social', 'toggleon', 'no'); // toggle
-                    break;
-                case 'off':
-                    update_option('fifu_cdn_social', 'toggleoff', 'no'); // toggle
-                    break;
-            }
-            return;
-        }
         if (!empty($assoc_args['content'])) {
             switch ($args[0]) {
                 case 'on':

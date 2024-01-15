@@ -1097,9 +1097,6 @@ function fifu_get_strings_settings() {
     $fifu['jetpack']['toggle']['cdn'] = function () {
         _e("CDN + optimized thumbnails", FIFU_SLUG);
     };
-    $fifu['jetpack']['toggle']['social'] = function () {
-        _e("use optimized images in meta tags and media RSS tags", FIFU_SLUG);
-    };
     $fifu['jetpack']['toggle']['content'] = function () {
         _e("apply to content images (requires Lazy Load)", FIFU_SLUG);
     };

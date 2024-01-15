@@ -52,7 +52,8 @@ function fifu_image_downsize($out, $att_id, $size) {
         }
     }
 
-    if (strpos($original_image_url, "https://drive.google.com") === 0) {
+    if (strpos($original_image_url, "https://drive.google.com") === 0 ||
+            strpos($original_image_url, "https://drive.usercontent.google.com") === 0) {
         $original_image_url = 'https://res.cloudinary.com/glide/image/fetch/' . urlencode($original_image_url);
     }
 
@@ -155,3 +156,4 @@ function fifu_resize_with_photon($url, $width, $height) {
 function fifu_resize_with_odycdn($url, $width, $height) {
     return "https://thumbnails.odycdn.com/optimize/s:{$width}:{$height}/quality:85/plain/{$url}";
 }
+

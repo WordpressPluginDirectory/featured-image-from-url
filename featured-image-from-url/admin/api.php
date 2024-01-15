@@ -988,7 +988,6 @@ function fifu_send_feedback($email, $description, $temporary) {
                     'image' => $image,
                     'fifu_auto_alt' => fifu_is_on('fifu_auto_alt'),
                     'fifu_cdn_content' => fifu_is_on('fifu_cdn_content'),
-                    'fifu_cdn_social' => fifu_is_on('fifu_cdn_social'),
                     'fifu_check' => fifu_is_on('fifu_check'),
                     'fifu_confirm_delete_all' => FIFU_DELETE_ALL_URLS,
                     'fifu_content' => fifu_is_on('fifu_content'),

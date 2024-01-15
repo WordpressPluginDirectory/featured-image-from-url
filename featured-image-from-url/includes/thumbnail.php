@@ -91,7 +91,7 @@ function fifu_add_social_tags() {
     if ($url) {
         if (fifu_is_from_speedup($url))
             $url = fifu_speedup_get_signed_url($url, 1280, 672, null, null, false);
-        elseif (fifu_is_on('fifu_cdn_social'))
+        elseif (fifu_is_on('fifu_photon'))
             $url = fifu_jetpack_photon_url($url, null);
         include 'html/og-image.html';
     }
@@ -280,6 +280,11 @@ function fifu_optimize_content($content) {
 
         $del = substr($src[0], - 1);
         $url = fifu_normalize(explode($del, $src[0])[1]);
+
+        if (strpos($url, "https://drive.google.com") === 0 ||
+                strpos($url, "https://drive.usercontent.google.com") === 0) {
+            $url = 'https://res.cloudinary.com/glide/image/fetch/' . urlencode($url);
+        }
 
         if (fifu_jetpack_blocked($url) || strpos($url, 'data:image') === 0)
             continue;
