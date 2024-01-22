@@ -123,6 +123,7 @@ function fifu_ctgr_column_content($internal_image, $column, $term_id) {
 
     list($border, $height, $width, $video_url, $video_src, $is_ctgr, $is_variable, $image_url, $url, $vars) = fifu_ctgr_column_featured($term_id);
     $post_id = $term_id;
+    $url = fifu_cdn_adjust($url);
     include 'html/column.html';
 
     $term_ids = [$term_id];
@@ -175,6 +176,7 @@ function fifu_column_content($column, $post_id) {
     $fifu = fifu_get_strings_meta_box();
 
     list($border, $height, $width, $video_url, $video_src, $is_ctgr, $is_variable, $image_url, $url, $vars) = fifu_column_featured($post_id, fifu_is_variable_product($post_id));
+    $url = fifu_cdn_adjust($url);
     include 'html/column.html';
 
     $post_ids = [$post_id];

@@ -222,7 +222,8 @@ function fifu_get_image_info(post_id) {
     if (image_url) {
         jQuery('input#fifu-quick-input-url').val(image_url);
         jQuery('#fifu-quick-input-url').select();
-        jQuery('img#fifu-quick-preview').attr('src', image_url);
+        let adjustedUrl = fifu_cdn_adjust(image_url);
+        jQuery('img#fifu-quick-preview').attr('src', adjustedUrl);
     }
 }
 
@@ -241,3 +242,23 @@ function fifu_register_help_quick_edit() {
                 );
     });
 }
+
+function fifu_cdn_adjust(url) {
+    if (url.includes("https://drive.google.com") || url.includes("https://drive.usercontent.google.com")) {
+        let cdnUrl = 'https://res.cloudinary.com/glide/image/fetch/' + encodeURIComponent(url);
+        return `https://i${Math.abs(crc32(cdnUrl) % 4)}.wp.com/${cdnUrl.replace(/^https?:\/\//, '')}`;
+    }
+    return url;
+}
+
+var crc32 = function (r) {
+    for (var a, o = [], c = 0; c < 256; c++) {
+        a = c;
+        for (var f = 0; f < 8; f++)
+            a = 1 & a ? 3988292384 ^ a >>> 1 : a >>> 1;
+        o[c] = a
+    }
+    for (var n = -1, t = 0; t < r.length; t++)
+        n = n >>> 8 ^ o[255 & (n ^ r.charCodeAt(t))];
+    return(-1 ^ n) >>> 0
+};

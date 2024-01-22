@@ -102,6 +102,9 @@ function fifu_get_strings_settings() {
     $fifu['word']['zindex'] = function () {
         _e("z-index", FIFU_SLUG);
     };
+    $fifu['word']['size'] = function () {
+        _e("size", FIFU_SLUG);
+    };
     $fifu['word']['zoom'] = function () {
         _e("zoom", FIFU_SLUG);
     };
@@ -182,13 +185,13 @@ function fifu_get_strings_settings() {
         _e("YouTube, Vimeo", FIFU_SLUG);
     };
     $fifu['player']['available']['autoplay'] = function () {
-        _e("YouTube, Vimeo, Odysee, Rumble, local videos", FIFU_SLUG);
+        _e("YouTube, Vimeo, Odysee, Rumble, local videos, remote video files", FIFU_SLUG);
     };
     $fifu['player']['available']['loop'] = function () {
-        _e("YouTube, Vimeo, local videos", FIFU_SLUG);
+        _e("YouTube, Vimeo, local videos, remote video files", FIFU_SLUG);
     };
     $fifu['player']['available']['mute'] = function () {
-        _e("YouTube, Vimeo, local videos", FIFU_SLUG);
+        _e("YouTube, Vimeo, local videos, remote video files", FIFU_SLUG);
     };
     $fifu['player']['available']['background'] = function () {
         _e("Vimeo", FIFU_SLUG);
@@ -1326,6 +1329,15 @@ function fifu_get_strings_settings() {
     };
     $fifu['social']['only'] = function () {
         _e("Only image tags", FIFU_SLUG);
+    };
+    $fifu['social']['tab']['posts'] = function () {
+        _e("Posts", FIFU_SLUG);
+    };
+    $fifu['social']['tab']['home'] = function () {
+        _e("Homepage", FIFU_SLUG);
+    };
+    $fifu['social']['home']['desc'] = function () {
+        _e("Here you can define the address of the image that should be displayed when your homepage is shared on social media.", FIFU_SLUG);
     };
 
     // rss

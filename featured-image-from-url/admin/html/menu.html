@@ -1454,6 +1454,23 @@
                                             <?php $fifu['title']['play']() ?>
                                         </th>
                                         <th>
+                                            <?php $fifu['word']['size']() ?>
+                                        </th>
+                                        <th>
+                                            wp fifu video --play-size &lt;integer&gt;
+                                        </th>
+                                        <th>
+                                            30, 50, 70...
+                                        </th>
+                                    </tr>
+                                    <tr class="color">
+                                        <th>
+                                            <?php $fifu['tab']['video']() ?>
+                                        </th>
+                                        <th>
+                                            <?php $fifu['title']['play']() ?>
+                                        </th>
+                                        <th>
                                             <?php $fifu['word']['mode']() ?>
                                         </th>
                                         <th>
@@ -1937,6 +1954,23 @@
                                         </th>
                                         <th>
                                             on, off
+                                        </th>
+                                    </tr>
+                                    <tr class="color">
+                                        <th>
+                                            <?php $fifu['tab']['social']() ?>
+                                        </th>
+                                        <th>
+                                            <?php $fifu['title']['social']() ?>
+                                        </th>
+                                        <th>
+                                            <?php $fifu['social']['tab']['home']() ?>
+                                        </th>
+                                        <th>
+                                            wp fifu social --home &lt;string&gt;
+                                        </th>
+                                        <th>
+                                            https://...
                                         </th>
                                     </tr>
                                     <tr class="color">
@@ -4176,6 +4210,18 @@
                                 <input type="submit" value="<?php $fifu['button']['ok']() ?>" style="width:85px" disabled>
                             </th>
                             <th>
+                                <?php $fifu['word']['size']() ?>
+                                <br>
+                                <input
+                                    id="fifu_input_video_size"
+                                    type="text"
+                                    name="fifu_input_video_size"
+                                    value=""
+                                    style="width:85px">
+                                <br>
+                                <input type="submit" value="<?php $fifu['button']['ok']() ?>" style="width:85px" disabled>
+                            </th>
+                            <th>
                                 <?php $fifu['word']['mode']() ?>
                                 <br>
                                 <select id="select_play_type" style="width:85px">
@@ -4748,64 +4794,99 @@
                         <?php $fifu['social']['desc']() ?>
                     </div>
                     <br>
-                    <table style="text-align:left">
-                        <tr>
-                            <th>
-                                <form
-                                    id="fifu_form_social"
-                                    action="javascript:void(0)"
-                                    method="post">
-                                        <?php wp_nonce_field(FIFU_ACTION_SETTINGS, 'nonce_fifu_form_social'); ?>
-                                    <input
-                                        type="submit"
-                                        href="javascript:void(0)"
-                                        id="fifu_toggle_social"
-                                        onclick="invert('social')"
-                                        name="fifu_toggle_social"
-                                        class="<?php echo $enable_social; ?>"
-                                        value=""
-                                        style="display:block;border:none">
+                    <div id="tabsMeta">
+                        <ul>
+                            <li><a href="#tabsMeta-a"><?php $fifu['social']['tab']['posts']() ?></a></li>
+                            <li><a href="#tabsMeta-b"><?php $fifu['social']['tab']['home']() ?></a></li>
+                            <br>
+                            <br>
+                            <div id="tabsMeta-a">
+                                <table style="text-align:left">
+                                    <tr>
+                                        <th>
+                                            <form
+                                                id="fifu_form_social"
+                                                action="javascript:void(0)"
+                                                method="post">
+                                                    <?php wp_nonce_field(FIFU_ACTION_SETTINGS, 'nonce_fifu_form_social'); ?>
+                                                <input
+                                                    type="submit"
+                                                    href="javascript:void(0)"
+                                                    id="fifu_toggle_social"
+                                                    onclick="invert('social')"
+                                                    name="fifu_toggle_social"
+                                                    class="<?php echo $enable_social; ?>"
+                                                    value=""
+                                                    style="display:block;border:none">
 
-                                    <input
-                                        type="hidden"
-                                        id="fifu_input_social"
-                                        name="fifu_input_social"
-                                        value="" >
-                                </form>
-                            </th>
-                            <th>
-                                <?php $fifu['social']['add']() ?>
-                            </th>
-                        </tr>
-                        <tr>
-                            <th>
-                                <form
-                                    id="fifu_form_social_image_only"
-                                    action="javascript:void(0)"
-                                    method="post">
-                                        <?php wp_nonce_field(FIFU_ACTION_SETTINGS, 'nonce_fifu_form_social_image_only'); ?>
-                                    <input
-                                        type="submit"
-                                        href="javascript:void(0)"
-                                        id="fifu_toggle_social_image_only"
-                                        onclick="invert('social_image_only')"
-                                        name="fifu_toggle_social_image_only"
-                                        class="<?php echo $enable_social_image_only; ?>"
-                                        value=""
-                                        style="display:block;border:none">
+                                                <input
+                                                    type="hidden"
+                                                    id="fifu_input_social"
+                                                    name="fifu_input_social"
+                                                    value="" >
+                                            </form>
+                                        </th>
+                                        <th>
+                                            <?php $fifu['social']['add']() ?>
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <th>
+                                            <form
+                                                id="fifu_form_social_image_only"
+                                                action="javascript:void(0)"
+                                                method="post">
+                                                    <?php wp_nonce_field(FIFU_ACTION_SETTINGS, 'nonce_fifu_form_social_image_only'); ?>
+                                                <input
+                                                    type="submit"
+                                                    href="javascript:void(0)"
+                                                    id="fifu_toggle_social_image_only"
+                                                    onclick="invert('social_image_only')"
+                                                    name="fifu_toggle_social_image_only"
+                                                    class="<?php echo $enable_social_image_only; ?>"
+                                                    value=""
+                                                    style="display:block;border:none">
 
-                                    <input
-                                        type="hidden"
-                                        id="fifu_input_social_image_only"
-                                        name="fifu_input_social_image_only"
-                                        value="" >
-                                </form>
-                            </th>
-                            <th>
-                                <?php $fifu['social']['only']() ?>
-                            </th>
-                        </tr>
-                    </table>
+                                                <input
+                                                    type="hidden"
+                                                    id="fifu_input_social_image_only"
+                                                    name="fifu_input_social_image_only"
+                                                    value="" >
+                                            </form>
+                                        </th>
+                                        <th>
+                                            <?php $fifu['social']['only']() ?>
+                                        </th>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div id="tabsMeta-b">
+                                <?php $fifu['social']['home']['desc']() ?>
+                                <br>
+                                <br>
+                                <table style="text-align:left">
+                                    <tr>
+                                        <th>
+                                            <form
+                                                id="fifu_form_social_home_url"
+                                                action="javascript:void(0)"
+                                                method="post">
+                                                    <?php wp_nonce_field(FIFU_ACTION_SETTINGS, 'nonce_fifu_form_social_home_url'); ?>
+                                                <input id="fifu_input_social_home_url"
+                                                       type="text"
+                                                       name="fifu_input_social_home_url"
+                                                       style="width:800px"
+                                                       value="<?php echo $social_home_url; ?>"
+                                                       placeholder="https://example.com/logo.jpg">
+                                                <input type="submit"
+                                                       value="<?php $fifu['button']['submit']() ?>" >                                                
+                                            </form>
+                                        </th>
+                                    </tr>
+                                </table>
+                            </div>
+                        </ul>
+                    </div>
                 </div>
                 <div class="box">
                     <div class="fifu-pro"><a class="fifu-pro-link" href="https://fifu.app/" target="_blank" title="<?php $fifu['unlock']() ?>"><span class="dashicons dashicons-lock fifu-pro-icon"></span></a></div>

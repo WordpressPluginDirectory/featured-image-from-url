@@ -247,6 +247,7 @@ class fifu_cli extends WP_CLI_Command {
     }
 
     function sizes() {
+        
     }
 
     // performance
@@ -287,6 +288,10 @@ class fifu_cli extends WP_CLI_Command {
     // social
 
     function social($args, $assoc_args) {
+        if (!empty($assoc_args['home'])) {
+            update_option('fifu_social_home_url', $args[0], 'no');
+            return;
+        }
         if (!empty($assoc_args['image-only'])) {
             switch ($args[0]) {
                 case 'on':

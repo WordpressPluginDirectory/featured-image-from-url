@@ -17,6 +17,8 @@ if (!in_array($pagenow, array('post.php', 'post-new.php', 'admin-ajax.php', 'wp-
         add_filter('wp_head', 'fifu_add_social_tags');
 }
 
+add_action('wp_head', 'fifu_home_add_social_tags');
+
 add_filter('wp_head', 'fifu_apply_css');
 
 function fifu_add_js() {
@@ -103,6 +105,16 @@ function fifu_add_social_tags() {
         if (fifu_is_from_speedup($url))
             $url = fifu_speedup_get_signed_url($url, 1280, 672, null, null, false);
         include 'html/twitter-image.html';
+    }
+}
+
+function fifu_home_add_social_tags() {
+    if (is_front_page()) {
+        $url = get_option('fifu_social_home_url');
+        if (!empty($url)) {
+            $url = esc_url($url);
+            include 'html/social-home.html';
+        }
     }
 }
 
@@ -242,7 +254,7 @@ function fifu_get_html($url, $alt, $width, $height) {
 add_filter('the_content', 'fifu_add_to_content');
 
 function fifu_add_to_content($content) {
-    return is_singular() && has_post_thumbnail() && ((is_singular('post') && fifu_is_on('fifu_content')) || (is_singular('page') && fifu_is_on('fifu_content_page')) || (fifu_is_cpt() && fifu_is_on('fifu_content_cpt'))) ? get_the_post_thumbnail() . $content : $content;
+    return is_singular() && has_post_thumbnail() && ((is_singular('post') && fifu_is_on('fifu_content')) || (is_singular('page') && fifu_is_on('fifu_content_page')) || (fifu_is_cpt() && fifu_is_on('fifu_content_cpt'))) ? '<div style="text-align:center">' . get_the_post_thumbnail() . '</div>' . $content : $content;
 }
 
 add_filter('the_content', 'fifu_remove_content_image');
@@ -281,10 +293,7 @@ function fifu_optimize_content($content) {
         $del = substr($src[0], - 1);
         $url = fifu_normalize(explode($del, $src[0])[1]);
 
-        if (strpos($url, "https://drive.google.com") === 0 ||
-                strpos($url, "https://drive.usercontent.google.com") === 0) {
-            $url = 'https://res.cloudinary.com/glide/image/fetch/' . urlencode($url);
-        }
+        $url = fifu_cdn_adjust($url);
 
         if (fifu_jetpack_blocked($url) || strpos($url, 'data:image') === 0)
             continue;
@@ -376,4 +385,16 @@ function fifu_style_loader_tag($html, $handle) {
     }
     return $html;
 }
+
+// for ajax pagination
+function fifu_posts_results($posts, $query) {
+    if (!is_admin() && $query->is_main_query() && is_paged()) {
+        foreach ($posts as $post) {
+            fifu_add_parameters_single_post($post->ID);
+        }
+    }
+    return $posts;
+}
+
+add_filter('posts_results', 'fifu_posts_results', 10, 2);
 

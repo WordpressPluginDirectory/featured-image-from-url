@@ -4,7 +4,7 @@ Donate link: https://donorbox.org/fifu
 Tags: featured, image, url, video, woocommerce
 Requires at least: 5.3
 Tested up to: 6.4.3
-Stable tag: 4.5.9
+Stable tag: 4.6.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -264,14 +264,14 @@ Supports URLs from YouTube, Vimeo, Twitter, 9GAG, Cloudinary, Tumblr, Publitio, 
 
 == Changelog ==
 
+= 4.6.0 =
+* New Option: Meta Tags → Homepage; New Option: Play Button → Size; Enhancements: Featured Video now supports Autoplay, Playback Loop, and Mute for external video files; Enhancements: CDN + Optimized Thumbnails, now capable of serving images from X, Dropbox, and Yahoo; Enhancement: Centralized Featured Image in Content; Fix: CDN + Optimized Thumbnails, with added fallback for unregistered sizes and resolution of conflicts with video thumbnails, Amazon images, FIFU Cloud, and SVG format; Fix: Resolved conflicts with the WordPress featured image box; Fix: Resolved issue where Google Drive images were not displayed in wp-admin and product galleries.
+
 = 4.5.9 =
 * Fix: CDN + Optimized Thumbnails (issues with a second category of Google Drive URLs); Deprecated: option to use optimized images in meta tags and media RSS tags (automatically applied when CDN is enabled).
 
 = 4.5.8 =
 * Note: Google Drive now requires a CDN for images; Enhancement: CDN + Optimized Thumbnails (integration with Google Drive and YouTube images); Deprecated: Save Image Dimensions (replaced by CDN + Optimized Thumbnails); Deprecated: CDN + Optimized Thumbnails > cropping of featured images (automatic now).
-
-= 4.5.7 =
-* Fixed: CDN + Optimized Thumbnails (resolved conflict with CloudFront images).
 
 = others =
 * [more](https://fifu.app/changelog)
@@ -279,5 +279,5 @@ Supports URLs from YouTube, Vimeo, Twitter, 9GAG, Cloudinary, Tumblr, Publitio, 
 
 == Upgrade Notice ==
 
-= 4.5.9 =
-* Fix: CDN + Optimized Thumbnails (issues with a second category of Google Drive URLs); Deprecated: option to use optimized images in meta tags and media RSS tags (automatically applied when CDN is enabled).
+= 4.6.0 =
+* New Option: Meta Tags → Homepage; New Option: Play Button → Size; Enhancements: Featured Video now supports Autoplay, Playback Loop, and Mute for external video files; Enhancements: CDN + Optimized Thumbnails, now capable of serving images from X, Dropbox, and Yahoo; Enhancement: Centralized Featured Image in Content; Fix: CDN + Optimized Thumbnails, with added fallback for unregistered sizes and resolution of conflicts with video thumbnails, Amazon images, FIFU Cloud, and SVG format; Fix: Resolved conflicts with the WordPress featured image box; Fix: Resolved issue where Google Drive images were not displayed in wp-admin and product galleries.

@@ -53,6 +53,7 @@ jQuery(function () {
     jQuery("#tabsAutoSet").tabs();
     jQuery("#tabsTags").tabs();
     jQuery("#tabsIsbn").tabs();
+    jQuery("#tabsMeta").tabs();
     jQuery("#tabsCustomfield").tabs();
     jQuery("#tabsFinder").tabs();
     jQuery("#tabsVideo").tabs();

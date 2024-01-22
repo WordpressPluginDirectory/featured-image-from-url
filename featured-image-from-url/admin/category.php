@@ -35,6 +35,7 @@ function fifu_ctgr_edit_box($term) {
     $check_ignore = fifu_is_on('fifu_check') ? 'checked' : '';
 
     $fifu = fifu_get_strings_meta_box();
+    $adjustedUrl = fifu_cdn_adjust($url);
     include 'html/category.html';
 }
 
@@ -53,6 +54,7 @@ function fifu_ctgr_add_box() {
     $check_ignore = fifu_is_on('fifu_check') ? 'checked' : '';
 
     $fifu = fifu_get_strings_meta_box();
+    $adjustedUrl = fifu_cdn_adjust($url);
     include 'html/category.html';
 }
 

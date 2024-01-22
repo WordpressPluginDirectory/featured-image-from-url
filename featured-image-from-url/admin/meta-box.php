@@ -44,7 +44,7 @@ function fifu_register_meta_box_script() {
     wp_enqueue_script('fancy-box-js', 'https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js');
 
     wp_enqueue_script('fifu-rest-route-js', plugins_url('/html/js/rest-route.js', __FILE__), array('jquery'), fifu_version_number());
-    wp_enqueue_script('fifu-meta-box-js', plugins_url('/html/js/meta-box.js', __FILE__), array('jquery'), fifu_version_number());
+    wp_enqueue_script('fifu-meta-box-js', plugins_url('/html/js/meta-box.js', __FILE__), array('jquery', 'wp-edit-post'), fifu_version_number());
     wp_enqueue_script('fifu-convert-url-js', plugins_url('/html/js/convert-url.js', __FILE__), array('jquery'), fifu_version_number());
 
     wp_register_style('fifu-unsplash-css', plugins_url('/html/css/unsplash.css', __FILE__), array(), fifu_version_number());
@@ -110,6 +110,7 @@ function fifu_show_elements($post) {
     $check_ignore = fifu_is_on('fifu_check') ? 'checked' : '';
 
     $fifu = fifu_get_strings_meta_box();
+    $adjustedUrl = fifu_cdn_adjust($url);
     include 'html/meta-box.html';
 }
 
