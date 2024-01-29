@@ -31,7 +31,7 @@ function fifu_jetpack_blocked($url) {
     if (fifu_is_photon_url($url))
         return true;
 
-    $blocklist = array('img.youtube.com', 'localhost', 'amazon-adsystem.com', 'sapo.io', 'i.guim.co.uk', 's.yimg.com', 's1.yimg.com', 'image.influenster.com', 'api.screenshotmachine.com', 'googleusercontent.com', 'https://drive.google.com', 'img.brownsfashion.com', 'fbcdn.net', 'nitrocdn.com', 'brightspotcdn.com', 'realtysouth.com', 'tiktokcdn.com', 'fdcdn.akamaized.net', 'blockchainstock.azureedge.net', 'cdn.sellio.net', 'aa.com.tr', 'cloudfront.net', 'cdn.fifu.app', 'cloud.fifu.app', 'images.placeholders.dev');
+    $blocklist = array('localhost', 'amazon-adsystem.com', 'sapo.io', 'i.guim.co.uk', 'image.influenster.com', 'api.screenshotmachine.com', 'img.brownsfashion.com', 'fbcdn.net', 'nitrocdn.com', 'brightspotcdn.com', 'realtysouth.com', 'tiktokcdn.com', 'fdcdn.akamaized.net', 'blockchainstock.azureedge.net', 'aa.com.tr', 'cloudfront.net', 'cdn.fifu.app', 'cloud.fifu.app', 'images.placeholders.dev');
     foreach ($blocklist as $domain) {
         if (strpos($url, $domain) !== false)
             return true;
@@ -75,7 +75,7 @@ function fifu_jetpack_photon_url($url, $args) {
     $path = $image_url_parts['path'];
     $photon_url = "https://i{$subdomain}.wp.com/{$host}{$path}";
     if ($args)
-        return add_query_arg($args, $photon_url);
+        return add_query_arg($args, $photon_url . '?' . $image_url_parts['query']);
     return $photon_url;
 }
 

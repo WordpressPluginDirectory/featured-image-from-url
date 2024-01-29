@@ -172,17 +172,11 @@ function fifu_get_strings_settings() {
     };
 
     // player
-    $fifu['player']['youtube'] = function () {
-        _e("for YouTube videos", FIFU_SLUG);
-    };
-    $fifu['player']['vimeo'] = function () {
-        _e("for Vimeo videos", FIFU_SLUG);
-    };
     $fifu['player']['available']['for'] = function () {
         _e("Available for", FIFU_SLUG);
     };
     $fifu['player']['available']['mouse'] = function () {
-        _e("YouTube, Vimeo", FIFU_SLUG);
+        _e("YouTube, Vimeo, local videos, remote video files", FIFU_SLUG);
     };
     $fifu['player']['available']['autoplay'] = function () {
         _e("YouTube, Vimeo, Odysee, Rumble, local videos, remote video files", FIFU_SLUG);
@@ -1405,8 +1399,14 @@ function fifu_get_strings_settings() {
     $fifu['play']['desc'] = function () {
         _e("Add a play button to the video thumbnail. When clicking on the button, the video will start (in inline or lightbox mode).", FIFU_SLUG);
     };
+    $fifu['play']['desc2'] = function () {
+        _e("If there are style issues with the play button, enable the 'draw' option for better compatibility, though it allows less customization.", FIFU_SLUG);
+    };
     $fifu['play']['hide'] = function () {
         _e("Hide from grid", FIFU_SLUG);
+    };
+    $fifu['play']['draw'] = function () {
+        _e("Draw", FIFU_SLUG);
     };
 
     // width
@@ -1420,7 +1420,7 @@ function fifu_get_strings_settings() {
     };
     // mouseover
     $fifu['mouseover']['desc'] = function () {
-        _e("Play a video on \"mouseover\" and pause on \"mouseout\". Requires \"Video Controls\" and \"Mute\".", FIFU_SLUG);
+        _e("Play a video on \"mouseover\" and pause on \"mouseout\". Requires \"Video Controls\" (except for video files) and \"Mute\".", FIFU_SLUG);
     };
 
     // autoplay

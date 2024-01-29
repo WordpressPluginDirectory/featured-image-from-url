@@ -3,10 +3,13 @@
 define('PROXY2_URLS', [
     "https://drive.google.com",
     "https://drive.usercontent.google.com",
+    "https://lh3.googleusercontent.com/",
     "https://s.yimg.com",
+    "https://s1.yimg.com",
     "https://blockworks.co",
     "https://coincodex.com",
     "https://www.ft.com",
+    "https://cdn.sellio.net",
 ]);
 
 define('PROXY3_URLS', [
@@ -59,7 +62,7 @@ function fifu_image_downsize($out, $att_id, $size) {
     }
 
     $original_image_url = get_post_meta($att_id, '_wp_attached_file', true);
-    if (!$original_image_url) {
+    if ($original_image_url) {
         if (strpos($original_image_url, "https://thumbnails.odycdn.com") !== 0 &&
                 strpos($original_image_url, "https://res.cloudinary.com") !== 0 &&
                 fifu_jetpack_blocked($original_image_url)) {
@@ -74,10 +77,6 @@ function fifu_image_downsize($out, $att_id, $size) {
         return $out;
 
     $image_url = fifu_cdn_adjust($original_image_url);
-
-    // Remove existing query parameters from the URL
-    $parsed_url = parse_url($image_url);
-    $image_url = $parsed_url['scheme'] . '://' . $parsed_url['host'] . $parsed_url['path'];
 
     // Check if the requested size is "full"
     if ($size === 'full') {
@@ -99,11 +98,7 @@ function fifu_image_downsize($out, $att_id, $size) {
                 $new_width = intval($new_height / $aspect_ratio);
             }
 
-            if (strpos($image_url, "https://img.youtube.com") === 0) {
-                $new_url = fifu_resize_with_odycdn($image_url, $new_width, $new_height);
-            } else {
-                $new_url = fifu_resize_with_photon($image_url, $new_width, $new_height);
-            }
+            $new_url = fifu_resize_with_photon($image_url, $new_width, $new_height);
 
             $FIFU_SESSION['cdn-new-old'][$new_url] = $original_image_url;
             return array($new_url, $new_width, $new_height, false);
@@ -114,11 +109,7 @@ function fifu_image_downsize($out, $att_id, $size) {
             // Use a small width to quickly get the height
             $small_width = 100;
 
-            if (strpos($image_url, "https://img.youtube.com") === 0) {
-                $small_resized_url = fifu_resize_with_odycdn($image_url, $small_width, intval($small_width * 90 / 120));
-            } else {
-                $small_resized_url = fifu_resize_with_photon($image_url, $small_width, 9999);
-            }
+            $small_resized_url = fifu_resize_with_photon($image_url, $small_width, 9999);
 
             list(, $small_height) = getimagesize($small_resized_url);
 
@@ -127,11 +118,7 @@ function fifu_image_downsize($out, $att_id, $size) {
             $aspect_ratio = $small_height / $small_width;
             $large_height = intval($large_width * $aspect_ratio);
 
-            if (strpos($image_url, "https://img.youtube.com") === 0) {
-                $resized_url = fifu_resize_with_odycdn($image_url, $large_width, $large_height);
-            } else {
-                $resized_url = fifu_resize_with_photon($image_url, $large_width, $large_height);
-            }
+            $resized_url = fifu_resize_with_photon($image_url, $large_width, $large_height);
 
             $FIFU_SESSION['cdn-new-old'][$resized_url] = $original_image_url;
             return array($resized_url, $large_width, $large_height, false);
@@ -159,11 +146,7 @@ function fifu_image_downsize($out, $att_id, $size) {
             fifu_plugin_log(['fifu-dimensions' => ['WARNING' => "Invalid size: $size"]]);
         }
 
-        if (strpos($image_url, "https://img.youtube.com") === 0) {
-            $new_url = fifu_resize_with_odycdn($image_url, $width, $height);
-        } else {
-            $new_url = fifu_resize_with_photon($image_url, $width, $height);
-        }
+        $new_url = fifu_resize_with_photon($image_url, $width, $height);
 
         $FIFU_SESSION['cdn-new-old'][$new_url] = $original_image_url;
         return array($new_url, $width, $height, false);
@@ -175,8 +158,9 @@ add_filter('image_downsize', 'fifu_image_downsize', 10, 3);
 function fifu_resize_with_photon($url, $width, $height) {
     $photon_base_url = "https://i" . (hexdec(substr(md5($url), 0, 1)) % 4) . ".wp.com/";
     $resize_param = $height == 9999 ? "{$width}" : "{$width},{$height}";
+    $delimiter = strpos($url, "?") !== false ? '&' : '?';
     $ssl_param = fifu_jetpack_ssl($url) ? '&ssl=1' : '';
-    return $photon_base_url . preg_replace('#^https?://#', '', $url) . "?w={$width}&resize={$resize_param}{$ssl_param}";
+    return $photon_base_url . preg_replace('#^https?://#', '', $url) . "{$delimiter}w={$width}&resize={$resize_param}{$ssl_param}";
 }
 
 function fifu_resize_with_odycdn($url, $width, $height) {
@@ -187,6 +171,12 @@ function fifu_cdn_adjust($original_image_url) {
     foreach (PROXY2_URLS as $url) {
         if (strpos($original_image_url, $url) === 0) {
             return 'https://res.cloudinary.com/glide/image/fetch/' . urlencode($original_image_url);
+        }
+    }
+
+    foreach (PROXY3_URLS as $url) {
+        if (strpos($original_image_url, $url) === 0) {
+            return fifu_resize_with_odycdn($original_image_url, 1920, 0);
         }
     }
 

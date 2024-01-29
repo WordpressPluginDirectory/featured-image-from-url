@@ -254,6 +254,8 @@ function fifu_column_custom_post_type() {
 }
 
 function fifu_optimized_column_image($url) {
+    $url = fifu_cdn_adjust($url);
+
     if (fifu_is_from_speedup($url)) {
         $url = explode('?', $url)[0];
         return fifu_speedup_get_signed_url($url, 128, 128, null, null, false);

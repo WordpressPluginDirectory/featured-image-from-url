@@ -1299,6 +1299,23 @@
                                     </tr>
                                     <tr class="color">
                                         <th>
+                                            <?php $fifu['tab']['video']() ?>
+                                        </th>
+                                        <th>
+                                            <?php $fifu['title']['play']() ?>
+                                        </th>
+                                        <th>
+                                            <?php $fifu['play']['draw']() ?>
+                                        </th>
+                                        <th>
+                                            wp fifu video --play-draw &lt;toggle&gt;
+                                        </th>
+                                        <th>
+                                            on, off
+                                        </th>
+                                    </tr>
+                                    <tr class="color">
+                                        <th>
                                             <?php $fifu['tab']['slider']() ?>
                                         </th>
                                         <th>
@@ -1569,27 +1586,9 @@
                                             <?php $fifu['title']['mouseover']() ?>
                                         </th>
                                         <th>
-                                            <?php $fifu['player']['youtube']() ?>
                                         </th>
                                         <th>
-                                            wp fifu video --mouse-youtube &lt;toggle&gt;
-                                        </th>
-                                        <th>
-                                            on, off
-                                        </th>
-                                    </tr>  
-                                    <tr class="color">
-                                        <th>
-                                            <?php $fifu['tab']['video']() ?>
-                                        </th>
-                                        <th>
-                                            <?php $fifu['title']['mouseover']() ?>
-                                        </th>
-                                        <th>
-                                            <?php $fifu['player']['vimeo']() ?>
-                                        </th>
-                                        <th>
-                                            wp fifu video --mouse-vimeo &lt;toggle&gt;
+                                            wp fifu video --mouse &lt;toggle&gt;
                                         </th>
                                         <th>
                                             on, off
@@ -4184,7 +4183,7 @@
                     <div class="fifu-cloud-details"><span class="dashicons dashicons-cloud fifu-cloud-details-icon" title="<?php $fifu['cloud']['details']['play']() ?>"></span></div>
                     <h2><?php $fifu['title']['play']() ?></h2>
                     <div class="greybox" id="grad2">
-                        <?php $fifu['play']['desc']() ?>
+                        <?php $fifu['play']['desc']() ?> <?php $fifu['play']['desc2']() ?>
                     </div>
                     <br>
                     <table style="text-align:left">
@@ -4243,6 +4242,22 @@
                                     style="width:85px">
                                 <br>
                                 <input type="submit" value="<?php $fifu['button']['ok']() ?>" style="width:85px" disabled>
+                            </th>
+                            <th style="position:relative;left:-8px;">
+                                <div style="position:relative;left:10px;"><?php $fifu['play']['draw']() ?></div>
+                                <table>
+                                    <tr>
+                                        <th>
+                                            <input
+                                                type="submit"
+                                                href="javascript:void(0)"
+                                                class="toggleoff"
+                                                value=""
+                                                style="display:block;border:none">
+                                        </th>
+                                    </tr>
+                                </table>
+                                <br>
                             </th>
                             <th style="position:relative;left:-8px;">
                                 <div style="position:relative;left:10px;"><?php $fifu['play']['hide']() ?></div>
@@ -4329,22 +4344,6 @@
                                     class="toggleoff"
                                     value=""
                                     style="display:block;border:none">
-                            </th>
-                            <th>
-                                <?php $fifu['player']['youtube']() ?>
-                            </th>
-                        </tr>
-                        <tr>
-                            <th>
-                                <input
-                                    type="submit"
-                                    href="javascript:void(0)"
-                                    class="toggleoff"
-                                    value=""
-                                    style="display:block;border:none">
-                            </th>
-                            <th>
-                                <?php $fifu['player']['vimeo']() ?>
                             </th>
                         </tr>
                     </table>
