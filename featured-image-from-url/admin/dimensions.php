@@ -168,6 +168,9 @@ function fifu_resize_with_odycdn($url, $width, $height) {
 }
 
 function fifu_cdn_adjust($original_image_url) {
+    if (!$original_image_url)
+        return $original_image_url;
+
     foreach (PROXY2_URLS as $url) {
         if (strpos($original_image_url, $url) === 0) {
             return 'https://res.cloudinary.com/glide/image/fetch/' . urlencode($original_image_url);

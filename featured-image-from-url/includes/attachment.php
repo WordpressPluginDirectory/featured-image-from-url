@@ -217,8 +217,8 @@ function fifu_callback($buffer) {
     if (empty($buffer))
         return;
 
-    /* plugin: Oxygen */
-    if (isset($_REQUEST['ct_builder']))
+    /* plugins: Oxygen, Bricks */
+    if (isset($_REQUEST['ct_builder']) || isset($_REQUEST['bricks']))
         return $buffer;
 
     /* fifu_save_query(); */

@@ -12,6 +12,56 @@
                 <div class="box">
                     <table>
                         <tr>
+                            <td style="border-bottom:none">2024-02-01</td>
+                            <td style="border-bottom:none"><h3>Google Drive</h3></td>
+                            <td style="border-bottom:none">service</td>
+                        </tr>
+                    </table>
+                    <div class="greybox" style="position: relative; top: -10px">
+                        Google Drive images not displayed:<br>
+                        1) enable "FIFU Settings → Performance → CDN + Optimized Thumbnails".<br>
+                    </div>
+                </div>
+                <div class="box">
+                    <table>
+                        <tr>
+                            <td style="border-bottom:none">2024-01-31</td>
+                            <td style="border-bottom:none"><h3> Electron
+                            </h3></td>
+                            <td style="border-bottom:none">theme</td>
+                        </tr>
+                    </table>
+                    <div class="greybox" style="position: relative; top: -10px">
+                        FIFU Product gallery is not displayed:<br>
+                        1) edit "electron/woocommerce/content-single-product.php" and replace<br>
+                        <textarea style="width:100%;height:25px;overflow:hidden" disabled>
+                            wc_get_template_part( 'content', 'main-gallery' );
+                        </textarea>
+                        with<br>
+                        <textarea style="width:100%;height:25px;overflow:hidden" disabled>
+                            echo do_shortcode('[fifu_gallery]');
+                        </textarea>
+                    </div>
+                </div>
+                <div class="box">
+                    <table>
+                        <tr>
+                            <td style="border-bottom:none">2024-01-29</td>
+                            <td style="border-bottom:none"><h3> Salient</h3></td>
+                            <td style="border-bottom:none">theme</td>
+                        </tr>
+                    </table>
+                    <div class="greybox" style="position: relative; top: -10px">
+                        Large empty area following the featured video:<br>
+                        1) access "Appearance → Customize → Additional CSS";<br>
+                        2) add:<br>
+                        &nbsp;&nbsp;&nbsp;&nbsp;div.nectar-post-grid-item-bg > video {position: absolute;}<br>
+                        3) publish.
+                    </div>
+                </div>
+                <div class="box">
+                    <table>
+                        <tr>
                             <td style="border-bottom:none">2024-01-20</td>
                             <td style="border-bottom:none"><h3>TI WooCommerce Wishlist</h3></td>
                             <td style="border-bottom:none">plugin</td>

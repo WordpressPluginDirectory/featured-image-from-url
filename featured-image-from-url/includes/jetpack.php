@@ -28,6 +28,9 @@ function fifu_jetpack_get_set($url, $is_slider) {
 }
 
 function fifu_jetpack_blocked($url) {
+    if (!$url)
+        return true;
+
     if (fifu_is_photon_url($url))
         return true;
 
@@ -73,9 +76,11 @@ function fifu_jetpack_photon_url($url, $args) {
     $subdomain = abs(crc32($url) % 4);
     $host = $image_url_parts['host'];
     $path = $image_url_parts['path'];
-    $photon_url = "https://i{$subdomain}.wp.com/{$host}{$path}";
+    $query = isset($image_url_parts['query']) ? $image_url_parts['query'] : null;
+    $query = $query ? '?' . $query : '';
+    $photon_url = "https://i{$subdomain}.wp.com/{$host}{$path}{$query}";
     if ($args)
-        return add_query_arg($args, $photon_url . '?' . $image_url_parts['query']);
+        return add_query_arg($args, $photon_url);
     return $photon_url;
 }
 

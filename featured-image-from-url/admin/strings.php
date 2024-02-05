@@ -362,6 +362,9 @@ function fifu_get_strings_settings() {
     $fifu['title']['title'] = function () {
         _e("Auto Set Image Title", FIFU_SLUG);
     };
+    $fifu['title']['cloak'] = function () {
+        _e("Cloak Links", FIFU_SLUG);
+    };
     $fifu['title']['video'] = function () {
         _e("Featured Video", FIFU_SLUG);
     };
@@ -448,8 +451,8 @@ function fifu_get_strings_settings() {
     $fifu['support']['money'] = function () {
         _e("Broken image icon", FIFU_SLUG);
     };
-    $fifu['support']['googledrive'] = function () {
-        _e("Google Drive images not displayed", FIFU_SLUG);
+    $fifu['support']['resolution'] = function () {
+        _e("Low resolution images", FIFU_SLUG);
     };
     $fifu['support']['speed'] = function () {
         _e("Issues with GTmetrix/PageSpeed", FIFU_SLUG);
@@ -466,8 +469,8 @@ function fifu_get_strings_settings() {
     $fifu['support']['money-desc'] = function () {
         _e("Possibilities: a) image file deleted by owner; b) URL has changed; c) hotlink protection; d) incorrect URL. Use <b>FIFU Cloud</b> to prevent image loss or bypass hotlink protection.", FIFU_SLUG);
     };
-    $fifu['support']['googledrive-desc'] = function () {
-        _e("Solve it by activating Performance → CDN + Optimized Thumbnails. Because Google Drive no longer allows embedding of images, except through a CDN. ", FIFU_SLUG);
+    $fifu['support']['resolution-desc'] = function () {
+        _e("Caused by the theme having incorrect image sizes registered and the use of 'CDN + Optimized Thumbnails'. Try adjusting the sizes with the 'Simple Image Sizes' plugin.", FIFU_SLUG);
     };
     $fifu['support']['speed-desc'] = function () {
         _e("Solve it by activating Performance → CDN + Optimized Thumbnails or <b>FIFU Cloud</b> (much better). Even large images hosted on slow servers should load quickly on your website.", FIFU_SLUG);
@@ -1364,6 +1367,11 @@ function fifu_get_strings_settings() {
         _e("Always use the post title as the image title (ignores alt/title field)", FIFU_SLUG);
     };
 
+    // cloak
+    $fifu['cloak']['desc'] = function () {
+        _e("Replace remote image URLs with local addresses like this:", FIFU_SLUG);
+    };
+
     // video
     $fifu['video']['desc'] = function () {
         _e("FIFU supports videos and audios from YouTube, Vimeo, Twitter, 9GAG, Cloudinary, Tumblr, Publitio, JW Player, VideoPress, Sprout, Odysee, Rumble, Dailymotion, Cloudflare Stream, Bunny Stream, Amazon, BitChute, Brighteon, Google Drive, Spotify and SoundCloud. It also supports external and local video files.", FIFU_SLUG);
@@ -1487,6 +1495,9 @@ function fifu_get_strings_settings() {
     };
     $fifu['gallery']['videos'] = function () {
         _e("Videos before images", FIFU_SLUG);
+    };
+    $fifu['gallery']['variations'] = function () {
+        _e("Variantions images in the main gallery", FIFU_SLUG);
     };
 
     // buy

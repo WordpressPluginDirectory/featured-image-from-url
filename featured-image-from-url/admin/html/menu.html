@@ -1095,6 +1095,22 @@
                                     </tr>
                                     <tr class="color">
                                         <th>
+                                            <?php $fifu['tab']['image']() ?>
+                                        </th>
+                                        <th>
+                                            <?php $fifu['title']['cloak']() ?>
+                                        </th>
+                                        <th>
+                                        </th>
+                                        <th>
+                                            wp fifu image --cloak &lt;toggle&gt;
+                                        </th>
+                                        <th>
+                                            on, off
+                                        </th>
+                                    </tr>
+                                    <tr class="color">
+                                        <th>
                                             <?php $fifu['tab']['slider']() ?>
                                         </th>
                                         <th>
@@ -2131,6 +2147,23 @@
                                         </th>
                                         <th>
                                             wp fifu woo --videos-before &lt;toggle&gt;
+                                        </th>
+                                        <th>
+                                            on, off
+                                        </th>
+                                    </tr>
+                                    <tr class="color">
+                                        <th>
+                                            WooCommerce
+                                        </th>
+                                        <th>
+                                            <?php $fifu['title']['gallery']() ?>
+                                        </th>
+                                        <th>
+                                            <?php $fifu['gallery']['variations']() ?>
+                                        </th>
+                                        <th>
+                                            wp fifu woo --variations-merge &lt;toggle&gt;
                                         </th>
                                         <th>
                                             on, off
@@ -3778,6 +3811,29 @@
                                     class="toggleoff"
                                     value=""
                                     style="display:block;border:none">
+                            </th>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="box">
+                    <div class="fifu-pro"><a class="fifu-pro-link" href="https://fifu.app/" target="_blank" title="<?php $fifu['unlock']() ?>"><span class="dashicons dashicons-lock fifu-pro-icon"></span></a></div>
+                    <h2><?php $fifu['title']['cloak']() ?></h2>
+                    <div class="greybox" id="grad2">
+                        <?php $fifu['cloak']['desc']() ?> https://example.com/fifu/123/my-post-title
+                    </div>
+                    <br>
+                    <table style="text-align:left">
+                        <tr>
+                            <th>
+                                <input
+                                    type="submit"
+                                    href="javascript:void(0)"
+                                    class="toggleoff"
+                                    value=""
+                                    style="display:block;border:none">
+                            </th>
+                            <th>
                             </th>
                         </tr>
                     </table>
@@ -5621,6 +5677,19 @@
                                 <?php $fifu['gallery']['videos']() ?>
                             </td>
                         </tr>
+                        <tr>
+                            <td>
+                                <input
+                                    type="submit"
+                                    href="javascript:void(0)"
+                                    class="toggleoff"
+                                    value=""
+                                    style="display:block;border:none" >
+                            </td>
+                            <td>
+                                <?php $fifu['gallery']['variations']() ?>
+                            </td>
+                        </tr>
                     </table>
                 </div>
 
@@ -6008,7 +6077,7 @@
                                     <i class="fa-solid fa-file-circle-xmark" style="font-size:30px"></i>
                                 </td>
                                 <td style="width:33%;text-align:center;border-bottom: 1px solid #ddd !important">
-                                    <i class="fa-brands fa-google-drive" style="font-size:30px"></i>
+                                    <i class="fa-solid fa-glasses" style="font-size:30px"></i>
                                 </td>
                             </tr>
                             <tr>
@@ -6019,7 +6088,7 @@
                                     <i><?php $fifu['support']['money']() ?></i>
                                 </td>
                                 <td style="width:33%;text-align:center;border-bottom: 1px solid #ddd !important">
-                                    <i><?php $fifu['support']['googledrive']() ?></i>
+                                    <i><?php $fifu['support']['resolution']() ?></i>
                                 </td>
                             </tr>
                             <tr>
@@ -6030,7 +6099,7 @@
                                     <?php $fifu['support']['money-desc']() ?>
                                 </td>
                                 <td style="vertical-align: top;">
-                                    <?php $fifu['support']['googledrive-desc']() ?>
+                                    <?php $fifu['support']['resolution-desc']() ?>
                                 </td>
                             </tr>
                         </table>
