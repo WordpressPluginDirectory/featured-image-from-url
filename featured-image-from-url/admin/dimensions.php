@@ -10,6 +10,7 @@ define('PROXY2_URLS', [
     "https://coincodex.com",
     "https://www.ft.com",
     "https://cdn.sellio.net",
+    "https://cf.bstatic.com",
 ]);
 
 define('PROXY3_URLS', [
@@ -54,11 +55,11 @@ function fifu_image_downsize($out, $att_id, $size) {
     global $FIFU_SESSION;
 
     if (!$att_id || !fifu_is_remote_image($att_id)) {
-        return false;
+        return $out;
     }
 
     if (fifu_is_off('fifu_photon')) {
-        return false;
+        return $out;
     }
 
     $original_image_url = get_post_meta($att_id, '_wp_attached_file', true);
@@ -66,7 +67,7 @@ function fifu_image_downsize($out, $att_id, $size) {
         if (strpos($original_image_url, "https://thumbnails.odycdn.com") !== 0 &&
                 strpos($original_image_url, "https://res.cloudinary.com") !== 0 &&
                 fifu_jetpack_blocked($original_image_url)) {
-            return false;
+            return $out;
         }
     }
 

@@ -1243,7 +1243,7 @@ function fifu_get_strings_settings() {
 
     // slider
     $fifu['slider']['desc'] = function () {
-        _e("This feature allows to have a slider of images instead of a regular featured image. It is particularly useful for certain types of websites, such as real estate, and can handle a large number of high-resolution images with optimal performance (enable performance settings).", FIFU_SLUG);
+        _e("This feature allows to have a slider of images and/or videos instead of a regular featured image. It is particularly useful for certain types of websites, such as real estate, and can handle a large number of high-resolution images with optimal performance (enable performance settings).", FIFU_SLUG);
     };
     $fifu['slider']['tab']['configuration'] = function () {
         _e("Configuration", FIFU_SLUG);
@@ -1987,7 +1987,7 @@ function fifu_get_strings_wai() {
 
     // info
     $fifu['info']['delimited'] = function () {
-        return __("Delimited by |", FIFU_SLUG);
+        return __("By default, FIFU uses | as the URL delimiter. You can define a different value in the 'List delimiter' field.", FIFU_SLUG);
     };
     $fifu['info']['default'] = function () {
         return __("Default is |", FIFU_SLUG);
