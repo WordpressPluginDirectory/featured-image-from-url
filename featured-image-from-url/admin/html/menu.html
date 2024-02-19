@@ -1111,6 +1111,22 @@
                                     </tr>
                                     <tr class="color">
                                         <th>
+                                            <?php $fifu['tab']['image']() ?>
+                                        </th>
+                                        <th>
+                                            <?php $fifu['title']['taxonomy']() ?>
+                                        </th>
+                                        <th>
+                                        </th>
+                                        <th>
+                                            wp fifu image --taxonomy &lt;toggle&gt;
+                                        </th>
+                                        <th>
+                                            on, off
+                                        </th>
+                                    </tr>
+                                    <tr class="color">
+                                        <th>
                                             <?php $fifu['tab']['slider']() ?>
                                         </th>
                                         <th>
@@ -3573,6 +3589,116 @@
 
                 <div class="box">
                     <div class="fifu-pro"><a class="fifu-pro-link" href="https://fifu.app/" target="_blank" title="<?php $fifu['unlock']() ?>"><span class="dashicons dashicons-lock fifu-pro-icon"></span></a></div>
+                    <div class="fifu-cloud-details"><span class="dashicons dashicons-cloud fifu-cloud-details-icon" title="<?php $fifu['cloud']['details']['replace']() ?>"></span></div>
+                    <h2><?php $fifu['title']['replace']() ?></h2>
+                    <div class="greybox" id="grad2">
+                        <?php $fifu['replace']['desc']() ?>
+                        <br><br>
+                        <input id="fifu_input_error_url"
+                               type="text"
+                               name="fifu_input_error_url"
+                               style="width:675px"
+                               value="">
+                        <input type="submit"
+                               value="<?php $fifu['button']['submit']() ?>" disabled>
+                    </div>
+                </div>
+
+                <div class="box">
+                    <div class="fifu-pro"><a class="fifu-pro-link" href="https://fifu.app/" target="_blank" title="<?php $fifu['unlock']() ?>"><span class="dashicons dashicons-lock fifu-pro-icon"></span></a></div>
+                    <h2><?php $fifu['title']['popup']() ?></h2>
+                    <div class="greybox" id="grad2">
+                        <?php $fifu['popup']['desc']() ?>
+                        <br>
+                        <br>
+                        <div class="polaroid" style="background-color:#373737">
+                            <img src="https://storage.googleapis.com/featuredimagefromurl/popup2.jpg">
+                        </div>
+                    </div>
+                    <br>
+                    <table style="text-align:left">
+                        <tr>
+                            <th>
+                                <input
+                                    type="submit"
+                                    href="javascript:void(0)"
+                                    class="toggleoff"
+                                    value=""
+                                    style="display:block;border:none">
+                            </th>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="box">
+                    <div class="fifu-pro"><a class="fifu-pro-link" href="https://fifu.app/" target="_blank" title="<?php $fifu['unlock']() ?>"><span class="dashicons dashicons-lock fifu-pro-icon"></span></a></div>
+                    <h2><?php $fifu['title']['redirection']() ?></h2>
+                    <div class="greybox" id="grad2">
+                        <?php $fifu['redirection']['desc']() ?>
+                    </div>
+                    <br>
+                    <table style="text-align:left">
+                        <tr>
+                            <th>
+                                <input
+                                    type="submit"
+                                    href="javascript:void(0)"
+                                    class="toggleoff"
+                                    value=""
+                                    style="display:block;border:none">
+                            </th>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="box">
+                    <div class="fifu-pro"><a class="fifu-pro-link" href="https://fifu.app/" target="_blank" title="<?php $fifu['unlock']() ?>"><span class="dashicons dashicons-lock fifu-pro-icon"></span></a></div>
+                    <h2><?php $fifu['title']['cloak']() ?></h2>
+                    <div class="greybox" id="grad2">
+                        <?php $fifu['cloak']['desc']() ?> https://example.com/fifu/123/my-post-title
+                    </div>
+                    <br>
+                    <table style="text-align:left">
+                        <tr>
+                            <th>
+                                <input
+                                    type="submit"
+                                    href="javascript:void(0)"
+                                    class="toggleoff"
+                                    value=""
+                                    style="display:block;border:none">
+                            </th>
+                            <th>
+                            </th>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="box">
+                    <div class="fifu-pro"><a class="fifu-pro-link" href="https://fifu.app/" target="_blank" title="<?php $fifu['unlock']() ?>"><span class="dashicons dashicons-lock fifu-pro-icon"></span></a></div>
+                    <h2><?php $fifu['title']['taxonomy']() ?></h2>
+                    <div class="greybox" id="grad2">
+                        <?php $fifu['taxonomy']['desc']() ?> <br><br> <code>[fifu_taxonomy slug="taxonomy-slug" width="150" height="100"]</code>
+                    </div>
+                    <br>
+                    <table style="text-align:left">
+                        <tr>
+                            <th>
+                                <input
+                                    type="submit"
+                                    href="javascript:void(0)"
+                                    class="toggleoff"
+                                    value=""
+                                    style="display:block;border:none">
+                            </th>
+                            <th>
+                            </th>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="box">
+                    <div class="fifu-pro"><a class="fifu-pro-link" href="https://fifu.app/" target="_blank" title="<?php $fifu['unlock']() ?>"><span class="dashicons dashicons-lock fifu-pro-icon"></span></a></div>
                     <div class="fifu-cloud-details"><span class="dashicons dashicons-cloud fifu-cloud-details-icon" title="<?php $fifu['cloud']['details']['crop']() ?>"></span></div>
                     <h2><?php $fifu['title']['height']() ?></h2>
                     <div class="greybox" id="grad2">
@@ -3751,93 +3877,6 @@
                         </ul>
                     </div>
                 </div>
-
-                <div class="box">
-                    <div class="fifu-pro"><a class="fifu-pro-link" href="https://fifu.app/" target="_blank" title="<?php $fifu['unlock']() ?>"><span class="dashicons dashicons-lock fifu-pro-icon"></span></a></div>
-                    <div class="fifu-cloud-details"><span class="dashicons dashicons-cloud fifu-cloud-details-icon" title="<?php $fifu['cloud']['details']['replace']() ?>"></span></div>
-                    <h2><?php $fifu['title']['replace']() ?></h2>
-                    <div class="greybox" id="grad2">
-                        <?php $fifu['replace']['desc']() ?>
-                        <br><br>
-                        <input id="fifu_input_error_url"
-                               type="text"
-                               name="fifu_input_error_url"
-                               style="width:675px"
-                               value="">
-                        <input type="submit"
-                               value="<?php $fifu['button']['submit']() ?>" disabled>
-                    </div>
-                </div>
-
-                <div class="box">
-                    <div class="fifu-pro"><a class="fifu-pro-link" href="https://fifu.app/" target="_blank" title="<?php $fifu['unlock']() ?>"><span class="dashicons dashicons-lock fifu-pro-icon"></span></a></div>
-                    <h2><?php $fifu['title']['popup']() ?></h2>
-                    <div class="greybox" id="grad2">
-                        <?php $fifu['popup']['desc']() ?>
-                        <br>
-                        <br>
-                        <div class="polaroid" style="background-color:#373737">
-                            <img src="https://storage.googleapis.com/featuredimagefromurl/popup2.jpg">
-                        </div>
-                    </div>
-                    <br>
-                    <table style="text-align:left">
-                        <tr>
-                            <th>
-                                <input
-                                    type="submit"
-                                    href="javascript:void(0)"
-                                    class="toggleoff"
-                                    value=""
-                                    style="display:block;border:none">
-                            </th>
-                        </tr>
-                    </table>
-                </div>
-
-                <div class="box">
-                    <div class="fifu-pro"><a class="fifu-pro-link" href="https://fifu.app/" target="_blank" title="<?php $fifu['unlock']() ?>"><span class="dashicons dashicons-lock fifu-pro-icon"></span></a></div>
-                    <h2><?php $fifu['title']['redirection']() ?></h2>
-                    <div class="greybox" id="grad2">
-                        <?php $fifu['redirection']['desc']() ?>
-                    </div>
-                    <br>
-                    <table style="text-align:left">
-                        <tr>
-                            <th>
-                                <input
-                                    type="submit"
-                                    href="javascript:void(0)"
-                                    class="toggleoff"
-                                    value=""
-                                    style="display:block;border:none">
-                            </th>
-                        </tr>
-                    </table>
-                </div>
-
-                <div class="box">
-                    <div class="fifu-pro"><a class="fifu-pro-link" href="https://fifu.app/" target="_blank" title="<?php $fifu['unlock']() ?>"><span class="dashicons dashicons-lock fifu-pro-icon"></span></a></div>
-                    <h2><?php $fifu['title']['cloak']() ?></h2>
-                    <div class="greybox" id="grad2">
-                        <?php $fifu['cloak']['desc']() ?> https://example.com/fifu/123/my-post-title
-                    </div>
-                    <br>
-                    <table style="text-align:left">
-                        <tr>
-                            <th>
-                                <input
-                                    type="submit"
-                                    href="javascript:void(0)"
-                                    class="toggleoff"
-                                    value=""
-                                    style="display:block;border:none">
-                            </th>
-                            <th>
-                            </th>
-                        </tr>
-                    </table>
-                </div>
             </div>
             <div id="tabs-j">
                 <div class="box">
@@ -4014,6 +4053,9 @@
                                         <th>
                                             <b><?php $fifu['shortcodes']['column']['optional']() ?></b>
                                         </th>
+                                        <th>
+                                            <b><?php $fifu['shortcodes']['column']['required']() ?></b>                                            
+                                        </th>
                                     </tr>
                                     <tr class="color">
                                         <th>
@@ -4025,6 +4067,7 @@
                                         <th>
                                             post_id, width, height, style
                                         </th>
+                                        <th></th>
                                     </tr>
                                     <tr class="color">
                                         <th>
@@ -4036,6 +4079,7 @@
                                         <th>
                                             post_id
                                         </th>
+                                        <th></th>
                                     </tr>
                                     <tr class="color">
                                         <th>
@@ -4046,6 +4090,21 @@
                                         </th>
                                         <th>
                                             post_id
+                                        </th>
+                                        <th></th>
+                                    </tr>
+                                    <tr class="color">
+                                        <th>
+                                            [fifu_taxonomy]
+                                        </th>
+                                        <th>
+                                            <?php $fifu['shortcodes']['description']['taxonomy']() ?>
+                                        </th>
+                                        <th>
+                                            width, height, style
+                                        </th>
+                                        <th>
+                                            slug
                                         </th>
                                     </tr>
                                 </table>

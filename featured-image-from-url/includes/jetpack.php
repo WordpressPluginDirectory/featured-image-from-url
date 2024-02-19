@@ -43,7 +43,7 @@ function fifu_jetpack_blocked($url) {
 }
 
 function fifu_jetpack_ssl($url) {
-    $list = array('m.media-amazon.com', 'images-na.ssl-images-amazon.com', 'image.blockchain.news', 'static.news.bitcoin.com', 'thenewscrypto.com', 'cdn.coolstuff.com', 'windows.net', 'completemedical.com', 'resizing.flixster.com', 'rackcdn.com', 'accounts.parrotproducts.biz', 'heutink.com');
+    $list = array('m.media-amazon.com', 'images-na.ssl-images-amazon.com', 'image.blockchain.news', 'static.news.bitcoin.com', 'thenewscrypto.com', 'cdn.coolstuff.com', 'windows.net', 'completemedical.com', 'resizing.flixster.com', 'rackcdn.com', 'accounts.parrotproducts.biz', 'heutink.com', 'i.ibb.co');
     foreach ($list as $domain) {
         if (strpos($url, $domain) !== false)
             return true;

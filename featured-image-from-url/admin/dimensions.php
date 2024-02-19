@@ -11,6 +11,7 @@ define('PROXY2_URLS', [
     "https://www.ft.com",
     "https://cdn.sellio.net",
     "https://cf.bstatic.com",
+    "https://media-cdn.oriflame.com",
 ]);
 
 define('PROXY3_URLS', [
@@ -128,7 +129,7 @@ function fifu_image_downsize($out, $att_id, $size) {
         // Logic for other sizes
         // Get all registered image sizes
         $image_sizes = get_intermediate_image_sizes();
-        $additional_sizes = wp_get_additional_image_sizes();
+        $additional_sizes = wp_get_registered_image_subsizes();
 
         // Determine the size dimensions
         $width = $height = 0;

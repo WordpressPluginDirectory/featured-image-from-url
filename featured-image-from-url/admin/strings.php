@@ -365,6 +365,9 @@ function fifu_get_strings_settings() {
     $fifu['title']['cloak'] = function () {
         _e("Cloak Links", FIFU_SLUG);
     };
+    $fifu['title']['taxonomy'] = function () {
+        _e("Taxonomy Image", FIFU_SLUG);
+    };
     $fifu['title']['video'] = function () {
         _e("Featured Video", FIFU_SLUG);
     };
@@ -1237,6 +1240,9 @@ function fifu_get_strings_settings() {
     $fifu['shortcodes']['description']['gallery'] = function () {
         _e("Displays the product gallery", FIFU_SLUG);
     };
+    $fifu['shortcodes']['description']['taxonomy'] = function () {
+        _e("Displays the taxonomy image", FIFU_SLUG);
+    };
     $fifu['shortcodes']['description']['form']['image'] = function () {
         _e("Input field for featured image URL", FIFU_SLUG);
     };
@@ -1370,6 +1376,11 @@ function fifu_get_strings_settings() {
     // cloak
     $fifu['cloak']['desc'] = function () {
         _e("Replace remote image URLs with local addresses like this:", FIFU_SLUG);
+    };
+
+    // taxonomy
+    $fifu['taxonomy']['desc'] = function () {
+        _e("Enables the featured image field for taxonomies. To display the image, use a shortcode like this:", FIFU_SLUG);
     };
 
     // video

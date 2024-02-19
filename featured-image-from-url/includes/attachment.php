@@ -119,30 +119,6 @@ function fifu_replace_attachment_image_src($image, $att_id, $size) {
         // }
     }
 
-    // use saved dimensions
-    if ($image[1] > 1 && $image[2] > 1) {
-        return $image;
-    }
-
-    // fix null height
-    if ($image[2] == null)
-        $image[2] = 0;
-
-    return fifu_fix_dimensions($image, $size);
-}
-
-function fifu_fix_dimensions($image, $size) {
-    // default
-    $image = fifu_add_size($image, $size);
-
-    // fix gallery (but no zoom or lightbox)
-    if (class_exists('WooCommerce') && is_product() && $image[1] == 1 && $image[2] == 1)
-        $image[1] = 1920;
-
-    // fix unkown size
-    if ($image[1] == 0 && $image[2] == 0)
-        $image[1] = 1920;
-
     return $image;
 }
 

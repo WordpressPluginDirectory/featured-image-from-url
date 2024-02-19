@@ -3,7 +3,7 @@
 add_filter('wp_head', 'fifu_ctgr_add_social_tags');
 
 function fifu_ctgr_add_social_tags() {
-    $url = fifu_ctgr_get_url();
+    $url = fifu_ctgr_get_url(null);
     $title = single_cat_title('', false);
 
     $term_id = fifu_ctgr_get_term_id();
@@ -14,13 +14,13 @@ function fifu_ctgr_add_social_tags() {
         include 'html/social.html';
 }
 
-function fifu_ctgr_get_url() {
-    $term_id = fifu_ctgr_get_term_id();
+function fifu_ctgr_get_url($term_id) {
+    $term_id = $term_id ? $term_id : fifu_ctgr_get_term_id();
     return get_term_meta($term_id, 'fifu_image_url', true);
 }
 
-function fifu_ctgr_get_alt() {
-    $term_id = fifu_ctgr_get_term_id();
+function fifu_ctgr_get_alt($term_id) {
+    $term_id = $term_id ? $term_id : fifu_ctgr_get_term_id();
     return get_term_meta($term_id, 'fifu_image_alt', true);
 }
 

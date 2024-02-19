@@ -4,7 +4,7 @@ Donate link: https://donorbox.org/fifu
 Tags: featured, image, url, video, woocommerce
 Requires at least: 5.3
 Tested up to: 6.4.3
-Stable tag: 4.6.3
+Stable tag: 4.6.4
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -31,11 +31,12 @@ Use an external image as featured image of your post, page or custom post type.
 * **[PRO]** Image search (search engine)
 * **[PRO]** Disable right-click
 * **[PRO]** Save in the media library
-* **[PRO]** Same height
 * **[PRO]** Replace not found image
 * **[PRO]** Custom popup
 * **[PRO]** Page redirection
 * **[PRO]** Cloak links
+* **[PRO]** Taxonomy image
+* **[PRO]** Same height
 
 #### Automatic featured media
 
@@ -265,14 +266,14 @@ Supports URLs from YouTube, Vimeo, Twitter, 9GAG, Cloudinary, Tumblr, Publitio, 
 
 == Changelog ==
 
+= 4.6.4 =
+* New feature: Taxonomy Image; new shortcode: [fifu_taxonomy]; fix: widgets for Elementor not working; fix: security issue reported by Wordfence; fix: CDN + Optimized Thumbnails (not working for ImgBB images).
+
 = 4.6.3 =
 * Enhancement: Featured Slider (supports videos now); fix: conflict with images added via Elementor.
 
 = 4.6.2 =
 * New feature: Cloak Links; New option: FIFU Product Gallery → Variations images in the main gallery; Fix: conflict with Bricks editor; Fix: CDN + Optimized Thumbnails (Warning message).
-
-= 4.6.1 =
-* New option: Play Button → Draw; enhancement: Autoplay on Mouseover (now supports both local and remote video files); fix: Quick Edit (issue with not displaying images requiring CDN resolved); fix: CDN + Optimized Thumbnails (resolved conflict with YouTube thumbnails and URLs containing query parameters).
 
 = others =
 * [more](https://fifu.app/changelog)
@@ -280,5 +281,5 @@ Supports URLs from YouTube, Vimeo, Twitter, 9GAG, Cloudinary, Tumblr, Publitio, 
 
 == Upgrade Notice ==
 
-= 4.6.3 =
-* Enhancement: Featured Slider (supports videos now); fix: conflict with images added via Elementor.
+= 4.6.4 =
+* New feature: Taxonomy Image; new shortcode: [fifu_taxonomy]; fix: widgets for Elementor not working; fix: security issue reported by Wordfence; fix: CDN + Optimized Thumbnails (not working for ImgBB images).
