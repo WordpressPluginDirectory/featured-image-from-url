@@ -119,6 +119,10 @@ function fifu_replace_attachment_image_src($image, $att_id, $size) {
         // }
     }
 
+    // fallback
+    if ($image[1] == 1 && $image[2] == 1)
+        $image[1] = 1920;
+
     return $image;
 }
 
@@ -194,7 +198,7 @@ function fifu_callback($buffer) {
         return;
 
     /* plugins: Oxygen, Bricks */
-    if (isset($_REQUEST['ct_builder']) || isset($_REQUEST['bricks']))
+    if (isset($_REQUEST['ct_builder']) || isset($_REQUEST['bricks']) || isset($_REQUEST['fb-edit']))
         return $buffer;
 
     /* fifu_save_query(); */

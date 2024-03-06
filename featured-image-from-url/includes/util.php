@@ -227,6 +227,13 @@ function fifu_check_screen_base() {
         return false;
 }
 
+function fifu_is_gutenberg_screen() {
+    $current_screen = get_current_screen();
+    if (method_exists($current_screen, 'is_block_editor') && $current_screen->is_block_editor())
+        return true;
+    return false;
+}
+
 // developers
 
 function fifu_dev_set_image($post_id, $image_url) {

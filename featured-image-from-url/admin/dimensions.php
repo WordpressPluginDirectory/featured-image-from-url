@@ -12,6 +12,9 @@ define('PROXY2_URLS', [
     "https://cdn.sellio.net",
     "https://cf.bstatic.com",
     "https://media-cdn.oriflame.com",
+    "https://i.ytimg.com/",
+    "https://cdn.myshoptet.com/",
+    "https://i.imgur.com/",
 ]);
 
 define('PROXY3_URLS', [
@@ -113,7 +116,7 @@ function fifu_image_downsize($out, $att_id, $size) {
 
             $small_resized_url = fifu_resize_with_photon($image_url, $small_width, 9999);
 
-            list(, $small_height) = getimagesize($small_resized_url);
+            list(, $small_height) = @getimagesize($small_resized_url);
 
             // Calculate width for a larger size based on the aspect ratio
             $large_width = 1920;
@@ -161,7 +164,7 @@ function fifu_resize_with_photon($url, $width, $height) {
     $photon_base_url = "https://i" . (hexdec(substr(md5($url), 0, 1)) % 4) . ".wp.com/";
     $resize_param = $height == 9999 ? "{$width}" : "{$width},{$height}";
     $delimiter = strpos($url, "?") !== false ? '&' : '?';
-    $ssl_param = fifu_jetpack_ssl($url) ? '&ssl=1' : '';
+    $ssl_param = '&ssl=1';
     return $photon_base_url . preg_replace('#^https?://#', '', $url) . "{$delimiter}w={$width}&resize={$resize_param}{$ssl_param}";
 }
 

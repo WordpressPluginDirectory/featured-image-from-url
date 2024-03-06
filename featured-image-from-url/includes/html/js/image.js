@@ -18,6 +18,14 @@ jQuery(document).ready(function ($) {
     // zoomImg
     setTimeout(function () {
         jQuery('img.zoomImg').css('z-index', '');
+        // Check if the zoomImg is missing an alt attribute and if its preceding sibling is an image
+        if (!jQuery('img.zoomImg').attr('alt')) {
+            const $zoomImg = jQuery('img.zoomImg');
+            const $precedingImg = $zoomImg.prev('img');
+            if ($precedingImg.length > 0) {
+                $zoomImg.attr('alt', $precedingImg.attr('alt'));
+            }
+        }
     }, 1000);
 
     jQuery('img[height=1]').each(function (index) {

@@ -152,53 +152,130 @@ function fifu_register_help() {
 
 // cdn adjsutments to display some images
 
-wp.domReady(() => {
-    let previousPanelState = wp.data.select('core/edit-post').isEditorPanelOpened('featured-image');
+if (typeof wp !== 'undefined' && typeof wp.domReady === 'function') {
+    wp.domReady(() => {
+        let previousPanelState = wp.data.select('core/edit-post').isEditorPanelOpened('featured-image');
 
-    const updateFeaturedImageSrc = () => {
-        const featuredImage = document.querySelector('.editor-post-featured-image img');
-        if (featuredImage && featuredImage.src) {
-            let newSrc = convertToCdnUrl(featuredImage.src);
-            featuredImage.src = newSrc;
-        }
-    };
+        const updateFeaturedImageSrc = () => {
+            const featuredImage = document.querySelector('.editor-post-featured-image img');
+            if (featuredImage && featuredImage.src) {
+                let newSrc = convertToCdnUrl(featuredImage.src);
+                featuredImage.src = newSrc;
+            }
+        };
 
-    const convertToCdnUrl = (originalUrl) => {
-        return fifu_cdn_adjust(originalUrl);
-    };
+        const convertToCdnUrl = (originalUrl) => {
+            return fifu_cdn_adjust(originalUrl);
+        };
 
-    const checkAndDisableButtons = () => {
-        const featuredImageContainer = jQuery('.editor-post-featured-image__container');
-        if (featuredImageContainer.length > 0 && (jQuery("#fifu_input_url").val() || jQuery("#fifu_image").css('background-image').includes('http'))) {
-            fifu_disable_wp_featured_image_buttons();
-            clearInterval(buttonCheckInterval); // Stop checking once buttons are disabled
-        }
-    };
+        const checkAndDisableButtons = () => {
+            const featuredImageContainer = jQuery('.editor-post-featured-image__container');
+            if (featuredImageContainer.length > 0 && (jQuery("#fifu_input_url").val() || jQuery("#fifu_image").css('background-image').includes('http'))) {
+                fifu_disable_wp_featured_image_buttons();
+                clearInterval(buttonCheckInterval); // Stop checking once buttons are disabled
+            }
+        };
 
-    // Periodically check for the presence of the buttons and disable them if needed
-    const buttonCheckInterval = setInterval(checkAndDisableButtons, 500);
+        // Periodically check for the presence of the buttons and disable them if needed
+        const buttonCheckInterval = setInterval(checkAndDisableButtons, 500);
 
-    const unsubscribe = wp.data.subscribe(() => {
-        const currentPanelState = wp.data.select('core/edit-post').isEditorPanelOpened('featured-image');
-        const featuredImageId = wp.data.select('core/editor').getEditedPostAttribute('featured_media');
+        const unsubscribe = wp.data.subscribe(() => {
+            const currentPanelState = wp.data.select('core/edit-post').isEditorPanelOpened('featured-image');
+            const featuredImageId = wp.data.select('core/editor').getEditedPostAttribute('featured_media');
 
-        // Check for panel state change
-        if (currentPanelState !== previousPanelState) {
-            previousPanelState = currentPanelState;
-            setTimeout(function () {
-                if (currentPanelState && (jQuery("#fifu_input_url").val() || jQuery("#fifu_image").css('background-image').includes('http'))) {
-                    fifu_disable_wp_featured_image_buttons();
-                } else
-                    fifu_enable_wp_featured_image_buttons();
-            }, 100);
-        }
+            // Check for panel state change
+            if (currentPanelState !== previousPanelState) {
+                previousPanelState = currentPanelState;
+                setTimeout(function () {
+                    if (currentPanelState && (jQuery("#fifu_input_url").val() || jQuery("#fifu_image").css('background-image').includes('http'))) {
+                        fifu_disable_wp_featured_image_buttons();
+                    } else
+                        fifu_enable_wp_featured_image_buttons();
+                }, 100);
+            }
 
-        // Update featured image source if there's an ID
-        if (featuredImageId) {
-            setTimeout(updateFeaturedImageSrc, 1);
-        }
+            // Update featured image source if there's an ID
+            if (featuredImageId) {
+                setTimeout(updateFeaturedImageSrc, 1);
+            }
+        });
     });
-});
+
+    // refresh image
+
+    (function (wp) {
+        wp.data.subscribe(function () {
+            var isSavingPost = wp.data.select('core/editor').isSavingPost();
+            var isAutosavingPost = wp.data.select('core/editor').isAutosavingPost();
+
+            if (isSavingPost && !isAutosavingPost) {
+                // Get the new image URL from your input field
+                var newImageUrl = jQuery("#fifu_input_url").val();
+
+                // Find the featured image element using a more specific selector
+                var featuredImageElement = jQuery('.components-responsive-wrapper img.components-responsive-wrapper__content');
+
+                // Check if the element exists and update its 'src' attribute
+                if (featuredImageElement.length && newImageUrl) {
+                    featuredImageElement.attr('src', newImageUrl);
+                }
+            }
+        });
+    })(window.wp);
+
+    // remove empty image from the media library
+
+    (function (wp, $) {
+        // Global variables to store the featured media ID and URL
+        window.featuredMediaIdGlobal = null;
+        window.featuredMediaUrlGlobal = null;
+
+        // Subscribe to editor data changes to get the featured media ID and URL
+        var unsubscribe = wp.data.subscribe(function () {
+            var currentPost = wp.data.select('core/editor').getCurrentPost();
+            var isSavingPost = wp.data.select('core/editor').isSavingPost();
+            var isAutosavingPost = wp.data.select('core/editor').isAutosavingPost();
+
+            if (currentPost && currentPost.id && !isSavingPost && !isAutosavingPost) {
+                unsubscribe(); // Stop listening to changes
+                window.featuredMediaIdGlobal = currentPost.featured_media;
+
+                if (window.featuredMediaIdGlobal) {
+                    wp.apiFetch({path: '/wp/v2/media/' + window.featuredMediaIdGlobal}).then(media => {
+                        window.featuredMediaUrlGlobal = media.source_url;
+                    }).catch(error => {
+                        console.error('Error fetching media:', error);
+                    });
+                }
+            }
+        });
+
+        // Function to extract hostname from URL
+        function getHostname(url) {
+            var a = document.createElement('a');
+            a.href = url;
+            return a.hostname;
+        }
+
+        // Extend the media frame to include custom logic when opened
+        var _oldMediaFrame = wp.media.view.MediaFrame.Select;
+        wp.media.view.MediaFrame.Select = _oldMediaFrame.extend({
+            open: function () {
+                _oldMediaFrame.prototype.open.apply(this, arguments);
+
+                // Custom logic when the media frame is opened
+                var currentSiteDomain = window.location.hostname;
+                var mediaUrlDomain = getHostname(window.featuredMediaUrlGlobal);
+
+                if (currentSiteDomain !== mediaUrlDomain) {
+                    setTimeout(function () {
+                        jQuery('.attachments li img[src=""]').parent().parent().parent().parent().remove();
+                    }, 1);
+                }
+            }
+        });
+    })(window.wp, jQuery);
+}
 
 // disable/enable buttons
 
@@ -211,78 +288,3 @@ function fifu_enable_wp_featured_image_buttons() {
     const featuredImageContainer = jQuery('.editor-post-featured-image__container');
     featuredImageContainer.find('button').prop('disabled', false);
 }
-
-// refresh image
-
-(function (wp) {
-    wp.data.subscribe(function () {
-        var isSavingPost = wp.data.select('core/editor').isSavingPost();
-        var isAutosavingPost = wp.data.select('core/editor').isAutosavingPost();
-
-        if (isSavingPost && !isAutosavingPost) {
-            // Get the new image URL from your input field
-            var newImageUrl = jQuery("#fifu_input_url").val();
-
-            // Find the featured image element using a more specific selector
-            var featuredImageElement = jQuery('.components-responsive-wrapper img.components-responsive-wrapper__content');
-
-            // Check if the element exists and update its 'src' attribute
-            if (featuredImageElement.length && newImageUrl) {
-                featuredImageElement.attr('src', newImageUrl);
-            }
-        }
-    });
-})(window.wp);
-
-// remove empty image from the media library
-
-(function (wp, $) {
-    // Global variables to store the featured media ID and URL
-    window.featuredMediaIdGlobal = null;
-    window.featuredMediaUrlGlobal = null;
-
-    // Subscribe to editor data changes to get the featured media ID and URL
-    var unsubscribe = wp.data.subscribe(function () {
-        var currentPost = wp.data.select('core/editor').getCurrentPost();
-        var isSavingPost = wp.data.select('core/editor').isSavingPost();
-        var isAutosavingPost = wp.data.select('core/editor').isAutosavingPost();
-
-        if (currentPost && currentPost.id && !isSavingPost && !isAutosavingPost) {
-            unsubscribe(); // Stop listening to changes
-            window.featuredMediaIdGlobal = currentPost.featured_media;
-
-            if (window.featuredMediaIdGlobal) {
-                wp.apiFetch({path: '/wp/v2/media/' + window.featuredMediaIdGlobal}).then(media => {
-                    window.featuredMediaUrlGlobal = media.source_url;
-                }).catch(error => {
-                    console.error('Error fetching media:', error);
-                });
-            }
-        }
-    });
-
-    // Function to extract hostname from URL
-    function getHostname(url) {
-        var a = document.createElement('a');
-        a.href = url;
-        return a.hostname;
-    }
-
-    // Extend the media frame to include custom logic when opened
-    var _oldMediaFrame = wp.media.view.MediaFrame.Select;
-    wp.media.view.MediaFrame.Select = _oldMediaFrame.extend({
-        open: function () {
-            _oldMediaFrame.prototype.open.apply(this, arguments);
-
-            // Custom logic when the media frame is opened
-            var currentSiteDomain = window.location.hostname;
-            var mediaUrlDomain = getHostname(window.featuredMediaUrlGlobal);
-
-            if (currentSiteDomain !== mediaUrlDomain) {
-                setTimeout(function () {
-                    jQuery('.attachments li img[src=""]').parent().parent().parent().parent().remove();
-                }, 1);
-            }
-        }
-    });
-})(window.wp, jQuery);

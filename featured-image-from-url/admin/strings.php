@@ -460,6 +460,12 @@ function fifu_get_strings_settings() {
     $fifu['support']['speed'] = function () {
         _e("Issues with GTmetrix/PageSpeed", FIFU_SLUG);
     };
+    $fifu['support']['cdn'] = function () {
+        _e("Image not visible (1px) or wrong sizes", FIFU_SLUG);
+    };
+    $fifu['support']['duplicated'] = function () {
+        _e("Duplicated image in a single post ", FIFU_SLUG);
+    };
     $fifu['support']['disappeared-desc'] = function () {
         _e("You may solve it by: 1) accessing Metadata tab; 2) running Clear Metadata; 3) activating Image Metadata (~50,000 URLs/min); 4) clearing your cache (optional).", FIFU_SLUG);
     };
@@ -470,13 +476,19 @@ function fifu_get_strings_settings() {
         _e("You probably have a plugin or theme that sets a default image as the Facebook image (og:image meta tag). Just find and disable the option. And make sure Social → Meta Tags is enabled.", FIFU_SLUG);
     };
     $fifu['support']['money-desc'] = function () {
-        _e("Possibilities: a) image file deleted by owner; b) URL has changed; c) hotlink protection; d) incorrect URL. Use <b>FIFU Cloud</b> to prevent image loss or bypass hotlink protection.", FIFU_SLUG);
+        _e("Possibilities: a) CDN can't serve it; b) image deleted by owner; c) hotlink protection; d) incorrect URL. For (a), disable Performance → CDN + Optimized Thumbnails temporarily and contact us. For (b) or (c), try FIFU Cloud.", FIFU_SLUG);
     };
     $fifu['support']['resolution-desc'] = function () {
         _e("Caused by the theme having incorrect image sizes registered and the use of 'CDN + Optimized Thumbnails'. Try adjusting the sizes with the 'Simple Image Sizes' plugin.", FIFU_SLUG);
     };
     $fifu['support']['speed-desc'] = function () {
-        _e("Solve it by activating Performance → CDN + Optimized Thumbnails or <b>FIFU Cloud</b> (much better). Even large images hosted on slow servers should load quickly on your website.", FIFU_SLUG);
+        _e("Solve it by activating Performance → CDN + Optimized Thumbnails or FIFU Cloud. Even large images hosted on slow servers should load quickly on your website.", FIFU_SLUG);
+    };
+    $fifu['support']['duplicated-desc'] = function () {
+        _e("Please check if Featured Image → Featured Image in Content is unduly enabled and disable it. Most themes don't need that feature.", FIFU_SLUG);
+    };
+    $fifu['support']['cdn-desc'] = function () {
+        _e("Some themes or plugins may not work with remote images when the sizes are not saved in the database. Solve this by enabling Performance → CDN + Optimized Thumbnails.", FIFU_SLUG);
     };
     $fifu['support']['wp-automatic'] = function () {
         _e("\"WP Automatic\" posts have no images", FIFU_SLUG);
@@ -1444,7 +1456,7 @@ function fifu_get_strings_settings() {
 
     // autoplay
     $fifu['autoplay']['desc'] = function () {
-        _e("Video autoplay. Requires \"Mute\".", FIFU_SLUG);
+        _e("Video autoplay based on viewport. Requires \"Mute\".", FIFU_SLUG);
     };
 
     // loop

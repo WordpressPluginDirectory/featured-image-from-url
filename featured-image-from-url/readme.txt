@@ -4,7 +4,7 @@ Donate link: https://donorbox.org/fifu
 Tags: featured, image, url, video, woocommerce
 Requires at least: 5.3
 Tested up to: 6.4.3
-Stable tag: 4.6.4
+Stable tag: 4.6.5
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -266,14 +266,14 @@ Supports URLs from YouTube, Vimeo, Twitter, 9GAG, Cloudinary, Tumblr, Publitio, 
 
 == Changelog ==
 
+= 4.6.5 =
+* Enhancement: CDN + Optimized Thumbnails (supports images from Imgur, YouTube and many other sources now); Fix: some themes not displaying images when CDN + Optimized Thumbnails was disabled; Fix: conflict with Pods plugin; Fix: warnings.
+
 = 4.6.4 =
 * New feature: Taxonomy Image; new shortcode: [fifu_taxonomy]; fix: widgets for Elementor not working; fix: security issue reported by Wordfence; fix: CDN + Optimized Thumbnails (not working for ImgBB images).
 
 = 4.6.3 =
 * Enhancement: Featured Slider (supports videos now); fix: conflict with images added via Elementor.
-
-= 4.6.2 =
-* New feature: Cloak Links; New option: FIFU Product Gallery → Variations images in the main gallery; Fix: conflict with Bricks editor; Fix: CDN + Optimized Thumbnails (Warning message).
 
 = others =
 * [more](https://fifu.app/changelog)
@@ -281,5 +281,5 @@ Supports URLs from YouTube, Vimeo, Twitter, 9GAG, Cloudinary, Tumblr, Publitio, 
 
 == Upgrade Notice ==
 
-= 4.6.4 =
-* New feature: Taxonomy Image; new shortcode: [fifu_taxonomy]; fix: widgets for Elementor not working; fix: security issue reported by Wordfence; fix: CDN + Optimized Thumbnails (not working for ImgBB images).
+= 4.6.5 =
+* Enhancement: CDN + Optimized Thumbnails (supports images from Imgur, YouTube and many other sources now); Fix: some themes not displaying images when CDN + Optimized Thumbnails was disabled; Fix: conflict with Pods plugin; Fix: warnings.
