@@ -152,7 +152,10 @@ function fifu_register_help() {
 
 // cdn adjsutments to display some images
 
-if (typeof wp !== 'undefined' && typeof wp.domReady === 'function') {
+if (typeof wp !== 'undefined' &&
+        typeof wp.domReady === 'function' &&
+        typeof wp.data !== 'undefined' &&
+        typeof wp.data.select !== 'function') {
     wp.domReady(() => {
         let previousPanelState = wp.data.select('core/edit-post').isEditorPanelOpened('featured-image');
 

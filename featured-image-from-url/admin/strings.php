@@ -199,11 +199,6 @@ function fifu_get_strings_settings() {
         _e("Chrome extension", FIFU_SLUG);
     };
 
-    // referral
-    $fifu['referral']['link'] = function () {
-        _e("Affiliate program", FIFU_SLUG);
-    };
-
     // messages
     $fifu['message']['wait'] = function () {
         _e("Please wait a few seconds...", FIFU_SLUG);
@@ -337,6 +332,9 @@ function fifu_get_strings_settings() {
     };
     $fifu['title']['lazy'] = function () {
         _e("Lazy Load", FIFU_SLUG);
+    };
+    $fifu['title']['debug'] = function () {
+        _e("Debug Mode", FIFU_SLUG);
     };
     $fifu['title']['jetpack'] = function () {
         _e("CDN + Optimized Thumbnails", FIFU_SLUG);
@@ -885,14 +883,17 @@ function fifu_get_strings_settings() {
     $fifu['screenshot']['desc'] = function () {
         _e("To use a website screenshot as the featured image of a post, add \"https://s.wp.com/mshots/v1/\" before the website address. Then use this new address as the image URL. For example, if you want the screenshot of the website \"https://openai.com/\" as the featured image of a post, your image URL should be: https://s.wp.com/mshots/v1/https://openai.com/", FIFU_SLUG);
     };
-    $fifu['screenshot']['desc2'] = function () {
-        _e("Alternatively, you can enter the website address in the featured image field and enable the \"use screenshot\" option. The plugin will automatically generate the screenshot URL.", FIFU_SLUG);
-    };
     $fifu['screenshot']['desc3'] = function () {
         _e("If the GIF \"Generating Preview\" appears, ignore it. It means the screenshot was not found in the cache but is being generated on the server. You can save the post and exit the editor. The screenshot will be ready in a few seconds. Refresh the page.", FIFU_SLUG);
     };
-    $fifu['screenshot']['checkbox'] = function () {
-        _e("display the \"use screenshot\" checkbox in the post editor", FIFU_SLUG);
+    $fifu['screenshot']['custom']['desc'] = function () {
+        _e("If you have the web page address saved in your database, please specify its custom field name here. The plugin will access it, generate the screenshot URL, and set that as the featured image automatically.", FIFU_SLUG);
+    };
+    $fifu['screenshot']['tab']['auto'] = function () {
+        _e("Auto set", FIFU_SLUG);
+    };
+    $fifu['screenshot']['tab']['custom'] = function () {
+        _e("Custom field", FIFU_SLUG);
     };
 
     // find
@@ -1130,6 +1131,11 @@ function fifu_get_strings_settings() {
     };
     $fifu['lazy']['important'] = function () {
         _e("Some themes and plugins may have their own lazy load implementations, which can cause conflicts. If you experience issues with images not loading, it may be due to multiple lazy load components running simultaneously.", FIFU_SLUG);
+    };
+
+    // debug
+    $fifu['debug']['desc'] = function () {
+        _e("When FIFU is in debug mode, JavaScript and CSS files are not cached.", FIFU_SLUG);
     };
 
     // api
@@ -2702,7 +2708,7 @@ function fifu_get_strings_uninstall() {
         return __("Optional", FIFU_SLUG);
     };
     $fifu['text']['email'] = function () {
-        return __("We will respond within 8 hours.", FIFU_SLUG);
+        return __("The developer will respond within 8 hours.", FIFU_SLUG);
     };
     $fifu['text']['reason']['conflict'] = function () {
         return __("Doesn't work with a specific theme, plugin, or URL...", FIFU_SLUG);
@@ -2754,9 +2760,6 @@ function fifu_get_strings_plugins() {
     };
     $fifu['star'] = function () {
         return __("Are you enjoying FIFU? Please give it a 5-star rating!", FIFU_SLUG);
-    };
-    $fifu['affiliate'] = function () {
-        return __("Affiliate program", FIFU_SLUG);
     };
     $fifu['settings'] = function () {
         return __("Settings", FIFU_SLUG);

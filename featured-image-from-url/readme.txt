@@ -1,10 +1,10 @@
-=== Plugin Name ===
+=== Featured Image from URL (FIFU) ===
 Contributors: marceljm
 Donate link: https://donorbox.org/fifu
 Tags: featured, image, url, video, woocommerce
-Requires at least: 5.3
+Requires at least: 5.6
 Tested up to: 6.4.3
-Stable tag: 4.6.5
+Stable tag: 4.6.6
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -151,7 +151,6 @@ Supports URLs from YouTube, Vimeo, Twitter, 9GAG, Cloudinary, Tumblr, Publitio, 
 
 * **<a href="https://fifu.app/">FIFU PRO ($29.90)</a>**
 * **<a href="https://tastewp.com/new?pre-installed-plugin-slug=featured-image-from-url&redirect=admin.php%3Fpage%3Dfeatured-image-from-url&ni=true">Dummy site for testing</a>**
-* **<a href="https://referral.fifu.app/">Affiliate Program</a>**
 * **<a href="https://chrome.google.com/webstore/detail/fifu-scraper/pccimcccbkdeeadhejdmnffmllpicola">Extension for Google Chrome</a>**
 * **<a href="https://plugintests.com/plugins/wporg/featured-image-from-url/latest">Smoke Test</a>**
 
@@ -266,14 +265,14 @@ Supports URLs from YouTube, Vimeo, Twitter, 9GAG, Cloudinary, Tumblr, Publitio, 
 
 == Changelog ==
 
+= 4.6.6 =
+* New option: Auto set screenshot as featured image → Custom field; New feature: Debug Mode; Enhancement: Meta Tags (supports JSON-LD now); Enhancement: Feedback form (gets the email automatically now); Fix: Hide Featured Media (not working when CDN + Optimized Thumbnails was enabled); Fix: conflict with Woodmart theme; Fix: log file was not being deleted.
+
 = 4.6.5 =
 * Enhancement: CDN + Optimized Thumbnails (supports images from Imgur, YouTube and many other sources now); Fix: some themes not displaying images when CDN + Optimized Thumbnails was disabled; Fix: conflict with Pods plugin; Fix: warnings.
 
 = 4.6.4 =
 * New feature: Taxonomy Image; new shortcode: [fifu_taxonomy]; fix: widgets for Elementor not working; fix: security issue reported by Wordfence; fix: CDN + Optimized Thumbnails (not working for ImgBB images).
-
-= 4.6.3 =
-* Enhancement: Featured Slider (supports videos now); fix: conflict with images added via Elementor.
 
 = others =
 * [more](https://fifu.app/changelog)
@@ -281,5 +280,5 @@ Supports URLs from YouTube, Vimeo, Twitter, 9GAG, Cloudinary, Tumblr, Publitio, 
 
 == Upgrade Notice ==
 
-= 4.6.5 =
-* Enhancement: CDN + Optimized Thumbnails (supports images from Imgur, YouTube and many other sources now); Fix: some themes not displaying images when CDN + Optimized Thumbnails was disabled; Fix: conflict with Pods plugin; Fix: warnings.
+= 4.6.6 =
+* New option: Auto set screenshot as featured image → Custom field; New feature: Debug Mode; Enhancement: Meta Tags (supports JSON-LD now); Enhancement: Feedback form (gets the email automatically now); Fix: Hide Featured Media (not working when CDN + Optimized Thumbnails was enabled); Fix: conflict with Woodmart theme; Fix: log file was not being deleted.

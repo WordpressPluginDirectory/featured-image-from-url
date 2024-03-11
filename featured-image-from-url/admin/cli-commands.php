@@ -9,6 +9,17 @@ class fifu_cli extends WP_CLI_Command {
         //WP_CLI::line($args[0]);
     }
 
+    function debug($args) {
+        switch ($args[0]) {
+            case 'on':
+                update_option('fifu_debug', 'toggleon', 'no'); // toggle
+                break;
+            case 'off':
+                update_option('fifu_debug', 'toggleoff', 'no'); // toggle
+                break;
+        }
+    }
+
     // automatic
 
     function content($args, $assoc_args) {

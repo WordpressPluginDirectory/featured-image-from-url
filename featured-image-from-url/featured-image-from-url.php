@@ -4,7 +4,7 @@
  * Plugin Name: Featured Image from URL (FIFU)
  * Plugin URI: https://fifu.app/
  * Description: Use an external image/video/audio as featured image of a post or WooCommerce product.
- * Version: 4.6.5
+ * Version: 4.6.6
  * Author: fifu.app
  * Author URI: https://fifu.app/
  * WC requires at least: 4.0
@@ -118,10 +118,8 @@ function fifu_row_meta($plugin_meta, $plugin_file, $plugin_data, $status) {
     if (strpos($plugin_file, 'featured-image-from-url.php') !== false) {
         $strings = fifu_get_strings_plugins();
 
-        $ref = '<a href="https://referral.fifu.app" target="_blank">' . $strings['affiliate']() . '</a>';
         $email = '<a style="color:#2271b1">support@fifu.app</a>';
         $new_links = array(
-            'affiliate' => $ref,
             'email' => $email,
         );
         $plugin_meta = array_merge($plugin_meta, $new_links);
@@ -139,8 +137,8 @@ function fifu_uninstall() {
     wp_enqueue_script('jquery-block-ui', 'https://cdnjs.cloudflare.com/ajax/libs/jquery.blockUI/2.70/jquery.blockUI.min.js');
     wp_enqueue_style('fancy-box-css', 'https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.css');
     wp_enqueue_script('fancy-box-js', 'https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js');
-    wp_enqueue_style('fifu-uninstall-css', plugins_url('includes/html/css/uninstall.css', __FILE__), array(), fifu_version_number());
-    wp_enqueue_script('fifu-uninstall-js', plugins_url('includes/html/js/uninstall.js', __FILE__), array('jquery'), fifu_version_number());
+    wp_enqueue_style('fifu-uninstall-css', plugins_url('includes/html/css/uninstall.css', __FILE__), array(), fifu_version_number_enq());
+    wp_enqueue_script('fifu-uninstall-js', plugins_url('includes/html/js/uninstall.js', __FILE__), array('jquery'), fifu_version_number_enq());
     wp_localize_script('fifu-uninstall-js', 'fifuUninstallVars', [
         'restUrl' => esc_url_raw(rest_url()),
         'nonce' => wp_create_nonce('wp_rest'),

@@ -43,13 +43,13 @@ function fifu_register_meta_box_script() {
     wp_enqueue_style('fancy-box-css', 'https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.css');
     wp_enqueue_script('fancy-box-js', 'https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js');
 
-    wp_enqueue_script('fifu-rest-route-js', plugins_url('/html/js/rest-route.js', __FILE__), array('jquery'), fifu_version_number());
-    wp_enqueue_script('fifu-meta-box-js', plugins_url('/html/js/meta-box.js', __FILE__), fifu_is_gutenberg_screen() ? array('jquery', 'wp-edit-post') : array('jquery'), fifu_version_number());
-    wp_enqueue_script('fifu-convert-url-js', plugins_url('/html/js/convert-url.js', __FILE__), array('jquery'), fifu_version_number());
+    wp_enqueue_script('fifu-rest-route-js', plugins_url('/html/js/rest-route.js', __FILE__), array('jquery'), fifu_version_number_enq());
+    wp_enqueue_script('fifu-meta-box-js', plugins_url('/html/js/meta-box.js', __FILE__), fifu_is_gutenberg_screen() ? array('jquery', 'wp-edit-post') : array('jquery'), fifu_version_number_enq());
+    wp_enqueue_script('fifu-convert-url-js', plugins_url('/html/js/convert-url.js', __FILE__), array('jquery'), fifu_version_number_enq());
 
-    wp_register_style('fifu-unsplash-css', plugins_url('/html/css/unsplash.css', __FILE__), array(), fifu_version_number());
+    wp_register_style('fifu-unsplash-css', plugins_url('/html/css/unsplash.css', __FILE__), array(), fifu_version_number_enq());
     wp_enqueue_style('fifu-unsplash-css');
-    wp_enqueue_script('fifu-unsplash-js', plugins_url('/html/js/unsplash.js', __FILE__), array('jquery'), fifu_version_number());
+    wp_enqueue_script('fifu-unsplash-js', plugins_url('/html/js/unsplash.js', __FILE__), array('jquery'), fifu_version_number_enq());
 
     // register custom variables for the AJAX script
     wp_localize_script('fifu-rest-route-js', 'fifuScriptVars', [
@@ -84,7 +84,7 @@ function fifu_register_meta_box_script() {
 add_action('add_meta_boxes', 'fifu_add_css');
 
 function fifu_add_css() {
-    wp_register_style('featured-image-from-url', plugins_url('/html/css/editor.css', __FILE__), array(), fifu_version_number());
+    wp_register_style('featured-image-from-url', plugins_url('/html/css/editor.css', __FILE__), array(), fifu_version_number_enq());
     wp_enqueue_style('featured-image-from-url');
 }
 

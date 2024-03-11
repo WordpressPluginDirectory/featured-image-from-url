@@ -946,22 +946,18 @@ function fifu_api_list_all_without_dimensions(WP_REST_Request $request) {
 }
 
 function fifu_api_pre_deactivate(WP_REST_Request $request) {
-    $email = filter_var($request['email'], FILTER_SANITIZE_EMAIL);
-    $email = filter_var($email, FILTER_VALIDATE_EMAIL) ? $email : null;
     $description = $request['description'];
     $temporary = filter_var($request['temporary'], FILTER_VALIDATE_BOOLEAN);
-    fifu_send_feedback($email, $description, $temporary);
+    fifu_send_feedback($description, $temporary);
     fifu_db_enable_clean();
     deactivate_plugins('featured-image-from-url/featured-image-from-url.php');
     return json_encode(array());
 }
 
 function fifu_api_feedback(WP_REST_Request $request) {
-    $email = filter_var($request['email'], FILTER_SANITIZE_EMAIL);
-    $email = filter_var($email, FILTER_VALIDATE_EMAIL) ? $email : null;
     $description = $request['description'];
     $temporary = filter_var($request['temporary'], FILTER_VALIDATE_BOOLEAN);
-    fifu_send_feedback($email, $description, $temporary);
+    fifu_send_feedback($description, $temporary);
     return json_encode(array());
 }
 
@@ -970,9 +966,12 @@ function fifu_api_deactivate_itself(WP_REST_Request $request) {
     return json_encode(array());
 }
 
-function fifu_send_feedback($email, $description, $temporary) {
-    if (!$email && !$description)
+function fifu_send_feedback($description, $temporary) {
+    if (!$description)
         return json_encode(array());
+
+    $current_user = wp_get_current_user();
+    $email = $current_user->exists() ? $current_user->user_email : null;
 
     $aux = fifu_db_get_last_image();
     $image = $aux ? fifu_db_get_last_image()[0]->meta_value : null;

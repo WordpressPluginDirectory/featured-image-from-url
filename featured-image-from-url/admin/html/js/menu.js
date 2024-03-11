@@ -52,6 +52,7 @@ jQuery(function () {
     jQuery("#tabsFifuShortcode").tabs();
     jQuery("#tabsAutoSet").tabs();
     jQuery("#tabsTags").tabs();
+    jQuery("#tabsScreenshot").tabs();
     jQuery("#tabsIsbn").tabs();
     jQuery("#tabsMeta").tabs();
     jQuery("#tabsCustomfield").tabs();

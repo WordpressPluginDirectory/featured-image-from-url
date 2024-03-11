@@ -17,21 +17,18 @@ jQuery(document).ready(function ($) {
             <br>
             <hr>
             <h4>${fifuUninstallVars.textWhy} <span style="color:grey">${fifuUninstallVars.textEmail}</span></h4>
-            <input id="fifu-email" style="width:100%;padding:10px;font-size:13px" placeholder="example@mail.com"></input>
-            <br><br>
             <textarea id="fifu-description" style="width:100%;height:135px;padding:10px;font-size:13px" placeholder="${fifuUninstallVars.textReasonConflict}&#013;${fifuUninstallVars.textReasonPro}&#013;${fifuUninstallVars.textReasonSeo}...&#013;${fifuUninstallVars.textReasonLocal}&#013;${fifuUninstallVars.textReasonUndestand}&#013;${fifuUninstallVars.textReasonOthers}"></textarea>
         `);
     });
 
     jQuery(document).on("click", "button#deactivate", function () {
         let description = jQuery('textarea#fifu-description').val();
-        let email = jQuery('input#fifu-email').val();
         let temporary = true;
 
-        if (description || email) {
+        if (description) {
             jQuery('.fancybox-slide').block({message: '', css: {backgroundColor: 'none', border: 'none', color: 'white'}});
             setTimeout(function () {
-                send_feedback(description, email, temporary);
+                send_feedback(description, temporary);
             }, 250);
         }
 
@@ -41,7 +38,6 @@ jQuery(document).ready(function ($) {
 
     jQuery(document).on("click", "button#pre-deactivate", function () {
         let description = jQuery('textarea#fifu-description').val();
-        let email = jQuery('input#fifu-email').val();
         let temporary = false;
 
         jQuery('.fancybox-slide').block({message: '', css: {backgroundColor: 'none', border: 'none', color: 'white'}});
@@ -51,7 +47,6 @@ jQuery(document).ready(function ($) {
                 url: fifuUninstallVars.restUrl + 'featured-image-from-url/v2/pre_deactivate/',
                 data: {
                     "description": description,
-                    "email": email,
                     "temporary": temporary,
                 },
                 async: false,
@@ -106,13 +101,12 @@ jQuery(document).ready(function ($) {
     });
 });
 
-function send_feedback(description, email, temporary) {
+function send_feedback(description, temporary) {
     jQuery.ajax({
         method: "POST",
         url: fifuUninstallVars.restUrl + 'featured-image-from-url/v2/feedback/',
         data: {
             "description": description,
-            "email": email,
             "temporary": temporary,
         },
         async: false,

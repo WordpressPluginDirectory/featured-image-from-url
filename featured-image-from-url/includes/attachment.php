@@ -88,9 +88,13 @@ function fifu_replace_attachment_image_src($image, $att_id, $size) {
     if ($att_post->post_author != FIFU_AUTHOR)
         return $image;
 
+    global $FIFU_SESSION;
+    $prev_url = isset($FIFU_SESSION['cdn-new-old']) ? $FIFU_SESSION['cdn-new-old'][$image[0]] : null;
+
     $image[0] = fifu_process_url($image[0], $att_id);
 
-    if (fifu_should_hide() && fifu_main_image_url(get_queried_object_id(), true) == $image[0])
+    $original_url = fifu_main_image_url(get_queried_object_id(), true);
+    if (fifu_should_hide() && ($original_url == $image[0] || ($prev_url && $prev_url == $original_url)))
         return null;
 
     if (fifu_is_from_speedup($image[0]))
@@ -409,7 +413,7 @@ function fifu_add_url_parameters($url, $att_id, $size) {
 
     if (fifu_is_from_speedup($url)) {
         $FIFU_SESSION['fifu-cloud'][$url] = fifu_speedup_get_set($url);
-        wp_enqueue_script('fifu-cloud', plugins_url('/html/js/cloud.js', __FILE__), array('jquery'), fifu_version_number());
+        wp_enqueue_script('fifu-cloud', plugins_url('/html/js/cloud.js', __FILE__), array('jquery'), fifu_version_number_enq());
         wp_localize_script('fifu-cloud', 'fifuCloudVars', [
             'srcsets' => $FIFU_SESSION['fifu-cloud'],
         ]);

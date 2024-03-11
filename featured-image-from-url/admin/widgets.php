@@ -17,7 +17,7 @@ class Fifu_Widget_Image extends WP_Widget {
     }
 
     public function form($instance) {
-        wp_enqueue_style('fifu-pro-css', plugins_url('/html/css/pro.css', __FILE__), array(), fifu_version_number());
+        wp_enqueue_style('fifu-pro-css', plugins_url('/html/css/pro.css', __FILE__), array(), fifu_version_number_enq());
         include 'html/widget-image.html';
     }
 
@@ -77,7 +77,7 @@ class Fifu_Widget_Gallery extends WP_Widget {
 
     public function form($instance) {
         $fifu = fifu_get_strings_widget();
-        wp_enqueue_style('fifu-pro-css', plugins_url('/html/css/pro.css', __FILE__), array(), fifu_version_number());
+        wp_enqueue_style('fifu-pro-css', plugins_url('/html/css/pro.css', __FILE__), array(), fifu_version_number_enq());
         include 'html/widget-gallery.html';
     }
 
