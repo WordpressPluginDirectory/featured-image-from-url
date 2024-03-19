@@ -453,7 +453,7 @@ function fifu_get_strings_settings() {
         _e("Broken image icon", FIFU_SLUG);
     };
     $fifu['support']['resolution'] = function () {
-        _e("Low resolution images", FIFU_SLUG);
+        _e("Low-resolution or unduly cropped images", FIFU_SLUG);
     };
     $fifu['support']['speed'] = function () {
         _e("Issues with GTmetrix/PageSpeed", FIFU_SLUG);
@@ -477,7 +477,7 @@ function fifu_get_strings_settings() {
         _e("Possibilities: a) CDN can't serve it; b) image deleted by owner; c) hotlink protection; d) incorrect URL. For (a), disable Performance → CDN + Optimized Thumbnails temporarily and contact us. For (b) or (c), try FIFU Cloud.", FIFU_SLUG);
     };
     $fifu['support']['resolution-desc'] = function () {
-        _e("Caused by the theme having incorrect image sizes registered and the use of 'CDN + Optimized Thumbnails'. Try adjusting the sizes with the 'Simple Image Sizes' plugin.", FIFU_SLUG);
+        _e("Caused by the theme having incorrect image sizes registered and the use of 'CDN + Optimized Thumbnails'. To adjust the sizes and determine if an image should be cropped, you can use the 'Simple Image Sizes' plugin.", FIFU_SLUG);
     };
     $fifu['support']['speed-desc'] = function () {
         _e("Solve it by activating Performance → CDN + Optimized Thumbnails or FIFU Cloud. Even large images hosted on slow servers should load quickly on your website.", FIFU_SLUG);
@@ -1744,7 +1744,7 @@ function fifu_get_strings_settings() {
 
     // pro
     $fifu['unlock'] = function () {
-        _e("Unlock all PRO features for $29.90. Pay with Alipay, WeChat, PayPal, bank transfers, cards, digital wallets, and more.", FIFU_SLUG);
+        _e("Unlock all PRO features for €29.90", FIFU_SLUG);
     };
 
     return $fifu;
@@ -2145,7 +2145,7 @@ function fifu_get_strings_quick_edit() {
 
     // pro
     $fifu['unlock'] = function () {
-        return __("Unlock the PRO features for $29.90. Pay with Alipay, WeChat, PayPal, bank transfers, cards, wallets, and more.", FIFU_SLUG);
+        return __("Unlock all PRO features for €29.90", FIFU_SLUG);
     };
 
     return $fifu;
@@ -2183,7 +2183,7 @@ function fifu_get_strings_help() {
         return __("FIFU can auto set images based on post title, tags, external web page address, and more. Check FIFU Settings → Automatic.", FIFU_SLUG);
     };
     $fifu['unsplash']['unlock'] = function () {
-        return __("Unlock the PRO features for $29.90. Pay with Alipay, WeChat, PayPal, bank transfers, cards, wallets, and more.", FIFU_SLUG);
+        return __("Unlock all PRO features for €29.90", FIFU_SLUG);
     };
     $fifu['unsplash']['more'] = function () {
         return __("Loading more...", FIFU_SLUG);
@@ -2526,7 +2526,7 @@ function fifu_get_strings_cloud() {
 
     // pro
     $fifu['unlock'] = function () {
-        _e("Unlock all PRO features for $29.90. Pay with Alipay, WeChat, PayPal, bank transfers, cards, digital wallets, and more.", FIFU_SLUG);
+        _e("Unlock all PRO features for €29.90", FIFU_SLUG);
     };
 
     // reset
@@ -2756,7 +2756,7 @@ function fifu_get_strings_plugins() {
         return __("Technical support", FIFU_SLUG);
     };
     $fifu['upgrade'] = function () {
-        return __("Upgrade to <b>PRO</b> for $29.90", FIFU_SLUG);
+        return __("Upgrade to <b>PRO</b> for €29.90", FIFU_SLUG);
     };
     $fifu['star'] = function () {
         return __("Are you enjoying FIFU? Please give it a 5-star rating!", FIFU_SLUG);

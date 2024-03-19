@@ -88,8 +88,13 @@ jQuery(document).ready(function () {
     });
 
     // title
-    jQuery("div#imageUrlMetaBox").find('h2').replaceWith('<h4 style="top:7px;position:relative;"><span class="dashicons dashicons-camera" style="font-size:15px"></span>' + jQuery("div#imageUrlMetaBox").find('h2').text() + '</h4>');
-    jQuery("div#urlMetaBox").find('h2').replaceWith('<h4 style="top:5px;position:relative;"><span class="dashicons dashicons-camera" style="font-size:15px"></span>' + jQuery("div#urlMetaBox").find('h2').text() + '</h4>');
+    let text = jQuery("div#imageUrlMetaBox").find('h2').text();
+    jQuery("div#imageUrlMetaBox").find('h2.hndle').text('');
+    jQuery("div#imageUrlMetaBox").find('h2').append('<h4 style="left:-10px;position:relative;font-size:13px"><span class="dashicons dashicons-camera"></span>' + text + '</h4>');
+
+    text = jQuery("div#urlMetaBox").find('h2').text();
+    jQuery("div#urlMetaBox").find('h2.hndle').text('');
+    jQuery("div#urlMetaBox").find('h2').append('<h4 style="left:-10px;position:relative;font-size:13px"><span class="dashicons dashicons-camera"></span>' + text + '</h4>');
 });
 
 function fifu_get_sizes() {

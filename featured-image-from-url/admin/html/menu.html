@@ -4,6 +4,21 @@
         <h1 style="color:white;padding-left:20px;width:98%;font-family:Ubuntu,sans-serif">
             <span class="dashicons dashicons-camera" style="font-size:30px"></span><span style="padding-left:20px">FIFU</span>
             <a href="https://chrome.google.com/webstore/detail/fifu-scraper/pccimcccbkdeeadhejdmnffmllpicola" target="_blank"><div class="fifu-referral"><i class="fa-brands fa-chrome" style="font-size:24px" title="<?php $fifu['chrome']['link']() ?>"></i></div></a>
+            <div id="donate-button-container" style="position:relative;top:4px;left:-15px;float:right">
+                <div id="donate-button"></div>
+                <script src="https://www.paypalobjects.com/donate/sdk/donate-sdk.js" charset="UTF-8"></script>
+                <script>
+                    PayPal.Donation.Button({
+                        env: 'production',
+                        hosted_button_id: 'KY7MRYTANZN9A',
+                        image: {
+                            src: 'https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif',
+                            alt: 'Donate with PayPal button',
+                            title: 'PayPal',
+                        }
+                    }).render('#donate-button');
+                </script>
+            </div>
         </h1>
     </div>
 
@@ -3412,7 +3427,8 @@
                                 <input 
                                     type="submit"
                                     value="<?php $fifu['button']['submit']() ?>"
-                                    onclick="fifu_default_js();fifu_default_js();">
+                                    onclick="fifu_default_js();
+                                            fifu_default_js();">
 
                                 <span class="dashicons dashicons-editor-help" style="font-size: 25px; position: relative; top: 3px;" title="<?php $fifu['default']['cpt']['info'](); ?>"></span>
                             </form>
@@ -4109,7 +4125,8 @@
                                         type="submit"
                                         href="javascript:void(0)"
                                         id="fifu_toggle_run_delete_all"
-                                        onclick="invert('run_delete_all'); fifu_run_delete_all_js();"
+                                        onclick="invert('run_delete_all');
+                                                fifu_run_delete_all_js();"
                                         name="fifu_toggle_run_delete_all"
                                         class="<?php echo $enable_run_delete_all; ?>"
                                         value=""

@@ -1,10 +1,10 @@
 === Featured Image from URL (FIFU) ===
 Contributors: marceljm
-Donate link: https://donorbox.org/fifu
+Donate link: https://www.paypal.com/donate/?hosted_button_id=KY7MRYTANZN9A
 Tags: featured, image, url, video, woocommerce
 Requires at least: 5.6
-Tested up to: 6.4.3
-Stable tag: 4.6.6
+Tested up to: 6.5
+Stable tag: 4.6.7
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -149,7 +149,7 @@ Supports URLs from YouTube, Vimeo, Twitter, 9GAG, Cloudinary, Tumblr, Publitio, 
 
 #### Links
 
-* **<a href="https://fifu.app/">FIFU PRO ($29.90)</a>**
+* **<a href="https://fifu.app/">FIFU PRO (€29.90)</a>**
 * **<a href="https://tastewp.com/new?pre-installed-plugin-slug=featured-image-from-url&redirect=admin.php%3Fpage%3Dfeatured-image-from-url&ni=true">Dummy site for testing</a>**
 * **<a href="https://chrome.google.com/webstore/detail/fifu-scraper/pccimcccbkdeeadhejdmnffmllpicola">Extension for Google Chrome</a>**
 * **<a href="https://plugintests.com/plugins/wporg/featured-image-from-url/latest">Smoke Test</a>**
@@ -265,14 +265,14 @@ Supports URLs from YouTube, Vimeo, Twitter, 9GAG, Cloudinary, Tumblr, Publitio, 
 
 == Changelog ==
 
+= 4.6.7 =
+* PayPal donation button added; Fix: Dragging and dropping of FIFU metaboxes was not working; Fix: FIFU fallback for when the image has no dimensions was causing troubles and has been removed; Fix: Warnings.
+
 = 4.6.6 =
 * New option: Auto set screenshot as featured image → Custom field; New feature: Debug Mode; Enhancement: Meta Tags (supports JSON-LD now); Enhancement: Feedback form (gets the email automatically now); Fix: Hide Featured Media (not working when CDN + Optimized Thumbnails was enabled); Fix: conflict with Woodmart theme; Fix: log file was not being deleted.
 
 = 4.6.5 =
 * Enhancement: CDN + Optimized Thumbnails (supports images from Imgur, YouTube and many other sources now); Fix: some themes not displaying images when CDN + Optimized Thumbnails was disabled; Fix: conflict with Pods plugin; Fix: warnings.
-
-= 4.6.4 =
-* New feature: Taxonomy Image; new shortcode: [fifu_taxonomy]; fix: widgets for Elementor not working; fix: security issue reported by Wordfence; fix: CDN + Optimized Thumbnails (not working for ImgBB images).
 
 = others =
 * [more](https://fifu.app/changelog)
@@ -280,5 +280,5 @@ Supports URLs from YouTube, Vimeo, Twitter, 9GAG, Cloudinary, Tumblr, Publitio, 
 
 == Upgrade Notice ==
 
-= 4.6.6 =
-* New option: Auto set screenshot as featured image → Custom field; New feature: Debug Mode; Enhancement: Meta Tags (supports JSON-LD now); Enhancement: Feedback form (gets the email automatically now); Fix: Hide Featured Media (not working when CDN + Optimized Thumbnails was enabled); Fix: conflict with Woodmart theme; Fix: log file was not being deleted.
+= 4.6.7 =
+* PayPal donation button added; Fix: Dragging and dropping of FIFU metaboxes was not working; Fix: FIFU fallback for when the image has no dimensions was causing troubles and has been removed; Fix: Warnings.
