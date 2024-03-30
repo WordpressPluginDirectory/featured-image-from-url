@@ -15,7 +15,9 @@ function fifu_resize_jetpack_image_size($size, $url) {
         return "{$clean_url}?resize={$size},{$new_h}";
     }
 
-    return "{$url}?w={$size}&resize={$size}";
+    $del = strpos($url, "?") !== false ? "&" : "?";
+
+    return "{$url}{$del}w={$size}&resize={$size}";
 }
 
 function fifu_jetpack_get_set($url, $is_slider) {

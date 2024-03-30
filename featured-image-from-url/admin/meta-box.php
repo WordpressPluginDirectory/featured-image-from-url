@@ -443,6 +443,34 @@ function fifu_dokan_save_meta($post_id, $data) {
     fifu_update_fake_attach_id($post_id);
 }
 
+/* plugin: multivendorx */
+
+add_action('mvx_product_manager_right_panel_after', 'fifu_mvx_product_manager_right_panel_after', 10);
+
+function fifu_mvx_product_manager_right_panel_after($post_id) {
+    $fifu = fifu_get_strings_dokan();
+    $url = get_post_meta($post_id, 'fifu_image_url', true);
+    ?>
+
+    <br>
+
+    <div>
+        <label for="fifu_input_url" class="form-label"><span class="dashicons dashicons-camera" style="font-size:20px"></span> <?php $fifu['title']['product']['image'](); ?></label>
+        <br>
+        <input class="form-control" type="url" name="fifu_input_url" value="<?php echo $url; ?>" placeholder="<?php $fifu['placeholder']['product']['image'](); ?>">
+    </div>
+
+    <?php
+}
+
+add_action('mvx_process_product_object', 'fifu_mvx_process_product_object', 10);
+
+function fifu_mvx_process_product_object($data) {
+    $url = $data->get_meta('fifu_image_url');
+    $url = $url ? $url : null;
+    fifu_dev_set_image($data->id, $url);
+}
+
 /* plugin: datafeedr */
 
 add_filter('dfrps_do_import_product_thumbnail/do_import', function (bool $do_import, WP_Post $post, array $product) {

@@ -12,6 +12,28 @@
                 <div class="box">
                     <table>
                         <tr>
+                            <td style="border-bottom:none">2024-03-19</td>
+                            <td style="border-bottom:none"><h3> JNews
+                            </h3></td>
+                            <td style="border-bottom:none">theme</td>
+                        </tr>
+                    </table>
+                    <div class="greybox" style="position: relative; top: -10px">
+                        Featured image is not displayed on single post types:<br>
+                        1) edit 'jnews/class/Image/ImageLazyLoad.php' and replace<br>
+                        <textarea style="width:100%;height:25px;overflow:hidden" disabled>
+                            $thumbnail = "<div class=\"thumbnail-container animate-lazy\" style=\"padding-bottom:" . $percentage . "%\">";
+                        </textarea>
+                        with<br>
+                        <textarea style="width:100%;height:25px;overflow:hidden" disabled>
+                            $thumbnail = "<div class=\"animate-lazy\" style=\"padding-bottom:" . $percentage . "%\">";
+                        </textarea>
+                        within the function 'image_thumbnail_unwrap';
+                    </div>
+                </div>
+                <div class="box">
+                    <table>
+                        <tr>
                             <td style="border-bottom:none">2023-03-18</td>
                             <td style="border-bottom:none"><h3> X</h3></td>
                             <td style="border-bottom:none">social networking</td>

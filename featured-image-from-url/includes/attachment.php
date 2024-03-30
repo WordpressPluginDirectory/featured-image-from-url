@@ -90,7 +90,7 @@ function fifu_replace_attachment_image_src($image, $att_id, $size) {
 
     global $FIFU_SESSION;
     $prev_url = null;
-    if (isset($FIFU_SESSION['cdn-new-old']) && isset($image[0]) && $FIFU_SESSION['cdn-new-old'][$image[0]])
+    if (isset($FIFU_SESSION['cdn-new-old']) && isset($image[0]) && isset($FIFU_SESSION['cdn-new-old'][$image[0]]))
         $prev_url = $FIFU_SESSION['cdn-new-old'][$image[0]];
 
     $image[0] = fifu_process_url($image[0], $att_id);

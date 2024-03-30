@@ -137,6 +137,9 @@ function fifu_wp_get_attachment_image_attributes($attr, $attachment, $size) {
     if (in_array(strtolower(get_option('template')), array('jnews')))
         return $attr;
 
+    if (!isset($attr['src']))
+        return $attr;
+
     $url = $attr['src'];
     if (strpos($url, 'cdn.fifu.app') === false)
         return $attr;

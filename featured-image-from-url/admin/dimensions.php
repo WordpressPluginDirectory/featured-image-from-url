@@ -89,8 +89,8 @@ function fifu_image_downsize($out, $att_id, $size) {
         // Check if dimensions are already saved
         $metadata = wp_get_attachment_metadata($att_id);
         if (!empty($metadata['width']) && !empty($metadata['height'])) {
-            $original_width = $metadata['width'];
-            $original_height = $metadata['height'];
+            $original_width = intval($metadata['width']);
+            $original_height = intval($metadata['height']);
             $aspect_ratio = $original_height / $original_width;
             $max_dimension = 1920;
 

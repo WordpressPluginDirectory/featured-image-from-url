@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/donate/?hosted_button_id=KY7MRYTANZN9A
 Tags: featured, image, url, video, woocommerce
 Requires at least: 5.6
 Tested up to: 6.5
-Stable tag: 4.6.7
+Stable tag: 4.6.8
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -265,14 +265,14 @@ Supports URLs from YouTube, Vimeo, Twitter, 9GAG, Cloudinary, Tumblr, Publitio, 
 
 == Changelog ==
 
+= 4.6.8 =
+* Enhancement: integration with Multivendor X plugin; Fix: FIFU Settings page not displayed.
+
 = 4.6.7 =
 * PayPal donation button added; Fix: Dragging and dropping of FIFU metaboxes was not working; Fix: FIFU fallback for when the image has no dimensions was causing troubles and has been removed; Fix: Warnings.
 
 = 4.6.6 =
 * New option: Auto set screenshot as featured image → Custom field; New feature: Debug Mode; Enhancement: Meta Tags (supports JSON-LD now); Enhancement: Feedback form (gets the email automatically now); Fix: Hide Featured Media (not working when CDN + Optimized Thumbnails was enabled); Fix: conflict with Woodmart theme; Fix: log file was not being deleted.
-
-= 4.6.5 =
-* Enhancement: CDN + Optimized Thumbnails (supports images from Imgur, YouTube and many other sources now); Fix: some themes not displaying images when CDN + Optimized Thumbnails was disabled; Fix: conflict with Pods plugin; Fix: warnings.
 
 = others =
 * [more](https://fifu.app/changelog)
@@ -280,5 +280,5 @@ Supports URLs from YouTube, Vimeo, Twitter, 9GAG, Cloudinary, Tumblr, Publitio, 
 
 == Upgrade Notice ==
 
-= 4.6.7 =
-* PayPal donation button added; Fix: Dragging and dropping of FIFU metaboxes was not working; Fix: FIFU fallback for when the image has no dimensions was causing troubles and has been removed; Fix: Warnings.
+= 4.6.8 =
+* Enhancement: integration with Multivendor X plugin; Fix: FIFU Settings page not displayed.
