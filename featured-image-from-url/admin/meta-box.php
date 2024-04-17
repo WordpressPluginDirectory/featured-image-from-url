@@ -56,6 +56,7 @@ function fifu_register_meta_box_script() {
         'restUrl' => esc_url_raw(rest_url()),
         'homeUrl' => esc_url_raw(home_url()),
         'nonce' => wp_create_nonce('wp_rest'),
+        'version' => fifu_version_number(),
     ]);
 
     if (fifu_is_sirv_active())

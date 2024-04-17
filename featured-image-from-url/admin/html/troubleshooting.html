@@ -12,6 +12,48 @@
                 <div class="box">
                     <table>
                         <tr>
+                            <td style="border-bottom:none">2024-04-14</td>
+                            <td style="border-bottom:none"><h3> Partdo
+                            </h3></td>
+                            <td style="border-bottom:none">theme</td>
+                        </tr>
+                    </table>
+                    <div class="greybox" style="position: relative; top: -10px">
+                        Featured image is not displayed on homepage:<br>
+                        1) edit 'partdo/includes/woocommerce.php' and replace<br>
+                        <textarea style="width:100%;height:100px;overflow:hidden" disabled>
+                            if($size['width'] && $size['height']){
+                                $image = partdo_resize( $image_src, $size['width'], $size['height'], true, true, true );  
+                            } else {
+                                $image = $image_src;
+                            }                    
+                        </textarea>
+                        with<br>
+                        <textarea style="width:100%;height:25px;overflow:hidden" disabled>
+                            $image = $image_src;
+                        </textarea>
+                        within the function 'partdo_product_image';
+                    </div>
+                </div>
+                <div class="box">
+                    <table>
+                        <tr>
+                            <td style="border-bottom:none">2024-04-13</td>
+                            <td style="border-bottom:none"><h3>WPML Multilingual CMS + Translation Management</h3></td>
+                            <td style="border-bottom:none">plugins</td>
+                        </tr>
+                    </table>
+                    <div class="greybox" style="position: relative; top: -10px">
+                        Copying the external featured image to the translation:<br>
+                        1) access "WPML → Settings → Custom Fields Translation";<br>
+                        2) search for "fifu_image_url", choose "Copy" and save;<br>
+                        3) if you use FIFU premium, enable "Metadata → Schedule Metadata Generation". That's all;<br>
+                        4) but if you use the free version, after the translation post is created, access the post editor and click on "Update" button.<br>
+                    </div>
+                </div>
+                <div class="box">
+                    <table>
+                        <tr>
                             <td style="border-bottom:none">2024-03-19</td>
                             <td style="border-bottom:none"><h3> JNews
                             </h3></td>
@@ -1437,22 +1479,6 @@
                         Showing the external featured images:<br>
                         1) open "ecome/framework/framework.php";<br>
                         2) search for and remove "&& file_exists( $actual_file_path )".<br>
-                    </div>
-                </div>
-                <div class="box">
-                    <table>
-                        <tr>
-                            <td style="border-bottom:none">2019-10-02</td>
-                            <td style="border-bottom:none"><h3>WPML Multilingual CMS + Translation Management</h3></td>
-                            <td style="border-bottom:none">plugins</td>
-                        </tr>
-                    </table>
-                    <div class="greybox" style="position: relative; top: -10px">
-                        Copying the external featured image to the translation:<br>
-                        1) access "WPML → Settings → Custom Fields Translation";<br>
-                        2) search for "fifu_image_url", choose "Copy" and save;<br>
-                        3) if you use FIFU premium, enable "Metadata → Schedule Metadata Generation". That's all;<br>
-                        4) but if you use the free version, after the translation post is created, access the post editor and click on "Update" button.<br>
                     </div>
                 </div>
                 <div class="box">

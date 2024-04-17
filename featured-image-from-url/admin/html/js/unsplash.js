@@ -1,6 +1,8 @@
 async function fifu_get_unsplash_urls(keywords, page) {
     try {
-        const response = await fetch(`https://corsproxy.io/?https://unsplash.com/napi/search/photos?query=${keywords}&per_page=10&page=${page}`);
+        let homeUrl = encodeURIComponent(fifuScriptVars.homeUrl);
+        let version = fifuScriptVars.version;
+        const response = await fetch(`https://unsplash-free.fifu.workers.dev?site=${homeUrl}&version=${version}&keywords=${keywords}`);
         const data = await response.json();
         const urls = data.results.map(result => result.urls.small);
 

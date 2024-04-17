@@ -15,7 +15,10 @@ define('PROXY2_URLS', [
     "https://i.ytimg.com/",
     "https://cdn.myshoptet.com/",
     "https://i.imgur.com/",
-    "https://a1.espncdn.com/"
+    "https://a1.espncdn.com/",
+    "https://books.google.com/",
+    "https://embed-cdn.gettyimages.com/",
+    "https://media.gettyimages.com/"
 ]);
 
 define('PROXY3_URLS', [

@@ -90,11 +90,15 @@ jQuery(document).ready(function () {
     // title
     let text = jQuery("div#imageUrlMetaBox").find('h2').text();
     jQuery("div#imageUrlMetaBox").find('h2.hndle').text('');
-    jQuery("div#imageUrlMetaBox").find('h2').append('<h4 style="left:-10px;position:relative;font-size:13px"><span class="dashicons dashicons-camera"></span>' + text + '</h4>');
+    jQuery("div#imageUrlMetaBox").find('h2').append('<h4 style="left:-10px;position:relative;font-size:13px;font-weight:normal"><span class="dashicons dashicons-camera"></span> ' + text + '</h4>');
+    jQuery("div#imageUrlMetaBox").find('button.handle-order-higher').remove();
+    jQuery("div#imageUrlMetaBox").find('button.handle-order-lower').remove();
 
     text = jQuery("div#urlMetaBox").find('h2').text();
     jQuery("div#urlMetaBox").find('h2.hndle').text('');
-    jQuery("div#urlMetaBox").find('h2').append('<h4 style="left:-10px;position:relative;font-size:13px"><span class="dashicons dashicons-camera"></span>' + text + '</h4>');
+    jQuery("div#urlMetaBox").find('h2').append('<h4 style="left:-10px;position:relative;font-size:13px;font-weight:normal"><span class="dashicons dashicons-camera"></span> ' + text + '</h4>');
+    jQuery("div#urlMetaBox").find('button.handle-order-higher').remove();
+    jQuery("div#urlMetaBox").find('button.handle-order-lower').remove();
 });
 
 function fifu_get_sizes() {

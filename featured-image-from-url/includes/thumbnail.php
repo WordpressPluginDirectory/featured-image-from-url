@@ -93,8 +93,10 @@ function fifu_add_social_tags() {
     if ($url) {
         if (fifu_is_from_speedup($url))
             $url = fifu_speedup_get_signed_url($url, 1280, 672, null, null, false);
-        elseif (fifu_is_on('fifu_photon'))
+        elseif (fifu_is_on('fifu_photon')) {
+            $url = fifu_cdn_adjust($url);
             $url = fifu_jetpack_photon_url($url, null);
+        }
         include 'html/og-image.html';
 
         wp_enqueue_script('fifu-json-ld', plugins_url('/html/js/json-ld.js', __FILE__), array(), fifu_version_number_enq());

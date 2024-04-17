@@ -277,7 +277,7 @@ function fifu_get_strings_settings() {
         _e("Auto set featured image using post title and search engine", FIFU_SLUG);
     };
     $fifu['title']['isbn'] = function () {
-        _e("Auto set featured image using ISBN and books API", FIFU_SLUG);
+        _e("Auto set featured image from ISBN", FIFU_SLUG);
     };
     $fifu['title']['customfield'] = function () {
         _e("Auto set featured image from custom field", FIFU_SLUG);
@@ -856,7 +856,7 @@ function fifu_get_strings_settings() {
 
     // isbn
     $fifu['isbn']['desc'] = function () {
-        _e("Set featured images automatically. The plugin checks every minute for post types without featured images and performs web searches based on ISBN to retrieve the image URLs.", FIFU_SLUG);
+        _e("Set featured images automatically. The plugin checks every minute for post types without featured images and performs web searches based on ISBN to retrieve the book cover URLs.", FIFU_SLUG);
     };
     $fifu['isbn']['tab']['auto'] = function () {
         _e("Auto set", FIFU_SLUG);
