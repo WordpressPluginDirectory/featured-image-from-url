@@ -166,10 +166,19 @@ add_filter('image_downsize', 'fifu_image_downsize', 10, 3);
 
 function fifu_resize_with_photon($url, $width, $height) {
     $photon_base_url = "https://i" . (hexdec(substr(md5($url), 0, 1)) % 4) . ".wp.com/";
-    $resize_param = $height == 9999 ? "{$width}" : "{$width},{$height}";
+
     $delimiter = strpos($url, "?") !== false ? '&' : '?';
+
+    if (strpos($url, "wp.com/mshots") !== false || strpos($url, "screenshot.fifu.app") !== false) {
+        $crop = "&crop=0px,0px,{$width}px,{$height}px";
+    } else {
+        $resize_param = $height == 9999 ? "{$width}" : "{$width},{$height}";
+        $crop = "&resize={$resize_param}";
+    }
+
     $ssl_param = '&ssl=1';
-    return $photon_base_url . preg_replace('#^https?://#', '', $url) . "{$delimiter}w={$width}&resize={$resize_param}{$ssl_param}";
+
+    return $photon_base_url . preg_replace('#^https?://#', '', $url) . "{$delimiter}w={$width}{$crop}{$ssl_param}";
 }
 
 function fifu_resize_with_odycdn($url, $width, $height) {

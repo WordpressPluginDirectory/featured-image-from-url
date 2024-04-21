@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/donate/?hosted_button_id=KY7MRYTANZN9A
 Tags: featured, image, url, video, woocommerce
 Requires at least: 5.6
 Tested up to: 6.5.2
-Stable tag: 4.7.0
+Stable tag: 4.7.1
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -44,7 +44,7 @@ Use an external image as featured image of your post, page or custom post type.
 * **[PRO]** Auto set featured image using post title and a search engine
 * **[PRO]** Auto set featured media using web page address
 * **[PRO]** Auto set featured image from custom field
-* **[PRO]** Auto set featured image using ISBN and books API
+* **[PRO]** Auto set featured image using ISBN
 * **[PRO]** Auto set screenshot as featured image
 * **[PRO]** Auto set featured image from Unsplash using tags
 
@@ -265,14 +265,14 @@ Supports URLs from YouTube, Vimeo, Twitter, 9GAG, Cloudinary, Tumblr, Publitio, 
 
 == Changelog ==
 
+= 4.7.1 =
+* Fix: CDN + Optimized Thumbnails (not cropping the top for screenshots).
+
 = 4.7.0 =
 * Fix: CDN + Optimized Thumbnails (not working for Getty Images); Fix: Meta Tags (not sharing images from Google Drive, YouTube and Imgur); Fix: Metabox (style issues).
 
 = 4.6.9 =
 * Fix: Unsplash image search not working for a few countries.
-
-= 4.6.8 =
-* Enhancement: integration with MultivendorX plugin; Fix: FIFU Settings page not displayed.
 
 = others =
 * [more](https://fifu.app/changelog)
@@ -280,5 +280,5 @@ Supports URLs from YouTube, Vimeo, Twitter, 9GAG, Cloudinary, Tumblr, Publitio, 
 
 == Upgrade Notice ==
 
-= 4.7.0 =
-* Fix: CDN + Optimized Thumbnails (not working for Getty Images); Fix: Meta Tags (not sharing images from Google Drive, YouTube and Imgur); Fix: Metabox (style issues).
+= 4.7.1 =
+* Fix: CDN + Optimized Thumbnails (not cropping the top for screenshots).

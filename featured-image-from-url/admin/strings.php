@@ -881,7 +881,7 @@ function fifu_get_strings_settings() {
 
     // screenshot
     $fifu['screenshot']['desc'] = function () {
-        _e("To use a website screenshot as the featured image of a post, add \"https://s.wp.com/mshots/v1/\" before the website address. Then use this new address as the image URL. For example, if you want the screenshot of the website \"https://openai.com/\" as the featured image of a post, your image URL should be: https://s.wp.com/mshots/v1/https://openai.com/", FIFU_SLUG);
+        _e("To use a website screenshot as the featured image of a post, add \"https://screenshot.fifu.app/\" before the website address. Then use this new address as the image URL. For example, if you want the screenshot of the website \"https://openai.com/\" as the featured image of a post, your image URL should be: https://screenshot.fifu.app/https://openai.com/", FIFU_SLUG);
     };
     $fifu['screenshot']['desc3'] = function () {
         _e("If the GIF \"Generating Preview\" appears, ignore it. It means the screenshot was not found in the cache but is being generated on the server. You can save the post and exit the editor. The screenshot will be ready in a few seconds. Refresh the page.", FIFU_SLUG);
