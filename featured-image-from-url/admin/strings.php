@@ -657,12 +657,6 @@ function fifu_get_strings_settings() {
     $fifu['media']['job'] = function () {
         _e("run a function that periodically searches for external images and saves them in the media library.", FIFU_SLUG);
     };
-    $fifu['media']['dev'] = function () {
-        _e("php function that performs the upload process immediately (i.e., without a scheduled event).", FIFU_SLUG);
-    };
-    $fifu['media']['run'] = function () {
-        _e("Run it now", FIFU_SLUG);
-    };
     $fifu['media']['tab']['main'] = function () {
         _e("Main", FIFU_SLUG);
     };
@@ -671,9 +665,6 @@ function fifu_get_strings_settings() {
     };
     $fifu['media']['tab']['proxy'] = function () {
         _e("Proxy", FIFU_SLUG);
-    };
-    $fifu['media']['tab']['dev'] = function () {
-        _e("Developer", FIFU_SLUG);
     };
     $fifu['media']['proxy']['desc'] = function () {
         _e("Proxies are utilized to bypass IP bans that can occur when your site downloads a large number of images from the same host. However, using proxies has certain disadvantages. A proxy can impose limitations on the number of requests, and its IP address may also get banned. In such cases, the plugin will attempt to find alternative proxies until it discovers a functional one. Consequently, the use of proxies can potentially slow down the process, unless you have access to a private proxy. By default, FIFU plugin incorporates a list of public proxies that are updated every 30 minutes. The plugin also caches the proxies that are working correctly with your image URLs.", FIFU_SLUG);
