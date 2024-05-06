@@ -856,24 +856,32 @@ function fifu_api_list_all_media_library(WP_REST_Request $request) {
     return fifu_db_get_posts_with_internal_featured_image($page);
 }
 
+function fifu_metadata_counter_api(WP_REST_Request $request) {
+    $transient = filter_var($request['transient'], FILTER_VALIDATE_BOOLEAN);
+    if ($transient) {
+        $total = get_transient('fifu_metadata_counter');
+    } else {
+        $total = fifu_db_count_urls_without_metadata();
+        set_transient('fifu_metadata_counter', $total, 0);
+    }
+    return $total;
+}
+
 function fifu_enable_fake_api(WP_REST_Request $request) {
     update_option('fifu_fake_stop', false, 'no');
     fifu_enable_fake();
-    set_transient('fifu_image_metadata_counter', fifu_db_count_urls_without_metadata(), 0);
     return json_encode(array());
 }
 
 function fifu_disable_fake_api(WP_REST_Request $request) {
     update_option('fifu_fake_created', false, 'no');
     update_option('fifu_fake_stop', true, 'no');
-    set_transient('fifu_image_metadata_counter', fifu_db_count_urls_without_metadata(), 0);
     return json_encode(array());
 }
 
 function fifu_data_clean_api(WP_REST_Request $request) {
     fifu_db_enable_clean();
     update_option('fifu_data_clean', 'toggleoff', 'no');
-    set_transient('fifu_image_metadata_counter', fifu_db_count_urls_without_metadata(), 0);
     fifu_set_author();
     return json_encode(array());
 }
@@ -895,6 +903,29 @@ function fifu_none_default_api(WP_REST_Request $request) {
 
 function fifu_rest_url(WP_REST_Request $request) {
     return get_rest_url();
+}
+
+function fifu_api_meta_in(WP_REST_Request $request) {
+    $id = $request->get_param('post_id');
+
+    $type = fifu_db_get_type_meta_in($id);
+    switch ($type) {
+        case "post":
+            fifu_db_insert_postmeta($id);
+            break;
+        case "term":
+            fifu_db_insert_termmeta($id);
+            break;
+    }
+
+    $result = fifu_db_get_meta_in_first();
+    if (isset($result[0])) {
+        $new_request = new WP_REST_Request();
+        $new_request->set_param('post_id', $result[0]->post_id);
+        return fifu_api_meta_in($new_request);
+    }
+
+    return new WP_REST_Response('', 200);
 }
 
 function fifu_save_sizes_api(WP_REST_Request $request) {
@@ -1020,15 +1051,22 @@ function fifu_send_feedback($description, $temporary) {
 }
 
 function fifu_test_execution_time() {
+    $start_time = microtime(true);
     for ($i = 0; $i <= 120; $i++) {
         error_log($i);
         sleep(1);
         //flush();
     }
+    error_log(number_format(microtime(true,) - $start_time, 4));
     return json_encode(array());
 }
 
 add_action('rest_api_init', function () {
+    register_rest_route('featured-image-from-url/v2', '/metadata_counter_api/', array(
+        'methods' => 'POST',
+        'callback' => 'fifu_metadata_counter_api',
+        'permission_callback' => 'fifu_get_private_data_permissions_check',
+    ));
     register_rest_route('featured-image-from-url/v2', '/enable_fake_api/', array(
         'methods' => 'POST',
         'callback' => 'fifu_enable_fake_api',
@@ -1091,6 +1129,27 @@ add_action('rest_api_init', function () {
         'methods' => ['GET', 'POST'],
         'callback' => 'fifu_rest_url',
         'permission_callback' => 'fifu_public_permission',
+    ));
+    register_rest_route('featured-image-from-url/v2', '/metain/', array(
+        'methods' => 'POST',
+        'callback' => 'fifu_api_meta_in',
+        'permission_callback' => function ($request) {
+            $token = $request->get_header('X-FIFU-Authorization');
+            $transient_token = get_transient('fifu_api_metain_auth_token');
+            if ($token === $transient_token) {
+                delete_transient('fifu_api_metain_auth_token');
+                return true;
+            }
+            return false;
+        },
+        'args' => array(
+            'post_id' => array(
+                'required' => true,
+                'validate_callback' => function ($param, $request, $key) {
+                    return is_numeric($param);
+                }
+            ),
+        ),
     ));
 
     register_rest_route('featured-image-from-url/v2', '/create_thumbnails_list/', array(

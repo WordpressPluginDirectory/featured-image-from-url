@@ -20,14 +20,17 @@
                     <div class="greybox" style="position: relative; top: -10px">
                         The alt attribute is not being applied to category images:<br>
                         1) go to 'Appearance → Theme File Editor → Theme Files → Theme Functions → functions.php' and add<br>
-                        <textarea style="width:100%;height:275px;overflow:hidden" disabled>
+                        <textarea style="width:100%;height:325px;overflow:hidden" disabled>
                             function custom_category_image_alt($category) {
                                 $thumbnail_id = get_woocommerce_term_meta($category->term_id, 'thumbnail_id', true);
                                 $image_attributes = wp_get_attachment_image_src($thumbnail_id, 'full');
                                 if ($image_attributes) {
-                                    $alt_text = get_post_meta($thumbnail_id, '_wp_attachment_image_alt', true);
-                                    if (empty($alt_text)) {
-                                        $alt_text = $category->name;
+                                    $alt_text = get_term_meta($category->term_id, 'fifu_image_alt', true);
+                                    if (!$alt_text) {
+                                        $alt_text = get_post_meta($thumbnail_id, '_wp_attachment_image_alt', true);
+                                        if (empty($alt_text)) {
+                                            $alt_text = $category->name;
+                                        }
                                     }
                                     echo '<img src="' . esc_url($image_attributes[0]) . '" alt="' . esc_attr($alt_text) . '" width="' . esc_attr($image_attributes[1]) . '" height="' . esc_attr($image_attributes[2]) . '" />';
                                 }

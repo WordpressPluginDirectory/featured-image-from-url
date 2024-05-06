@@ -478,8 +478,31 @@ function fifu_enable_fake() {
     update_option('fifu_fake_created', true, 'no');
 
     fifu_db_change_url_length();
-    fifu_db_insert_attachment();
-    fifu_db_insert_attachment_category();
+    $result = fifu_db_get_meta_in_first();
+    if (count($result) == 0) {
+        fifu_db_prepare_meta_in();
+        $result = fifu_db_get_meta_in_first();
+    }
+
+    if (isset($result[0])) {
+        $url = rest_url() . "featured-image-from-url/v2/metain/";
+        $transient_token = wp_generate_password(8, false);
+        set_transient('fifu_api_metain_auth_token', $transient_token, MINUTE_IN_SECONDS);
+        $body = json_encode(array(
+            'post_id' => $result[0]->post_id,
+        ));
+        $headers = array(
+            'Content-Type' => 'application/json',
+            'X-FIFU-Authorization' => $transient_token,
+        );
+        $response = wp_remote_post($url, array(
+            'method' => 'POST',
+            'body' => $body,
+            'headers' => $headers,
+            'blocking' => true,
+            'timeout' => 30,
+        ));
+    }
 }
 
 function fifu_disable_fake() {

@@ -3,8 +3,8 @@ Contributors: marceljm
 Donate link: https://www.paypal.com/donate/?hosted_button_id=KY7MRYTANZN9A
 Tags: featured, image, url, video, woocommerce
 Requires at least: 5.6
-Tested up to: 6.5.2
-Stable tag: 4.7.2
+Tested up to: 6.5.3
+Stable tag: 4.7.4
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -265,14 +265,14 @@ Supports URLs from YouTube, Vimeo, Twitter, 9GAG, Cloudinary, Tumblr, Publitio, 
 
 == Changelog ==
 
+= 4.7.4 =
+* Enhancement: database optimizations for reduced memory usage; Fix: Image Metadata (counter making too many requests).
+
+= 4.7.3 =
+* Fixes: Image Metadata (wrong counter, Apache/Nginx timeout, fatal error due to excessive memory usage, slow queries).
+
 = 4.7.2 =
 * Deprecated: Save in the media library > Developer.
-
-= 4.7.1 =
-* Fix: CDN + Optimized Thumbnails (not cropping the top for screenshots).
-
-= 4.7.0 =
-* Fix: CDN + Optimized Thumbnails (not working for Getty Images); Fix: Meta Tags (not sharing images from Google Drive, YouTube and Imgur); Fix: Metabox (style issues).
 
 = others =
 * [more](https://fifu.app/changelog)
@@ -280,5 +280,5 @@ Supports URLs from YouTube, Vimeo, Twitter, 9GAG, Cloudinary, Tumblr, Publitio, 
 
 == Upgrade Notice ==
 
-= 4.7.2 =
-* Deprecated: Save in the media library > Developer.
+= 4.7.4 =
+* Enhancement: database optimizations for reduced memory usage; Fix: Image Metadata (counter making too many requests).
