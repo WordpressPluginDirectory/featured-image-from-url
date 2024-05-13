@@ -49,8 +49,8 @@ class FifuDb {
             return;
 
         $this->wpdb->query("
-            ALTER TABLE " . $this->posts . "
-            MODIFY COLUMN guid VARCHAR(" . $this->MAX_URL_LENGTH . ")"
+            ALTER TABLE {$this->posts}
+            MODIFY COLUMN guid VARCHAR({$this->MAX_URL_LENGTH})"
         );
     }
 
@@ -58,13 +58,13 @@ class FifuDb {
 
     function fix_guid() {
         $this->wpdb->query("
-            UPDATE " . $this->posts . " p 
-            INNER JOIN " . $this->postmeta . " pm ON (
+            UPDATE {$this->posts} p 
+            INNER JOIN {$this->postmeta} pm ON (
                 pm.post_id = p.id 
                 AND	pm.meta_key = '_wp_attached_file'
             )
             SET p.guid = pm.meta_value
-            WHERE p.post_author = " . $this->author . "  
+            WHERE p.post_author = {$this->author}  
             AND LENGTH(p.guid) = 255"
         );
     }
@@ -76,14 +76,17 @@ class FifuDb {
         $ctgr_sql = $is_ctgr ? "AND p.post_name LIKE 'fifu-category%'" : "";
 
         $this->wpdb->query("
-            INSERT INTO " . $this->postmeta . " (post_id, meta_key, meta_value) (
+            INSERT INTO {$this->postmeta} (post_id, meta_key, meta_value) (
                 SELECT p.id, '_wp_attached_file', p.guid
-                FROM " . $this->posts . " p LEFT OUTER JOIN " . $this->postmeta . " b ON p.id = b.post_id AND meta_key = '_wp_attached_file'
-                WHERE b.post_id IS NULL
-                AND p.post_parent IN (" . $ids . ") 
-                AND p.post_type = 'attachment' 
-                AND p.post_author = " . $this->author . " 
-                " . $ctgr_sql . " 
+                FROM {$this->posts} p 
+                WHERE NOT EXISTS (
+                    SELECT 1 
+                    FROM {$this->postmeta} b 
+                    WHERE p.id = b.post_id AND b.meta_key = '_wp_attached_file'
+                )
+                AND p.post_parent IN ({$ids}) 
+                AND p.post_author = {$this->author} 
+                {$ctgr_sql} 
             )"
         );
     }
@@ -97,7 +100,6 @@ class FifuDb {
             FROM {$this->postmeta} pm JOIN {$this->posts} p ON pm.post_id = p.id
             WHERE pm.meta_key IN ('_wp_attached_file', '_wp_attachment_image_alt', '_wp_attachment_metadata')
             AND p.post_parent IN ({$ids})
-            AND p.post_type = 'attachment'
             AND p.post_author = {$this->author} 
             {$ctgr_sql}"
         );
@@ -111,14 +113,17 @@ class FifuDb {
         $ctgr_sql = $is_ctgr ? "AND p.post_name LIKE 'fifu-category%'" : "";
 
         $this->wpdb->query("
-            INSERT INTO " . $this->postmeta . " (post_id, meta_key, meta_value) (
+            INSERT INTO {$this->postmeta} (post_id, meta_key, meta_value) (
                 SELECT p.id, '_wp_attachment_image_alt', p.post_title 
-                FROM " . $this->posts . " p LEFT OUTER JOIN " . $this->postmeta . " b ON p.id = b.post_id AND meta_key = '_wp_attachment_image_alt'
-                WHERE b.post_id IS NULL
-                AND p.post_parent IN (" . $ids . ") 
-                AND p.post_type = 'attachment' 
-                AND p.post_author = " . $this->author . " 
-                " . $ctgr_sql . "
+                FROM {$this->posts} p
+                WHERE NOT EXISTS (
+                    SELECT 1 
+                    FROM {$this->postmeta} b 
+                    WHERE p.id = b.post_id AND b.meta_key = '_wp_attachment_image_alt'
+                )
+                AND p.post_parent IN ({$ids}) 
+                AND p.post_author = {$this->author} 
+                {$ctgr_sql}
             )"
         );
     }
@@ -128,14 +133,17 @@ class FifuDb {
         $ctgr_sql = $is_ctgr ? "AND p.post_name LIKE 'fifu-category%'" : "";
 
         $this->wpdb->query("
-            INSERT INTO " . $this->postmeta . " (post_id, meta_key, meta_value) (
+            INSERT INTO {$this->postmeta} (post_id, meta_key, meta_value) (
                 SELECT p.post_parent, '_thumbnail_id', p.id 
-                FROM " . $this->posts . " p LEFT OUTER JOIN " . $this->postmeta . " b ON p.post_parent = b.post_id AND meta_key = '_thumbnail_id'
-                WHERE b.post_id IS NULL
-                AND p.post_parent IN (" . $ids . ") 
-                AND p.post_type = 'attachment' 
-                AND p.post_author = " . $this->author . " 
-                " . $ctgr_sql . " 
+                FROM {$this->posts} p
+                WHERE NOT EXISTS (
+                    SELECT 1 
+                    FROM {$this->postmeta} b 
+                    WHERE p.post_parent = b.post_id AND b.meta_key = '_thumbnail_id'
+                )
+                AND p.post_parent IN ({$ids}) 
+                AND p.post_author = {$this->author} 
+                {$ctgr_sql} 
             )"
         );
     }
@@ -149,7 +157,6 @@ class FifuDb {
                 FROM {$this->posts} p LEFT OUTER JOIN {$this->termmeta} b ON p.post_parent = b.term_id AND meta_key = 'thumbnail_id'
                 WHERE b.term_id IS NULL
                 AND p.post_parent IN ({$ids}) 
-                AND p.post_type = 'attachment' 
                 AND p.post_author = {$this->author} 
                 {$ctgr_sql}
             )"
@@ -160,8 +167,8 @@ class FifuDb {
     function is_fifu_attachment($att_id) {
         return $this->wpdb->get_row("
             SELECT 1 
-            FROM " . $this->posts . " 
-            WHERE id = " . $att_id . " 
+            FROM {$this->posts} 
+            WHERE id = {$att_id} 
             AND post_author = " . $this->author
                 ) != null;
     }
@@ -170,13 +177,13 @@ class FifuDb {
     function get_categories_without_meta() {
         return $this->wpdb->get_results("
             SELECT DISTINCT term_id
-            FROM " . $this->termmeta . " a
+            FROM {$this->termmeta} a
             WHERE a.meta_key IN ('fifu_image_url')
             AND a.meta_value IS NOT NULL 
             AND a.meta_value <> ''
             AND NOT EXISTS (
                 SELECT 1 
-                FROM " . $this->termmeta . " b 
+                FROM {$this->termmeta} b 
                 WHERE a.term_id = b.term_id 
                 AND b.meta_key = 'thumbnail_id'
                 AND b.meta_value <> 0
@@ -188,13 +195,13 @@ class FifuDb {
     function get_posts_without_meta() {
         return $this->wpdb->get_results("
             SELECT DISTINCT post_id
-            FROM " . $this->postmeta . " a
+            FROM {$this->postmeta} a
             WHERE a.meta_key IN ('fifu_image_url')
             AND a.meta_value IS NOT NULL 
             AND a.meta_value <> ''
             AND NOT EXISTS (
                 SELECT 1 
-                FROM (SELECT post_id FROM " . $this->postmeta . " WHERE meta_key = '_thumbnail_id') AS b
+                FROM (SELECT post_id FROM {$this->postmeta} WHERE meta_key = '_thumbnail_id') AS b
                 WHERE a.post_id = b.post_id 
             )"
         );
@@ -204,7 +211,7 @@ class FifuDb {
     function get_posts_with_url() {
         return $this->wpdb->get_results("
             SELECT post_id 
-            FROM " . $this->postmeta . " 
+            FROM {$this->postmeta} 
             WHERE meta_key = 'fifu_image_url'"
         );
     }
@@ -213,7 +220,7 @@ class FifuDb {
     function get_terms_with_url() {
         return $this->wpdb->get_results("
             SELECT term_id 
-            FROM " . $this->termmeta . " 
+            FROM {$this->termmeta} 
             WHERE meta_key = 'fifu_image_url'
             AND meta_value <> ''
             AND meta_value IS NOT NULL"
@@ -224,9 +231,8 @@ class FifuDb {
     function get_fake_attachments() {
         return $this->wpdb->get_results("
             SELECT id 
-            FROM " . $this->posts . " 
-            WHERE post_type = 'attachment' 
-            AND post_author = " . $this->author
+            FROM {$this->posts} 
+            WHERE post_author = " . $this->author
         );
     }
 
@@ -236,11 +242,11 @@ class FifuDb {
 
         $result = $this->wpdb->get_results("
             SELECT p.id 
-            FROM " . $this->posts . " p 
-            WHERE p.post_parent = " . $post_parent . "
-            AND p.guid = '" . $url . "' 
-            AND post_author = " . $this->author . "
-            " . $ctgr_sql . " 
+            FROM {$this->posts} p 
+            WHERE p.post_parent = {$post_parent}
+            AND p.guid = '{$url}' 
+            AND post_author = {$this->author}
+            {$ctgr_sql} 
             LIMIT 1"
         );
         return $result ? $result[0]->id : null;
@@ -250,10 +256,13 @@ class FifuDb {
     function get_posts_without_dimensions() {
         return $this->wpdb->get_results("
             SELECT p.ID, p.guid
-            FROM " . $this->posts . " p LEFT OUTER JOIN " . $this->postmeta . " b ON p.id = b.post_id AND meta_key = '_wp_attachment_metadata'
-            WHERE b.post_id IS NULL
-            AND p.post_type = 'attachment' 
-            AND p.post_author = " . $this->author . "
+            FROM {$this->posts} p
+            WHERE NOT EXISTS (
+                SELECT 1 
+                FROM {$this->postmeta} b 
+                WHERE p.id = b.post_id AND b.meta_key = '_wp_attachment_metadata'
+            )
+            AND p.post_author = {$this->author}
             AND p.post_status NOT IN ('auto-draft', 'trash')
             ORDER BY p.id DESC"
         );
@@ -263,19 +272,22 @@ class FifuDb {
     function get_count_posts_without_dimensions() {
         return $this->wpdb->get_results("
             SELECT COUNT(1) AS amount
-            FROM " . $this->posts . " p LEFT OUTER JOIN " . $this->postmeta . " b ON p.id = b.post_id AND meta_key = '_wp_attachment_metadata'
-            WHERE b.post_id IS NULL
-            AND p.post_type = 'attachment' 
-            AND p.post_author = " . $this->author
-        );
+            FROM {$this->posts} p
+            WHERE NOT EXISTS (
+                SELECT 1 
+                FROM {$this->postmeta} b
+                WHERE p.id = b.post_id AND meta_key = '_wp_attachment_metadata'
+            )
+            AND p.post_author = {$this->author}
+        ");
     }
 
     // count urls with metadata
     function get_count_urls_with_metadata() {
         return $this->wpdb->get_results("
             SELECT COUNT(1) AS amount
-            FROM " . $this->posts . " p
-            WHERE p.post_author = " . $this->author . ""
+            FROM {$this->posts} p
+            WHERE p.post_author = {$this->author}"
         );
     }
 
@@ -285,13 +297,13 @@ class FifuDb {
             SELECT SUM(id) AS amount
             FROM (
                 SELECT count(post_id) AS id
-                FROM " . $this->postmeta . " pm
+                FROM {$this->postmeta} pm
                 WHERE pm.meta_key LIKE 'fifu_%'
                 AND pm.meta_key LIKE '%url%'
                 AND pm.meta_key NOT LIKE '%list%'
                 UNION 
                 SELECT count(term_id) AS id
-                FROM " . $this->termmeta . " tm
+                FROM {$this->termmeta} tm
                 WHERE tm.meta_key LIKE 'fifu_%'
                 AND tm.meta_key LIKE '%url%'
             ) x"
@@ -301,34 +313,8 @@ class FifuDb {
     // count urls without metadata
     function get_count_urls_without_metadata() {
         return $this->wpdb->get_results("
-            SELECT SUM(total_rows) AS amount
-            FROM (
-                SELECT COUNT(*) AS total_rows
-                FROM {$this->postmeta} AS a
-                WHERE a.meta_key IN ('fifu_image_url')
-                AND a.meta_value IS NOT NULL
-                AND a.meta_value <> ''
-                AND NOT EXISTS (
-                    SELECT 1 
-                    FROM {$this->postmeta} AS b
-                    WHERE b.meta_key = '_thumbnail_id' AND a.post_id = b.post_id
-                )
-            
-                UNION ALL
-            
-                SELECT COUNT(*) AS total_rows
-                FROM {$this->termmeta} AS a
-                WHERE a.meta_key IN ('fifu_image_url')
-                AND a.meta_value IS NOT NULL
-                AND a.meta_value <> ''
-                AND NOT EXISTS (
-                    SELECT 1 
-                    FROM {$this->termmeta} AS b
-                    WHERE a.term_id = b.term_id 
-                    AND b.meta_key = 'thumbnail_id'
-                    AND b.meta_value <> 0
-                )
-            ) AS combined_results"
+            SELECT COALESCE(SUM(CHAR_LENGTH(post_ids) - CHAR_LENGTH(REPLACE(post_ids, ',', '')) + 1), 0) AS amount
+            FROM {$this->fifu_meta_in}"
         );
     }
 
@@ -341,9 +327,9 @@ class FifuDb {
     function get_last($meta_key) {
         return $this->wpdb->get_results("
             SELECT p.id, pm.meta_value
-            FROM " . $this->posts . " p
-            INNER JOIN " . $this->postmeta . " pm ON p.id = pm.post_id
-            WHERE pm.meta_key = '" . $meta_key . "'
+            FROM {$this->posts} p
+            INNER JOIN {$this->postmeta} pm ON p.id = pm.post_id
+            WHERE pm.meta_key = '{$meta_key}'
             ORDER BY p.post_date DESC
             LIMIT 3"
         );
@@ -352,7 +338,7 @@ class FifuDb {
     function get_last_image() {
         return $this->wpdb->get_results("
             SELECT pm.meta_value
-            FROM " . $this->postmeta . " pm 
+            FROM {$this->postmeta} pm 
             WHERE pm.meta_key = 'fifu_image_url'
             ORDER BY pm.meta_id DESC
             LIMIT 1"
@@ -363,14 +349,13 @@ class FifuDb {
     function get_attachments_without_post($post_id) {
         $result = $this->wpdb->get_results("
             SELECT GROUP_CONCAT(id) AS ids 
-            FROM " . $this->posts . " 
-            WHERE post_parent = " . $post_id . " 
-            AND post_type = 'attachment' 
-            AND post_author = " . $this->author . "
+            FROM {$this->posts} 
+            WHERE post_parent = {$post_id} 
+            AND post_author = {$this->author}
             AND post_name NOT LIKE 'fifu-category%' 
             AND NOT EXISTS (
 	            SELECT 1
-                FROM " . $this->postmeta . "
+                FROM {$this->postmeta}
                 WHERE post_id = post_parent
                 AND meta_key = '_thumbnail_id'
                 AND meta_value = id
@@ -383,14 +368,13 @@ class FifuDb {
     function get_ctgr_attachments_without_post($term_id) {
         $result = $this->wpdb->get_results("
             SELECT GROUP_CONCAT(id) AS ids 
-            FROM " . $this->posts . " 
-            WHERE post_parent = " . $term_id . " 
-            AND post_type = 'attachment' 
-            AND post_author = " . $this->author . " 
+            FROM {$this->posts} 
+            WHERE post_parent = {$term_id} 
+            AND post_author = {$this->author} 
             AND post_name LIKE 'fifu-category%' 
             AND NOT EXISTS (
 	            SELECT 1
-                FROM " . $this->termmeta . "
+                FROM {$this->termmeta}
                 WHERE term_id = post_parent
                 AND meta_key = 'thumbnail_id'
                 AND meta_value = id
@@ -403,12 +387,12 @@ class FifuDb {
     function get_posts_without_featured_image($post_types) {
         return $this->wpdb->get_results("
             SELECT id, post_title
-            FROM " . $this->posts . " 
+            FROM {$this->posts} 
             WHERE post_type IN ('$post_types')
             AND post_status = 'publish'
             AND NOT EXISTS (
                 SELECT 1
-                FROM " . $this->postmeta . " 
+                FROM {$this->postmeta} 
                 WHERE post_id = id
                 AND meta_key IN ('_thumbnail_id', 'fifu_image_url')
             )
@@ -419,7 +403,7 @@ class FifuDb {
     function get_number_of_posts() {
         return $this->wpdb->get_row("
             SELECT count(1) AS n
-            FROM " . $this->posts . " 
+            FROM {$this->posts} 
             WHERE post_type IN ('$this->types')
             AND post_status = 'publish'"
                 )->n;
@@ -428,7 +412,7 @@ class FifuDb {
     function get_category_image_url($term_id) {
         return $this->wpdb->get_results("
             SELECT meta_value 
-            FROM " . $this->termmeta . " 
+            FROM {$this->termmeta} 
             WHERE meta_key = 'fifu_image_url' 
             AND term_id = " . $term_id
         );
@@ -437,15 +421,15 @@ class FifuDb {
     function get_featured_and_gallery_ids($post_id) {
         return $this->wpdb->get_results("
             SELECT GROUP_CONCAT(meta_value SEPARATOR ',') as 'ids'
-            FROM " . $this->postmeta . "
-            WHERE post_id = " . $post_id . "
+            FROM {$this->postmeta}
+            WHERE post_id = {$post_id}
             AND meta_key IN ('_thumbnail_id')"
         );
     }
 
     function insert_default_thumbnail_id($value) {
         $this->wpdb->query("
-            INSERT INTO " . $this->postmeta . " (post_id, meta_key, meta_value)
+            INSERT INTO {$this->postmeta} (post_id, meta_key, meta_value)
             VALUES " . $value
         );
     }
@@ -454,27 +438,27 @@ class FifuDb {
 
     function delete_thumbnail_ids($ids) {
         $this->wpdb->query("
-            DELETE FROM " . $this->postmeta . " 
+            DELETE FROM {$this->postmeta} 
             WHERE meta_key = '_thumbnail_id' 
-            AND meta_value IN (" . $ids . ")"
+            AND meta_value IN ({$ids})"
         );
     }
 
     function delete_thumbnail_ids_category($ids) {
         $this->wpdb->query("
-            DELETE FROM " . $this->termmeta . " 
+            DELETE FROM {$this->termmeta} 
             WHERE meta_key = 'thumbnail_id' 
-            AND term_id IN (" . $ids . ")"
+            AND term_id IN ({$ids})"
         );
     }
 
     function delete_thumbnail_ids_category_without_attachment() {
         $this->wpdb->query("
-            DELETE FROM " . $this->termmeta . " 
+            DELETE FROM {$this->termmeta} 
             WHERE meta_key = 'thumbnail_id' 
             AND NOT EXISTS (
                 SELECT 1 
-                FROM " . $this->posts . " p 
+                FROM {$this->posts} p 
                 WHERE p.id = meta_value
             )"
         );
@@ -482,9 +466,9 @@ class FifuDb {
 
     function delete_invalid_thumbnail_ids($ids) {
         $this->wpdb->query("
-            DELETE FROM " . $this->postmeta . " 
+            DELETE FROM {$this->postmeta} 
             WHERE meta_key = '_thumbnail_id' 
-            AND post_id IN (" . $ids . ") 
+            AND post_id IN ({$ids}) 
             AND (
                 meta_value = -1 
                 OR meta_value IS NULL 
@@ -497,9 +481,9 @@ class FifuDb {
         $att_id = get_option('fifu_fake_attach_id');
         if ($att_id) {
             $this->wpdb->query("
-                DELETE FROM " . $this->postmeta . " 
+                DELETE FROM {$this->postmeta} 
                 WHERE meta_key = '_thumbnail_id' 
-                AND post_id IN (" . $ids . ") 
+                AND post_id IN ({$ids}) 
                 AND meta_value = " . $att_id
             );
         }
@@ -507,44 +491,43 @@ class FifuDb {
 
     function delete_attachments($ids) {
         $this->wpdb->query("
-            DELETE FROM " . $this->posts . " 
-            WHERE id IN (" . $ids . ")
-            AND post_type = 'attachment'
+            DELETE FROM {$this->posts} 
+            WHERE id IN ({$ids})
             AND post_author = " . $this->author
         );
     }
 
     function delete_attachment_meta_url_and_alt($ids) {
         $this->wpdb->query("
-            DELETE FROM " . $this->postmeta . " 
+            DELETE FROM {$this->postmeta} 
             WHERE meta_key IN ('_wp_attached_file', '_wp_attachment_image_alt', '_wp_attachment_metadata')
-            AND post_id IN (" . $ids . ")
+            AND post_id IN ({$ids})
             AND EXISTS (
                 SELECT 1 
-                FROM " . $this->posts . " 
+                FROM {$this->posts} 
                 WHERE id = post_id 
-                AND post_author = " . $this->author . "
+                AND post_author = {$this->author}
             )"
         );
     }
 
     function delete_attachment_meta_url($ids) {
         $this->wpdb->query("
-            DELETE FROM " . $this->postmeta . " 
+            DELETE FROM {$this->postmeta} 
             WHERE meta_key = '_wp_attached_file' 
-            AND post_id IN (" . $ids . ")"
+            AND post_id IN ({$ids})"
         );
     }
 
     function delete_thumbnail_id_without_attachment() {
         if (fifu_is_multisite_global_media_active()) {
             $this->wpdb->query("
-                DELETE FROM " . $this->postmeta . " 
+                DELETE FROM {$this->postmeta} 
                 WHERE meta_key = '_thumbnail_id' 
                 AND meta_value NOT LIKE '100000%' 
                 AND NOT EXISTS (
                     SELECT 1 
-                    FROM " . $this->posts . " p 
+                    FROM {$this->posts} p 
                     WHERE p.id = meta_value
                 )"
             );
@@ -552,11 +535,11 @@ class FifuDb {
         }
 
         $this->wpdb->query("
-            DELETE FROM " . $this->postmeta . " 
+            DELETE FROM {$this->postmeta} 
             WHERE meta_key = '_thumbnail_id' 
             AND NOT EXISTS (
                 SELECT 1 
-                FROM " . $this->posts . " p 
+                FROM {$this->posts} p 
                 WHERE p.id = meta_value
             )"
         );
@@ -564,11 +547,11 @@ class FifuDb {
 
     function delete_attachment_meta_without_attachment() {
         $this->wpdb->query("
-            DELETE FROM " . $this->postmeta . " 
+            DELETE FROM {$this->postmeta} 
             WHERE meta_key IN ('_wp_attached_file', '_wp_attachment_image_alt', '_wp_attachment_metadata') 
             AND NOT EXISTS (
                 SELECT 1
-                FROM " . $this->posts . " p 
+                FROM {$this->posts} p 
                 WHERE p.id = post_id
             )"
         );
@@ -576,7 +559,7 @@ class FifuDb {
 
     function delete_empty_urls_category() {
         $this->wpdb->query("
-            DELETE FROM " . $this->termmeta . " 
+            DELETE FROM {$this->termmeta} 
             WHERE meta_key = 'fifu_image_url'
             AND (
                 meta_value = ''
@@ -587,7 +570,7 @@ class FifuDb {
 
     function delete_empty_urls() {
         $this->wpdb->query("
-            DELETE FROM " . $this->postmeta . " 
+            DELETE FROM {$this->postmeta} 
             WHERE meta_key = 'fifu_image_url'
             AND (
                 meta_value = ''
@@ -603,12 +586,12 @@ class FifuDb {
         $value = $fake_attach_id ? $value . ',' . $fake_attach_id : $value;
         $value = $default_attach_id ? $value . ',' . $default_attach_id : $value;
         $this->wpdb->query("
-            DELETE FROM " . $this->postmeta . " 
+            DELETE FROM {$this->postmeta} 
             WHERE meta_key IN ('_thumbnail_id', '_product_image_gallery')
-            AND meta_value IN (" . $value . ")"
+            AND meta_value IN ({$value})"
         );
         $this->wpdb->query("
-            DELETE FROM " . $this->postmeta . " 
+            DELETE FROM {$this->postmeta} 
             WHERE meta_key = 'fifu_image_dimension'"
         );
     }
@@ -621,8 +604,8 @@ class FifuDb {
         $sql = "
             (
                 SELECT pm.meta_id, pm.post_id, pm.meta_value AS url, pm.meta_key, p.post_name, p.post_title, p.post_date, false AS category, null AS video_url
-                FROM " . $this->postmeta . " pm
-                INNER JOIN " . $this->posts . " p ON pm.post_id = p.id
+                FROM {$this->postmeta} pm
+                INNER JOIN {$this->posts} p ON pm.post_id = p.id
                 WHERE pm.meta_key = 'fifu_image_url'
                 AND pm.meta_value NOT LIKE '%https://cdn.fifu.app/%'
                 AND pm.meta_value NOT LIKE 'http://localhost/%'
@@ -634,8 +617,8 @@ class FifuDb {
                 UNION
                 (
                     SELECT tm.meta_id, tm.term_id AS post_id, tm.meta_value AS url, tm.meta_key, null AS post_name, t.name AS post_title, null AS post_date, true AS category, null AS video_url
-                    FROM " . $this->termmeta . " tm
-                    INNER JOIN " . $this->terms . " t ON tm.term_id = t.term_id
+                    FROM {$this->termmeta} tm
+                    INNER JOIN {$this->terms} t ON tm.term_id = t.term_id
                     WHERE tm.meta_key IN ('fifu_image_url')
                     AND tm.meta_value NOT LIKE '%https://cdn.fifu.app/%'
                     AND tm.meta_value NOT LIKE 'http://localhost/%'
@@ -661,24 +644,24 @@ class FifuDb {
                     p.post_title, 
                     p.post_date, 
                     att.id AS thumbnail_id,
-                    (SELECT meta_value FROM " . $this->postmeta . " pm2 WHERE pm2.post_id = pm.post_id AND pm2.meta_key = '_product_image_gallery') AS gallery_ids,
+                    (SELECT meta_value FROM {$this->postmeta} pm2 WHERE pm2.post_id = pm.post_id AND pm2.meta_key = '_product_image_gallery') AS gallery_ids,
                     false AS category
-                FROM " . $this->postmeta . " pm
-                INNER JOIN " . $this->posts . " p ON pm.post_id = p.id
-                INNER JOIN " . $this->posts . " att ON (
+                FROM {$this->postmeta} pm
+                INNER JOIN {$this->posts} p ON pm.post_id = p.id
+                INNER JOIN {$this->posts} att ON (
                     pm.meta_key = '_thumbnail_id'
                     AND pm.meta_value = att.id
-                    AND att.post_author <> " . $this->author . "
+                    AND att.post_author <> {$this->author}
                 )
                 WHERE NOT EXISTS (
                     SELECT 1
-                    FROM " . $this->postmeta . "
+                    FROM {$this->postmeta}
                     WHERE post_id = pm.post_id
                     AND (meta_key LIKE 'fifu_%image_url%' OR meta_key IN ('bkp_thumbnail_id', 'bkp_product_image_gallery'))
                 )
                 AND (
                     SELECT COUNT(1)
-                    FROM " . $this->postmeta . "
+                    FROM {$this->postmeta}
                     WHERE post_id = pm.post_id
                     AND meta_key = '_product_image_gallery'
                 ) <= 1
@@ -698,16 +681,16 @@ class FifuDb {
                         att.id AS thumbnail_id,
                         null AS gallery_ids,
                         true AS category
-                    FROM " . $this->termmeta . " tm
-                    INNER JOIN " . $this->terms . " t ON tm.term_id = t.term_id
-                    INNER JOIN " . $this->posts . " att ON (
+                    FROM {$this->termmeta} tm
+                    INNER JOIN {$this->terms} t ON tm.term_id = t.term_id
+                    INNER JOIN {$this->posts} att ON (
                         tm.meta_key = 'thumbnail_id'
                         AND tm.meta_value = att.id
-                        AND att.post_author <> " . $this->author . "
+                        AND att.post_author <> {$this->author}
                     )
                     WHERE NOT EXISTS (
                         SELECT 1
-                        FROM " . $this->termmeta . "
+                        FROM {$this->termmeta}
                         WHERE term_id = tm.term_id
                         AND (meta_key = 'fifu_image_url' OR meta_key = 'bkp_thumbnail_id')
                     )
@@ -738,8 +721,8 @@ class FifuDb {
                     pm.post_id, 
                     pm.meta_key, 
                     false AS category
-                FROM " . $this->postmeta . " pm
-                INNER JOIN " . $this->posts . " p ON pm.post_id = p.id
+                FROM {$this->postmeta} pm
+                INNER JOIN {$this->posts} p ON pm.post_id = p.id
                 WHERE pm.meta_key LIKE 'fifu_%image_url%'
                 AND pm.meta_value LIKE 'https://cdn.fifu.app/%'" .
                 $filter_post_image . "
@@ -756,8 +739,8 @@ class FifuDb {
                         tm.term_id AS post_id, 
                         tm.meta_key, 
                         true AS category
-                    FROM " . $this->termmeta . " tm
-                    INNER JOIN " . $this->terms . " t ON tm.term_id = t.term_id
+                    FROM {$this->termmeta} tm
+                    INNER JOIN {$this->terms} t ON tm.term_id = t.term_id
                     WHERE tm.meta_key = 'fifu_image_url'
                     AND tm.meta_value LIKE 'https://cdn.fifu.app/%'" .
                     $filter_term_image . "
@@ -820,14 +803,14 @@ class FifuDb {
         $table = $is_ctgr ? $this->termmeta : $this->postmeta;
 
         $query = "
-            INSERT INTO " . $table . " (meta_id, meta_value) VALUES ";
+            INSERT INTO {$table} (meta_id, meta_value) VALUES ";
         $count = 0;
         foreach ($thumbnails as $thumbnail) {
             $su_url = $this->get_su_url($bucket_id, $thumbnail->storage_id);
 
             if ($count++ != 0)
                 $query .= ", ";
-            $query .= "(" . $thumbnail->meta_id . ",'" . $su_url . "') ";
+            $query .= "({$thumbnail->meta_id},'{$su_url}') ";
         }
         $query .= "ON DUPLICATE KEY UPDATE meta_value=VALUES(meta_value)";
         return $this->wpdb->get_results($query);
@@ -844,15 +827,15 @@ class FifuDb {
         if ($is_ctgr) {
             $result = $this->wpdb->get_results("
                 SELECT term_id AS post_id, meta_value AS att_id
-                FROM " . $this->termmeta . " 
-                WHERE term_id IN (" . $ids . ") 
+                FROM {$this->termmeta} 
+                WHERE term_id IN ({$ids}) 
                 AND meta_key = 'thumbnail_id'"
             );
         } else {
             $result = $this->wpdb->get_results("
                 SELECT post_id, meta_value AS att_id
-                FROM " . $this->postmeta . " 
-                WHERE post_id IN (" . $ids . ") 
+                FROM {$this->postmeta} 
+                WHERE post_id IN ({$ids}) 
                 AND meta_key = '_thumbnail_id'"
             );
         }
@@ -877,7 +860,7 @@ class FifuDb {
     function speed_up_attachments($bucket_id, $thumbnails, $att_ids_map) {
         $count = 0;
         $query = "
-            INSERT INTO " . $this->posts . " (id, guid) VALUES ";
+            INSERT INTO {$this->posts} (id, guid) VALUES ";
         foreach ($thumbnails as $thumbnail) {
             if (!isset($att_ids_map[$thumbnail->meta_id])) // no metadata, only custom field
                 continue;
@@ -886,7 +869,7 @@ class FifuDb {
 
             if ($count++ != 0)
                 $query .= ", ";
-            $query .= "(" . $att_ids_map[$thumbnail->meta_id] . ",'" . $su_url . "') ";
+            $query .= "(" . $att_ids_map[$thumbnail->meta_id] . ",'{$su_url}') ";
         }
         $query .= "ON DUPLICATE KEY UPDATE guid=VALUES(guid)";
         return $this->wpdb->get_results($query);
@@ -905,8 +888,8 @@ class FifuDb {
         // get meta ids
         $result = $this->wpdb->get_results("
             SELECT meta_id, post_id
-            FROM " . $this->postmeta . " 
-            WHERE post_id IN (" . $ids . ") 
+            FROM {$this->postmeta} 
+            WHERE post_id IN ({$ids}) 
             AND meta_key = '_wp_attached_file'"
         );
 
@@ -929,7 +912,7 @@ class FifuDb {
     function speed_up_attachments_meta($bucket_id, $thumbnails, $meta_ids_map) {
         $count = 0;
         $query = "
-            INSERT INTO " . $this->postmeta . " (meta_id, meta_value) VALUES ";
+            INSERT INTO {$this->postmeta} (meta_id, meta_value) VALUES ";
         foreach ($thumbnails as $thumbnail) {
             if (!isset($meta_ids_map[$thumbnail->meta_id])) // no metadata, only custom field
                 continue;
@@ -938,7 +921,7 @@ class FifuDb {
 
             if ($count++ != 0)
                 $query .= ", ";
-            $query .= "(" . $meta_ids_map[$thumbnail->meta_id] . ",'" . $su_url . "') ";
+            $query .= "(" . $meta_ids_map[$thumbnail->meta_id] . ",'{$su_url}') ";
         }
         $query .= "ON DUPLICATE KEY UPDATE meta_value=VALUES(meta_value)";
         return $this->wpdb->get_results($query);
@@ -1013,13 +996,13 @@ class FifuDb {
         $table = $is_ctgr ? $this->termmeta : $this->postmeta;
 
         $query = "
-            INSERT INTO " . $table . " (meta_id, meta_value) VALUES ";
+            INSERT INTO {$table} (meta_id, meta_value) VALUES ";
         $count = 0;
         foreach ($thumbnails as $thumbnail) {
             if ($count++ != 0)
                 $query .= ", ";
             $url = $urls[$thumbnail->storage_id];
-            $query .= "(" . $thumbnail->meta_id . ",'" . $url . "')";
+            $query .= "({$thumbnail->meta_id},'{$url}')";
         }
         $query .= "ON DUPLICATE KEY UPDATE meta_value=VALUES(meta_value)";
         return $this->wpdb->get_results($query);
@@ -1028,7 +1011,7 @@ class FifuDb {
     function revert_attachments($urls, $thumbnails, $att_ids_map) {
         $count = 0;
         $query = "
-            INSERT INTO " . $this->posts . " (id, guid) VALUES ";
+            INSERT INTO {$this->posts} (id, guid) VALUES ";
         foreach ($thumbnails as $thumbnail) {
             if (!isset($att_ids_map[$thumbnail->meta_id])) // no metadata, only custom field
                 continue;
@@ -1043,7 +1026,7 @@ class FifuDb {
     function revert_attachments_meta($urls, $thumbnails, $meta_ids_map) {
         $count = 0;
         $query = "
-            INSERT INTO " . $this->postmeta . " (meta_id, meta_value) VALUES ";
+            INSERT INTO {$this->postmeta} (meta_id, meta_value) VALUES ";
         foreach ($thumbnails as $thumbnail) {
             if (!isset($meta_ids_map[$thumbnail->meta_id])) // no metadata, only custom field
                 continue;
@@ -1095,7 +1078,7 @@ class FifuDb {
         $md5 = md5($url);
         $result = $this->wpdb->get_row("
             SELECT attempts
-            FROM " . $this->fifu_invalid_media_su . " 
+            FROM {$this->fifu_invalid_media_su} 
             WHERE md5 = '{$md5}'"
         );
         return $result ? (int) $result->attempts : 0;
@@ -1104,7 +1087,7 @@ class FifuDb {
     function delete_invalid_media_su($url) {
         $md5 = md5($url);
         $this->wpdb->query("
-            DELETE FROM " . $this->fifu_invalid_media_su . " 
+            DELETE FROM {$this->fifu_invalid_media_su} 
             WHERE md5 = '{$md5}'"
         );
     }
@@ -1116,7 +1099,7 @@ class FifuDb {
 
         $featured = $this->wpdb->get_results("
             SELECT COUNT(1) AS total
-            FROM " . $this->postmeta . "
+            FROM {$this->postmeta}
             WHERE meta_key = '_thumbnail_id'"
         );
 
@@ -1125,7 +1108,7 @@ class FifuDb {
         if (class_exists('WooCommerce')) {
             $gallery = $this->wpdb->get_results("
                 SELECT SUM(LENGTH(meta_value) - LENGTH(REPLACE(meta_value, ',', '')) + 1) AS total
-                FROM " . $this->postmeta . "
+                FROM {$this->postmeta}
                 WHERE meta_key = '_product_image_gallery'"
             );
 
@@ -1133,7 +1116,7 @@ class FifuDb {
 
             $category = $this->wpdb->get_results("
                 SELECT COUNT(1) AS total
-                FROM " . $this->termmeta . "
+                FROM {$this->termmeta}
                 WHERE meta_key = 'thumbnail_id'"
             );
 
@@ -1147,22 +1130,22 @@ class FifuDb {
 
     function insert_attachment_by($value) {
         $this->wpdb->query("
-            INSERT INTO " . $this->posts . " (post_author, guid, post_title, post_mime_type, post_type, post_status, post_parent, post_date, post_date_gmt, post_modified, post_modified_gmt, post_content, post_excerpt, to_ping, pinged, post_content_filtered) 
+            INSERT INTO {$this->posts} (post_author, guid, post_title, post_mime_type, post_type, post_status, post_parent, post_date, post_date_gmt, post_modified, post_modified_gmt, post_content, post_excerpt, to_ping, pinged, post_content_filtered) 
             VALUES " . str_replace('\\', '', $value));
     }
 
     function insert_ctgr_attachment_by($value) {
         $this->wpdb->query("
-            INSERT INTO " . $this->posts . " (post_author, guid, post_title, post_mime_type, post_type, post_status, post_parent, post_date, post_date_gmt, post_modified, post_modified_gmt, post_content, post_excerpt, to_ping, pinged, post_content_filtered, post_name) 
+            INSERT INTO {$this->posts} (post_author, guid, post_title, post_mime_type, post_type, post_status, post_parent, post_date, post_date_gmt, post_modified, post_modified_gmt, post_content, post_excerpt, to_ping, pinged, post_content_filtered, post_name) 
             VALUES " . str_replace('\\', '', $value));
     }
 
     function get_formatted_value($url, $alt, $post_parent) {
-        return "(" . $this->author . ", '" . $url . "', '" . str_replace("'", "", $alt) . "', 'image/jpeg', 'attachment', 'inherit', '" . $post_parent . "', now(), now(), now(), now(), '', '', '', '', '')";
+        return "({$this->author}, '{$url}', '" . str_replace("'", "", $alt) . "', 'image/jpeg', 'attachment', 'inherit', '{$post_parent}', now(), now(), now(), now(), '', '', '', '', '')";
     }
 
     function get_ctgr_formatted_value($url, $alt, $post_parent) {
-        return "(" . $this->author . ", '" . $url . "', '" . str_replace("'", "", $alt) . "', 'image/jpeg', 'attachment', 'inherit', '" . $post_parent . "', now(), now(), now(), now(), '', '', '', '', '', 'fifu-category-" . $post_parent . "')";
+        return "({$this->author}, '{$url}', '" . str_replace("'", "", $alt) . "', 'image/jpeg', 'attachment', 'inherit', '{$post_parent}', now(), now(), now(), now(), '', '', '', '', '', 'fifu-category-{$post_parent}')";
     }
 
     /* insert fake internal featured image */
@@ -1284,14 +1267,13 @@ class FifuDb {
 
     function clean_dimensions_all() {
         $this->wpdb->query("
-            DELETE FROM " . $this->postmeta . " pm            
+            DELETE FROM {$this->postmeta} pm            
             WHERE pm.meta_key = '_wp_attachment_metadata'
             AND EXISTS (
                 SELECT 1 
-                FROM " . $this->posts . " p 
+                FROM {$this->posts} p 
                 WHERE p.id = pm.post_id
-                AND p.post_type = 'attachment'
-                AND p.post_author = " . $this->author . " 
+                AND p.post_author = {$this->author} 
             )"
         );
     }
@@ -1408,7 +1390,7 @@ class FifuDb {
         $post_types ? $post_types : $this->types;
         $value = null;
         foreach ($this->get_posts_without_featured_image($post_types) as $res) {
-            $aux = "(" . $res->id . ", '_thumbnail_id', " . $att_id . ")";
+            $aux = "({$res->id}, '_thumbnail_id', {$att_id})";
             $value = $value ? $value . ',' . $aux : $aux;
         }
         if ($value) {
@@ -1470,7 +1452,7 @@ class FifuDb {
         sleep(3);
         if (fifu_is_on('fifu_run_delete_all') && get_option('fifu_run_delete_all_time') && FIFU_DELETE_ALL_URLS) {
             $this->wpdb->query("
-                DELETE FROM " . $this->postmeta . " 
+                DELETE FROM {$this->postmeta} 
                 WHERE meta_key LIKE 'fifu_%'"
             );
         }
@@ -1503,7 +1485,7 @@ class FifuDb {
                 FROM {$this->postmeta} AS b
                 WHERE b.meta_key = '_thumbnail_id' AND a.post_id = b.post_id
             )
-            GROUP BY FLOOR(a.post_id / 2000)"
+            GROUP BY FLOOR(a.post_id / 5000)"
         );
 
         // term (woocommerce category)
@@ -1523,7 +1505,7 @@ class FifuDb {
                     OR b.meta_key IN ('fifu_metadataterm_sent')
                 )
             )
-            GROUP BY FLOOR(a.term_id / 1000)"
+            GROUP BY FLOOR(a.term_id / 5000)"
         );
     }
 
@@ -1565,18 +1547,16 @@ class FifuDb {
         // insert 1 attachment for each selected post
         $value_arr = array();
         $ids = $result[0]->post_ids;
+        $meta_data = $this->get_fifu_fields($ids);
         $post_ids = explode(",", $ids);
         foreach ($post_ids as $post_id) {
-            $url = fifu_main_image_url($post_id, false);
-            $aux = $this->get_formatted_value($url, get_post_meta($post_id, 'fifu_image_alt', true), $post_id);
+            $url = $this->get_main_image_url($meta_data[$post_id], $post_id);
+            $aux = $this->get_formatted_value($url, $meta_data[$post_id]['fifu_image_alt'], $post_id);
             array_push($value_arr, $aux);
         }
         $value = implode(",", $value_arr);
         wp_cache_flush();
-        $this->insert_attachment_by($value);
-        $this->insert_thumbnail_id($ids, false);
-        $this->insert_attachment_meta_url($ids, false);
-        $this->insert_attachment_meta_alt($ids, false);
+        $this->insert_postmeta2($value, $ids);
 
         $this->wpdb->query("
             DELETE FROM {$this->fifu_meta_in}
@@ -1586,6 +1566,47 @@ class FifuDb {
         set_transient('fifu_metadata_counter', get_transient('fifu_metadata_counter') - count($post_ids), 0);
 
         return true;
+    }
+
+    function insert_postmeta2($value, $ids) {
+        $this->wpdb->query('START TRANSACTION');
+
+        try {
+            $this->wpdb->query("
+                INSERT INTO {$this->posts} (post_author, guid, post_title, post_mime_type, post_type, post_status, post_parent, post_date, post_date_gmt, post_modified, post_modified_gmt, post_content, post_excerpt, to_ping, pinged, post_content_filtered) 
+                VALUES " . str_replace('\\', '', $value));
+
+            $this->wpdb->query("
+                INSERT INTO {$this->postmeta} (post_id, meta_key, meta_value) (
+                    SELECT p.post_parent, '_thumbnail_id', p.id 
+                    FROM {$this->posts} p
+                    WHERE p.post_parent IN ({$ids}) 
+                    AND p.post_author = {$this->author} 
+                )"
+            );
+
+            $this->wpdb->query("
+                INSERT INTO {$this->postmeta} (post_id, meta_key, meta_value) (
+                    SELECT p.id, '_wp_attached_file', p.guid
+                    FROM {$this->posts} p 
+                    WHERE p.post_parent IN ({$ids}) 
+                    AND p.post_author = {$this->author} 
+                )"
+            );
+
+            $this->wpdb->query("
+                INSERT INTO {$this->postmeta} (post_id, meta_key, meta_value) (
+                    SELECT p.id, '_wp_attachment_image_alt', p.post_title 
+                    FROM {$this->posts} p
+                    WHERE p.post_parent IN ({$ids}) 
+                    AND p.post_author = {$this->author} 
+                )"
+            );
+
+            $this->wpdb->query('COMMIT');
+        } catch (Exception $e) {
+            $this->wpdb->query('ROLLBACK');
+        }
     }
 
     function insert_termmeta($id) {
@@ -1614,10 +1635,7 @@ class FifuDb {
         }
         $value = implode(",", $value_arr);
         wp_cache_flush();
-        $this->insert_ctgr_attachment_by($value);
-        $this->insert_thumbnail_id_ctgr($ids, true);
-        $this->insert_attachment_meta_url($ids, true);
-        $this->insert_attachment_meta_alt($ids, true);
+        $this->insert_termmeta2($value, $ids);
 
         $this->wpdb->query("
             DELETE FROM {$this->fifu_meta_in}
@@ -1627,6 +1645,93 @@ class FifuDb {
         set_transient('fifu_metadata_counter', get_transient('fifu_metadata_counter') - count($term_ids), 0);
 
         return true;
+    }
+
+    function insert_termmeta2($value, $ids) {
+        $this->wpdb->query('START TRANSACTION');
+
+        try {
+            $this->wpdb->query("
+                INSERT INTO {$this->posts} (post_author, guid, post_title, post_mime_type, post_type, post_status, post_parent, post_date, post_date_gmt, post_modified, post_modified_gmt, post_content, post_excerpt, to_ping, pinged, post_content_filtered, post_name) 
+                VALUES " . str_replace('\\', '', $value));
+
+            $this->wpdb->query("
+                INSERT INTO {$this->termmeta} (term_id, meta_key, meta_value) (
+                    SELECT p.post_parent, 'thumbnail_id', p.id 
+                    FROM {$this->posts} p
+                    WHERE p.post_parent IN ({$ids}) 
+                    AND p.post_author = {$this->author} 
+                    AND p.post_name LIKE 'fifu-category%'
+                )"
+            );
+
+            $this->wpdb->query("
+                INSERT INTO {$this->postmeta} (post_id, meta_key, meta_value) (
+                    SELECT p.id, '_wp_attached_file', p.guid
+                    FROM {$this->posts} p 
+                    WHERE p.post_parent IN ({$ids}) 
+                    AND p.post_author = {$this->author} 
+                    AND p.post_name LIKE 'fifu-category%'
+                )"
+            );
+
+            $this->wpdb->query("
+                INSERT INTO {$this->postmeta} (post_id, meta_key, meta_value) (
+                    SELECT p.id, '_wp_attachment_image_alt', p.post_title 
+                    FROM {$this->posts} p
+                    WHERE p.post_parent IN ({$ids}) 
+                    AND p.post_author = {$this->author} 
+                    AND p.post_name LIKE 'fifu-category%'
+                )"
+            );
+
+            $this->wpdb->query('COMMIT');
+        } catch (Exception $e) {
+            $this->wpdb->query('ROLLBACK');
+        }
+    }
+
+    function get_fifu_fields($ids) {
+        $results = $this->wpdb->get_results("
+            SELECT post_id, meta_key, meta_value
+            FROM {$this->postmeta}
+            WHERE post_id IN ({$ids})
+            AND meta_key IN ('fifu_image_url', 'fifu_image_alt')"
+        );
+
+        $post_ids = explode(",", $ids);
+
+        $data = [];
+        foreach ($post_ids as $id) {
+            $data[$id] = [
+                'fifu_image_url' => "",
+                'fifu_image_alt' => ""
+            ];
+        }
+
+        // Populate the results
+        foreach ($results as $row) {
+            if (isset($data[$row->post_id]))
+                $data[$row->post_id][$row->meta_key] = $row->meta_value;
+        }
+
+        return $data;
+    }
+
+    function get_main_image_url($meta_data, $post_id) {
+        $url = $meta_data['fifu_image_url'];
+
+        if (!$url && fifu_no_internal_image($post_id) && (get_option('fifu_default_url') && fifu_is_on('fifu_enable_default_url'))) {
+            if (fifu_is_valid_default_cpt($post_id))
+                $url = get_option('fifu_default_url');
+        }
+
+        if (!$url)
+            return null;
+
+        $url = htmlspecialchars_decode($url);
+
+        return str_replace("'", "%27", $url);
     }
 
 }

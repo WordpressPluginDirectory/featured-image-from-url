@@ -16,7 +16,6 @@ WooCommerce:<?php echo class_exists('WooCommerce') ? WC()->version : '' ?>;
 Pages:<?php echo wp_count_posts('page')->publish ?>;
 Posts:<?php echo wp_count_posts('post')->publish ?>;
 Products:<?php echo class_exists('WooCommerce') ? wp_count_posts('product')->publish : null ?>;
-Images without dimensions:<?php echo fifu_db_missing_dimensions() ?>;
 URLs with metadata:<?php echo fifu_db_count_urls_with_metadata() ?>;
 URLs:<?php echo fifu_db_count_urls() ?>;
 Users:<?php echo fifu_number_of_users() ?>;

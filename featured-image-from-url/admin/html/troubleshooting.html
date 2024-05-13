@@ -9,6 +9,26 @@
     <div id="tabs-top" style="float:left">
         <ul>
             <div id="tabs-t" style="padding:1em 1.4em; position: relative; top: -25px;">
+                <div class="box" style="display:none">
+                    <table>
+                        <tr>
+                            <td style="border-bottom:none">2024-05-09</td>
+                            <td style="border-bottom:none"><h3>WP All Import</h3></td>
+                            <td style="border-bottom:none">plugin</td>
+                        </tr>
+                    </table>
+                    <div class="greybox" style="position: relative; top: -10px">
+                        "PHP Fatal error:  Uncaught Exception: Serialization of 'Closure' is not allowed":<br>
+                        1) edit 'wp-all-import-pro/classes/session.php' and add<br>
+                        <textarea style="width:100%;height:25px;overflow:hidden" disabled>
+                            if ($value instanceof PMXI_Import_Record) return;  
+                        </textarea>
+                        immediately before<br>
+                        <textarea style="width:100%;height:25px;overflow:hidden" disabled>
+                            $this->_data[sanitize_key($key)] = maybe_serialize($value);
+                        </textarea>
+                    </div>
+                </div>
                 <div class="box">
                     <table>
                         <tr>

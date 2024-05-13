@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/donate/?hosted_button_id=KY7MRYTANZN9A
 Tags: featured, image, url, video, woocommerce
 Requires at least: 5.6
 Tested up to: 6.5.3
-Stable tag: 4.7.4
+Stable tag: 4.7.5
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -215,6 +215,10 @@ Supports URLs from YouTube, Vimeo, Twitter, 9GAG, Cloudinary, Tumblr, Publitio, 
 
 * No, external images don't affect SEO. Click [here](https://www.searchenginejournal.com/does-using-a-cdn-improve-ranking/) to know more.
 
+= Plugin could not be activated because it triggered a fatal error
+
+* During activation, the plugin tries to change a column in the database to support URLs longer than 256 characters. If the plugin cannot be activated, it's possible that your site doesn't have enough memory to support the column resizing operation, especially if your database is too large. In this case, try to increase the memory of your site.
+
 
 == Screenshots ==
 
@@ -265,14 +269,14 @@ Supports URLs from YouTube, Vimeo, Twitter, 9GAG, Cloudinary, Tumblr, Publitio, 
 
 == Changelog ==
 
+= 4.7.5 =
+* Enhancement: Taxonomy Image (integration with Variation Swatches for WooCommerce); enhancement: Image Metadata (2x faster); enhancement: Status page (loads faster); fix: WP All Import add-on (XML example missing); fix: Meta Tags (conflict with Yoast).
+
 = 4.7.4 =
 * Enhancement: database optimizations for reduced memory usage; Fix: Image Metadata (counter making too many requests).
 
 = 4.7.3 =
 * Fixes: Image Metadata (wrong counter, Apache/Nginx timeout, fatal error due to excessive memory usage, slow queries).
-
-= 4.7.2 =
-* Deprecated: Save in the media library > Developer.
 
 = others =
 * [more](https://fifu.app/changelog)
@@ -280,5 +284,5 @@ Supports URLs from YouTube, Vimeo, Twitter, 9GAG, Cloudinary, Tumblr, Publitio, 
 
 == Upgrade Notice ==
 
-= 4.7.4 =
-* Enhancement: database optimizations for reduced memory usage; Fix: Image Metadata (counter making too many requests).
+= 4.7.5 =
+* Enhancement: Taxonomy Image (integration with Variation Swatches for WooCommerce); enhancement: Image Metadata (2x faster); enhancement: Status page (loads faster); fix: WP All Import add-on (XML example missing); fix: Meta Tags (conflict with Yoast).

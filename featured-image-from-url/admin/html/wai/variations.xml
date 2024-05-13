@@ -1,6 +1,7 @@
 <Product>
 	<title>Parent</title>
 	<sku>ParentSKU1</sku>
+	<fifu_list_url>https://images.pexels.com/photos/147411/italy-mountains-dawn-daybreak-147411.jpeg|https://images.pexels.com/photos/247599/pexels-photo-247599.jpeg|https://images.pexels.com/photos/346529/pexels-photo-346529.jpeg</fifu_list_url>
 	<Extended_Xml_Attributes>
 		<variants>
 			<variant>

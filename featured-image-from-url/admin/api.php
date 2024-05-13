@@ -918,6 +918,13 @@ function fifu_api_meta_in(WP_REST_Request $request) {
             break;
     }
 
+    $total = fifu_db_count_urls_without_metadata();
+    if ($total < 0) {
+        return new WP_REST_Response('', 200);
+    }
+
+    set_transient('fifu_metadata_counter', $total, 0);
+
     $result = fifu_db_get_meta_in_first();
     if (isset($result[0])) {
         $new_request = new WP_REST_Request();

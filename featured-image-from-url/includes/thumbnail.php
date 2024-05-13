@@ -68,10 +68,11 @@ function fifu_add_js() {
     }
 }
 
-function fifu_add_social_tag_yoast() {
+function fifu_add_social_tag_yoast($image_url) {
     if (get_post_meta(get_the_ID(), '_yoast_wpseo_opengraph-image', true) || get_post_meta(get_the_ID(), '_yoast_wpseo_twitter-image', true))
-        return;
-    return fifu_main_image_url(get_the_ID(), true);
+        return $image_url;
+    $url = fifu_main_image_url(get_the_ID(), true);
+    return $url ? $url : $image_url;
 }
 
 function fifu_add_social_tag_yoast_list($object) {

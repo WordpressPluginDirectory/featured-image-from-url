@@ -465,7 +465,7 @@ function fifu_get_strings_settings() {
         _e("Duplicated image in a single post ", FIFU_SLUG);
     };
     $fifu['support']['disappeared-desc'] = function () {
-        _e("You may solve it by: 1) accessing Metadata tab; 2) running Clear Metadata; 3) activating Image Metadata (~50,000 URLs/min); 4) clearing your cache (optional).", FIFU_SLUG);
+        _e("You may solve it by: 1) accessing Metadata tab; 2) running Clear Metadata; 3) activating Image Metadata (~100,000 URLs/min); 4) clearing your cache (optional).", FIFU_SLUG);
     };
     $fifu['support']['plugin-desc'] = function () {
         _e("Contact us. If you are available to discuss the details and the plugin is free, we should provide an integration. Or contact its developer and ask him to use the FIFU integration functions below.", FIFU_SLUG);
@@ -1389,7 +1389,7 @@ function fifu_get_strings_settings() {
 
     // taxonomy
     $fifu['taxonomy']['desc'] = function () {
-        _e("Enables the featured image field for taxonomies. To display the image, use a shortcode like this:", FIFU_SLUG);
+        _e("Enables the featured image field for taxonomies. It's automatically integrated with the 'Variation Swatches for WooCommerce' plugin. To display the image for taxonomies from different plugins or themes, use a shortcode like this:", FIFU_SLUG);
     };
 
     // video

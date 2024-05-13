@@ -1,15 +1,9 @@
 jQuery(document).ready(function () {
-    // reload after 10 minutes
-    setTimeout(function () {
-        location.reload();
-    }, 10 * 60 * 1000);
-
     jQuery('link[href*="jquery-ui.css"]').attr("disabled", "true");
     jQuery('div.wrap div.header-box div.notice').hide();
     jQuery('div.wrap div.header-box div#message').hide();
     jQuery('div.wrap div.header-box div.updated').remove();
 
-    updateMetadataCounter(false);
     var metaIntervalId = null;
 });
 
@@ -139,15 +133,16 @@ function fifu_fake_js() {
         async: true,
         beforeSend: function (xhr) {
             xhr.setRequestHeader('X-WP-Nonce', fifuScriptVars.nonce);
-            if (toggle == "toggleon") {
-                updateMetadataCounter(false);
-                metaIntervalId = setInterval(updateMetadataCounter.bind(null, true), 3000);
-            }
         },
         success: function (data) {
             setTimeout(function () {
-                if (toggle == "toggleoff")
+                if (toggle == "toggleon") {
+                    metaIntervalId = setInterval(updateMetadataCounter.bind(null, true), 3000);
+                }
+                if (toggle == "toggleoff") {
                     jQuery('#tabs-top').unblock();
+                    jQuery('#image_metadata_counter').text('');
+                }
             }, 1000);
         },
         error: function (jqXHR, textStatus, errorThrown) {
@@ -190,7 +185,7 @@ function fifu_run_clean_js() {
                 jQuery("#fifu_toggle_data_clean").attr('class', 'toggleoff');
                 jQuery("#fifu_toggle_fake").attr('class', 'toggleoff');
                 jQuery('#tabs-top').unblock();
-                updateMetadataCounter(false);
+                jQuery('#image_metadata_counter').text('');
             }, 1000);
         },
         timeout: 0
@@ -264,7 +259,7 @@ function updateMetadataCounter(transient) {
             "transient": transient,
         },
         method: 'POST',
-        async: true,
+        async: false,
         beforeSend: function (xhr) {
             xhr.setRequestHeader('X-WP-Nonce', fifuScriptVars.nonce);
         },
@@ -282,6 +277,6 @@ function updateMetadataCounter(transient) {
         error: function (xhr, status, error) {
             console.error('Error updating metadata counter:', error);
         },
-        timeout: 0
+        timeout: 60
     });
 }
