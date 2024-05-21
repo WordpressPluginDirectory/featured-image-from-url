@@ -3,7 +3,8 @@
         var jsonData = {
             "@context": "http://schema.org",
             "@type": "ImageObject",
-            "url": fifuJsonLd.url
+            "url": fifuJsonLd.url,
+            "image": fifuJsonLd.url
         };
 
         // Create a script element for the JSON-LD structured data

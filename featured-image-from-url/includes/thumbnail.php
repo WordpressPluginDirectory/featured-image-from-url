@@ -409,3 +409,40 @@ function fifu_posts_results($posts, $query) {
 
 add_filter('posts_results', 'fifu_posts_results', 10, 2);
 
+function fifu_wpseo_schema_graph($graph, $context) {
+    if (is_singular()) {
+        $post_id = get_the_ID();
+
+        $url = fifu_main_image_url($post_id, true);
+        $image_urls = $url ? [$url] : [];
+
+        if (!empty($image_urls)) {
+            foreach ($graph as &$item) {
+                // Replace the image URLs for WebPage, Article, and Product types
+                if (isset($item['@type']) && in_array($item['@type'], ['Article', 'WebPage', 'Product'])) {
+                    if (isset($item['primaryImageOfPage'])) {
+                        $item['primaryImageOfPage'] = $image_urls[0];
+                    }
+
+                    if (isset($item['image'])) {
+                        $item['image'] = $image_urls;
+                    }
+                }
+
+                // Replace the image URLs for ImageObject types
+                if (isset($item['@type']) && $item['@type'] === 'ImageObject') {
+                    if (isset($item['url'])) {
+                        $item['url'] = $image_urls[0];
+                    }
+                    if (isset($item['contentUrl'])) {
+                        $item['contentUrl'] = $image_urls[0];
+                    }
+                }
+            }
+        }
+    }
+    return $graph;
+}
+
+add_filter('wpseo_schema_graph', 'fifu_wpseo_schema_graph', 10, 2);
+
