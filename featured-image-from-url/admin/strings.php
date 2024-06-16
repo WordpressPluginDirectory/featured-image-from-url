@@ -144,6 +144,9 @@ function fifu_get_strings_settings() {
     $fifu['word']['troubleshooting'] = function () {
         _e("Troubleshooting", FIFU_SLUG);
     };
+    $fifu['word']['gallery'] = function () {
+        _e("Gallery", FIFU_SLUG);
+    };
 
     // where
     $fifu['where']['page'] = function () {
@@ -1519,6 +1522,12 @@ function fifu_get_strings_settings() {
     $fifu['gallery']['variations'] = function () {
         _e("Variantions images in the main gallery", FIFU_SLUG);
     };
+    $fifu['gallery']['tab']['custom'] = function () {
+        _e("Custom content", FIFU_SLUG);
+    };
+    $fifu['gallery']['custom'] = function () {
+        _e("The lightbox can display custom content instead of an image or video, such as a 360º product view, PDF, Google Map, web page, or any other content that can be rendered through an iframe tag. To set this up, go to the product editor, select a slot in the 'Image gallery,' and fill out both the 'Image URL' and 'iframe URL' fields.", FIFU_SLUG);
+    };
 
     // buy
     $fifu['buy']['desc'] = function () {
@@ -1813,7 +1822,10 @@ function fifu_get_strings_meta_box() {
         _e("Upload to media library", FIFU_SLUG);
     };
     $fifu['image']['alt'] = function () {
-        return __("alt/title (optional)", FIFU_SLUG);
+        return __("alt/title", FIFU_SLUG);
+    };
+    $fifu['image']['ifm'] = function () {
+        return __("iframe URL", FIFU_SLUG);
     };
     $fifu['image']['url'] = function () {
         return __("Image URL", FIFU_SLUG);

@@ -147,6 +147,10 @@ function fifu_first_url_in_content($post_id) {
             if (($tag && strpos($tag, 'data:image/jpeg') !== false) || ($i < $nth))
                 continue;
 
+            $src = fifu_get_attribute('src', $tag);
+            if (!filter_var($src, FILTER_VALIDATE_URL))
+                continue;
+
             // skip
             $skip_list = get_option('fifu_skip');
             if ($skip_list) {
@@ -170,6 +174,9 @@ function fifu_first_url_in_content($post_id) {
 
     // src
     $src = fifu_get_attribute('src', $tag);
+
+    if (!filter_var($src, FILTER_VALIDATE_URL))
+        return null;
 
     //query strings
     if (fifu_is_on('fifu_query_strings'))

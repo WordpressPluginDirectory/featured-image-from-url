@@ -18,7 +18,8 @@ define('PROXY2_URLS', [
     "https://a1.espncdn.com/",
     "https://books.google.com/",
     "https://embed-cdn.gettyimages.com/",
-    "https://media.gettyimages.com/"
+    "https://media.gettyimages.com/",
+    "https://cdn.diariodeavisos.com/"
 ]);
 
 define('PROXY3_URLS', [

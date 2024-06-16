@@ -510,9 +510,31 @@ function fifu_disable_fake() {
         return;
     update_option('fifu_fake_created', false, 'no');
 
-    fifu_db_delete_default_url();
-    fifu_db_delete_attachment();
-    fifu_db_delete_attachment_category();
+    $result = fifu_db_get_meta_out_first();
+    if (count($result) == 0) {
+        fifu_db_prepare_meta_out();
+        $result = fifu_db_get_meta_out_first();
+    }
+
+    if (isset($result[0])) {
+        $url = rest_url() . "featured-image-from-url/v2/metaout/";
+        $transient_token = wp_generate_password(8, false);
+        set_transient('fifu_api_metaout_auth_token', $transient_token, MINUTE_IN_SECONDS);
+        $body = json_encode(array(
+            'post_id' => $result[0]->post_id,
+        ));
+        $headers = array(
+            'Content-Type' => 'application/json',
+            'X-FIFU-Authorization' => $transient_token,
+        );
+        $response = wp_remote_post($url, array(
+            'method' => 'POST',
+            'body' => $body,
+            'headers' => $headers,
+            'blocking' => true,
+            'timeout' => 30,
+        ));
+    }
 }
 
 function fifu_version() {

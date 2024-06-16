@@ -3,8 +3,8 @@ Contributors: marceljm
 Donate link: https://www.paypal.com/donate/?hosted_button_id=KY7MRYTANZN9A
 Tags: featured, image, url, video, woocommerce
 Requires at least: 5.6
-Tested up to: 6.5.3
-Stable tag: 4.7.7
+Tested up to: 6.5.4
+Stable tag: 4.8.1
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -269,14 +269,14 @@ Supports URLs from YouTube, Vimeo, Twitter, 9GAG, Cloudinary, Tumblr, Publitio, 
 
 == Changelog ==
 
-= 4.7.7 =
-* Enhancement: integration with Yoast (JSON-LD schema); enhancement: WP All Import add-on (easier usage).
+= 4.8.1 =
+* New: FIFU Product Gallery → Custom content (you can add a pdf, map, 360º product view, web page, etc).
 
-= 4.7.6 =
-* Enhancement: Featured audio (you can change its behavior through the Featured Video settings now); fix: database error (Missing DB alias).
+= 4.8.0 =
+* Fix: Auto set featured media from post content (URL validation missing); fix: CDN + Optimized Thumbnails (conflict with images from Discord).
 
-= 4.7.5 =
-* Enhancement: Taxonomy Image (integration with Variation Swatches for WooCommerce); enhancement: Image Metadata (2x faster); enhancement: Status page (loads faster); fix: WP All Import add-on (XML example missing); fix: Meta Tags (conflict with Yoast).
+= 4.7.9 =
+* Fix: incompatibility with WooCommerce HPOS; fix: CDN + Optimized Thumbnails (not serving images from CloudFront); deprecated: integration with WordPress Importer plugin.
 
 = others =
 * [more](https://fifu.app/changelog)
@@ -284,5 +284,5 @@ Supports URLs from YouTube, Vimeo, Twitter, 9GAG, Cloudinary, Tumblr, Publitio, 
 
 == Upgrade Notice ==
 
-= 4.7.7 =
-* Enhancement: integration with Yoast (JSON-LD schema); enhancement: WP All Import add-on (easier usage).
+= 4.8.1 =
+* New: FIFU Product Gallery → Custom content (you can add a pdf, map, 360º product view, web page, etc).

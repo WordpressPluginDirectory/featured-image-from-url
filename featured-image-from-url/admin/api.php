@@ -861,7 +861,7 @@ function fifu_metadata_counter_api(WP_REST_Request $request) {
     if ($transient) {
         $total = get_transient('fifu_metadata_counter');
     } else {
-        $total = fifu_db_count_urls_without_metadata();
+        $total = fifu_db_count_metadata_operations();
         set_transient('fifu_metadata_counter', $total, 0);
     }
     return $total;
@@ -918,7 +918,7 @@ function fifu_api_meta_in(WP_REST_Request $request) {
             break;
     }
 
-    $total = fifu_db_count_urls_without_metadata();
+    $total = fifu_db_count_metadata_operations();
     if ($total < 0) {
         return new WP_REST_Response('', 200);
     }
@@ -930,6 +930,36 @@ function fifu_api_meta_in(WP_REST_Request $request) {
         $new_request = new WP_REST_Request();
         $new_request->set_param('post_id', $result[0]->post_id);
         return fifu_api_meta_in($new_request);
+    }
+
+    return new WP_REST_Response('', 200);
+}
+
+function fifu_api_meta_out(WP_REST_Request $request) {
+    $id = $request->get_param('post_id');
+
+    $type = fifu_db_get_type_meta_out($id);
+    switch ($type) {
+        case "att":
+            fifu_db_delete_attmeta($id);
+            break;
+        case "term":
+            fifu_db_delete_termmeta($id);
+            break;
+    }
+
+    $total = fifu_db_count_metadata_operations();
+    if ($total < 0) {
+        return new WP_REST_Response('', 200);
+    }
+
+    set_transient('fifu_metadata_counter', $total, 0);
+
+    $result = fifu_db_get_meta_out_first();
+    if (isset($result[0])) {
+        $new_request = new WP_REST_Request();
+        $new_request->set_param('post_id', $result[0]->post_id);
+        return fifu_api_meta_out($new_request);
     }
 
     return new WP_REST_Response('', 200);
@@ -988,6 +1018,15 @@ function fifu_api_pre_deactivate(WP_REST_Request $request) {
     $temporary = filter_var($request['temporary'], FILTER_VALIDATE_BOOLEAN);
     fifu_send_feedback($description, $temporary);
     fifu_db_enable_clean();
+
+    $total = fifu_db_count_metadata_operations();
+    set_transient('fifu_metadata_counter', $total, 0);
+    while ($total > 0) {
+        wp_cache_flush();
+        $total = get_transient('fifu_metadata_counter');
+        sleep(3);
+    }
+
     deactivate_plugins('featured-image-from-url/featured-image-from-url.php');
     return json_encode(array());
 }
@@ -1145,6 +1184,27 @@ add_action('rest_api_init', function () {
             $transient_token = get_transient('fifu_api_metain_auth_token');
             if ($token === $transient_token) {
                 delete_transient('fifu_api_metain_auth_token');
+                return true;
+            }
+            return false;
+        },
+        'args' => array(
+            'post_id' => array(
+                'required' => true,
+                'validate_callback' => function ($param, $request, $key) {
+                    return is_numeric($param);
+                }
+            ),
+        ),
+    ));
+    register_rest_route('featured-image-from-url/v2', '/metaout/', array(
+        'methods' => 'POST',
+        'callback' => 'fifu_api_meta_out',
+        'permission_callback' => function ($request) {
+            $token = $request->get_header('X-FIFU-Authorization');
+            $transient_token = get_transient('fifu_api_metaout_auth_token');
+            if ($token === $transient_token) {
+                delete_transient('fifu_api_metaout_auth_token');
                 return true;
             }
             return false;

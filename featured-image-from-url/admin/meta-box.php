@@ -354,18 +354,6 @@ function fifu_get_height_meta($req) {
     return null;
 }
 
-/* plugin: wordpress importer */
-
-add_action('import_end', 'fifu_import_end', 10, 0);
-
-function fifu_import_end() {
-    if (isset($_POST['action']) && $_POST['action'] == "woocommerce_csv_import_request" && !isset($_POST['mapping']))
-        return;
-    fifu_db_delete_thumbnail_id_without_attachment();
-    fifu_db_insert_attachment();
-    fifu_db_insert_attachment_category();
-}
-
 /* plugin: yoast duplicate post */
 
 function fifu_duplicate_post_meta_keys_filter($meta_keys) {

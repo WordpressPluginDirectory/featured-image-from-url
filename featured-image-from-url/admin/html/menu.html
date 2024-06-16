@@ -5801,60 +5801,71 @@
                         <?php $fifu['gallery']['desc']() ?>
                     </div>
                     <br>
-                    <table style="text-align:left">
-                        <tr>
-                            <td>
-                                <input
-                                    type="submit"
-                                    href="javascript:void(0)"
-                                    class="toggleoff"
-                                    value=""
-                                    style="display:block;border:none" >
-                            </td>
-                            <td>
-                                <?php $fifu['gallery']['toggle']() ?>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <input
-                                    type="submit"
-                                    href="javascript:void(0)"
-                                    class="toggleoff"
-                                    value=""
-                                    style="display:block;border:none" >
-                            </td>
-                            <td>
-                                <?php $fifu['gallery']['adaptive']() ?>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <input
-                                    type="submit"
-                                    href="javascript:void(0)"
-                                    class="toggleoff"
-                                    value=""
-                                    style="display:block;border:none" >
-                            </td>
-                            <td>
-                                <?php $fifu['gallery']['videos']() ?>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <input
-                                    type="submit"
-                                    href="javascript:void(0)"
-                                    class="toggleoff"
-                                    value=""
-                                    style="display:block;border:none" >
-                            </td>
-                            <td>
-                                <?php $fifu['gallery']['variations']() ?>
-                            </td>
-                        </tr>
-                    </table>
+                    <div id="tabsGallery">
+                        <ul>
+                            <li><a href="#tabs-1"><?php $fifu['word']['gallery']() ?></a></li>
+                            <li><a href="#tabs-2"><?php $fifu['gallery']['tab']['custom']() ?></a></li>
+                        </ul>
+                        <div id="tabs-1">
+                            <table style="text-align:left">
+                                <tr>
+                                    <td>
+                                        <input
+                                            type="submit"
+                                            href="javascript:void(0)"
+                                            class="toggleoff"
+                                            value=""
+                                            style="display:block;border:none" >
+                                    </td>
+                                    <td>
+                                        <?php $fifu['gallery']['toggle']() ?>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input
+                                            type="submit"
+                                            href="javascript:void(0)"
+                                            class="toggleoff"
+                                            value=""
+                                            style="display:block;border:none" >
+                                    </td>
+                                    <td>
+                                        <?php $fifu['gallery']['adaptive']() ?>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input
+                                            type="submit"
+                                            href="javascript:void(0)"
+                                            class="toggleoff"
+                                            value=""
+                                            style="display:block;border:none" >
+                                    </td>
+                                    <td>
+                                        <?php $fifu['gallery']['videos']() ?>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input
+                                            type="submit"
+                                            href="javascript:void(0)"
+                                            class="toggleoff"
+                                            value=""
+                                            style="display:block;border:none" >
+                                    </td>
+                                    <td>
+                                        <?php $fifu['gallery']['variations']() ?>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div id="tabs-2">
+                            <?php $fifu['gallery']['custom']() ?>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="box">
