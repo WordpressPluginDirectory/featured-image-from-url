@@ -15,8 +15,6 @@ class FifuDb {
     private $fifu_invalid_media_su;
     private $query;
     private $author;
-    private $MAX_INSERT;
-    private $MAX_URL_LENGTH;
     private $types;
 
     function __construct() {
@@ -33,42 +31,12 @@ class FifuDb {
         $this->fifu_meta_out = $wpdb->prefix . 'fifu_meta_out';
         $this->fifu_invalid_media_su = $wpdb->prefix . 'fifu_invalid_media_su';
         $this->author = fifu_get_author();
-        $this->MAX_INSERT = 1500;
-        $this->MAX_URL_LENGTH = 2048;
         $this->types = $this->get_types();
     }
 
     function get_types() {
         $post_types = fifu_get_post_types();
         return join("','", $post_types);
-    }
-
-    /* alter table */
-
-    function change_url_length() {
-        $length = $this->wpdb->get_col_length($this->posts, 'guid');
-        if ($length && $length['length'] >= $this->MAX_URL_LENGTH)
-            return;
-
-        $this->wpdb->query("
-            ALTER TABLE {$this->posts}
-            MODIFY COLUMN guid VARCHAR({$this->MAX_URL_LENGTH})"
-        );
-    }
-
-    /* wordpress upgrade */
-
-    function fix_guid() {
-        $this->wpdb->query("
-            UPDATE {$this->posts} p 
-            INNER JOIN {$this->postmeta} pm ON (
-                pm.post_id = p.id 
-                AND	pm.meta_key = '_wp_attached_file'
-            )
-            SET p.guid = pm.meta_value
-            WHERE p.post_author = {$this->author}  
-            AND LENGTH(p.guid) = 255"
-        );
     }
 
     /* attachment metadata */
@@ -115,33 +83,21 @@ class FifuDb {
     // get att_id by post and url
     function get_att_id($post_parent, $url, $is_ctgr) {
         $ctgr_sql = $is_ctgr ? "AND p.post_name LIKE 'fifu-category%'" : "";
-
         $result = $this->wpdb->get_results("
-            SELECT p.id 
-            FROM {$this->posts} p 
-            WHERE p.post_parent = {$post_parent}
-            AND p.guid = '{$url}' 
-            AND post_author = {$this->author}
-            {$ctgr_sql} 
-            LIMIT 1"
-        );
-        return $result ? $result[0]->id : null;
-    }
-
-    // get posts without dimensions
-    function get_posts_without_dimensions() {
-        return $this->wpdb->get_results("
-            SELECT p.ID, p.guid
-            FROM {$this->posts} p
-            WHERE NOT EXISTS (
-                SELECT 1 
-                FROM {$this->postmeta} b 
-                WHERE p.id = b.post_id AND b.meta_key = '_wp_attachment_metadata'
+            SELECT pm.post_id
+            FROM {$this->postmeta} pm
+            WHERE pm.meta_key = '_wp_attached_file'
+            AND pm.meta_value = '{$url}'
+            AND pm.post_id IN (
+                SELECT p.id
+                FROM {$this->posts} p 
+                WHERE p.post_parent = {$post_parent}
+                AND post_author = {$this->author}
+                {$ctgr_sql} 
             )
-            AND p.post_author = {$this->author}
-            AND p.post_status NOT IN ('auto-draft', 'trash')
-            ORDER BY p.id DESC"
-        );
+            LIMIT 1
+        ");
+        return $result ? $result[0]->post_id : null;
     }
 
     // count images without dimensions
@@ -202,11 +158,6 @@ class FifuDb {
                     ), 0
                 ) AS total_amount
         ");
-    }
-
-    // guid size
-    function get_guid_size() {
-        return $this->wpdb->get_col_length($this->posts, 'guid')['length'];
     }
 
     // get last (images/videos/sliders)
@@ -293,15 +244,6 @@ class FifuDb {
             WHERE post_type IN ('$this->types')
             AND post_status = 'publish'"
                 )->n;
-    }
-
-    function get_category_image_url($term_id) {
-        return $this->wpdb->get_results("
-            SELECT meta_value 
-            FROM {$this->termmeta} 
-            WHERE meta_key = 'fifu_image_url' 
-            AND term_id = {$term_id}"
-        );
     }
 
     function get_featured_and_gallery_ids($post_id) {
@@ -630,7 +572,7 @@ class FifuDb {
     function speed_up_attachments($bucket_id, $thumbnails, $att_ids_map) {
         $count = 0;
         $query = "
-            INSERT INTO {$this->posts} (id, guid) VALUES ";
+            INSERT INTO {$this->posts} (id, post_content_filtered) VALUES ";
         foreach ($thumbnails as $thumbnail) {
             if (!isset($att_ids_map[$thumbnail->meta_id])) // no metadata, only custom field
                 continue;
@@ -641,7 +583,7 @@ class FifuDb {
                 $query .= ", ";
             $query .= "(" . $att_ids_map[$thumbnail->meta_id] . ",'{$su_url}') ";
         }
-        $query .= "ON DUPLICATE KEY UPDATE guid=VALUES(guid)";
+        $query .= "ON DUPLICATE KEY UPDATE post_content_filtered=VALUES(post_content_filtered)";
         return $this->wpdb->get_results($query);
     }
 
@@ -781,7 +723,7 @@ class FifuDb {
     function revert_attachments($urls, $thumbnails, $att_ids_map) {
         $count = 0;
         $query = "
-            INSERT INTO {$this->posts} (id, guid) VALUES ";
+            INSERT INTO {$this->posts} (id, post_content_filtered) VALUES ";
         foreach ($thumbnails as $thumbnail) {
             if (!isset($att_ids_map[$thumbnail->meta_id])) // no metadata, only custom field
                 continue;
@@ -789,7 +731,7 @@ class FifuDb {
                 $query .= ", ";
             $query .= "(" . $att_ids_map[$thumbnail->meta_id] . ",'" . $urls[$thumbnail->storage_id] . "')";
         }
-        $query .= "ON DUPLICATE KEY UPDATE guid=VALUES(guid)";
+        $query .= "ON DUPLICATE KEY UPDATE post_content_filtered=VALUES(post_content_filtered)";
         return $this->wpdb->get_results($query);
     }
 
@@ -912,12 +854,12 @@ class FifuDb {
 
     function get_formatted_value($url, $alt, $post_parent) {
         $alt = $alt ?? '';
-        return "({$this->author}, '{$url}', '" . str_replace("'", "", $alt) . "', 'image/jpeg', 'attachment', 'inherit', '{$post_parent}', now(), now(), now(), now(), '', '', '', '', '')";
+        return "({$this->author}, '', '" . str_replace("'", "", $alt) . "', 'image/jpeg', 'attachment', 'inherit', '{$post_parent}', now(), now(), now(), now(), '', '', '', '', '{$url}')";
     }
 
     function get_ctgr_formatted_value($url, $alt, $post_parent) {
         $alt = $alt ?? '';
-        return "({$this->author}, '{$url}', '" . str_replace("'", "", $alt) . "', 'image/jpeg', 'attachment', 'inherit', '{$post_parent}', now(), now(), now(), now(), '', '', '', '', '', 'fifu-category-{$post_parent}')";
+        return "({$this->author}, '', '" . str_replace("'", "", $alt) . "', 'image/jpeg', 'attachment', 'inherit', '{$post_parent}', now(), now(), now(), now(), '', '', '', '', '{$url}', 'fifu-category-{$post_parent}')";
     }
 
     /* dimensions: clean all */
@@ -972,7 +914,7 @@ class FifuDb {
             if ($has_fifu_attachment) {
                 update_post_meta($att_id, '_wp_attached_file', $url);
                 update_post_meta($att_id, '_wp_attachment_image_alt', $alt);
-                $this->wpdb->update($this->posts, $set = array('post_title' => $alt, 'guid' => $url), $where = array('id' => $att_id), null, null);
+                $this->wpdb->update($this->posts, $set = array('post_title' => $alt, 'post_content_filtered' => $url), $where = array('id' => $att_id), null, null);
             }
             // insert
             else {
@@ -1012,7 +954,7 @@ class FifuDb {
             if ($has_fifu_attachment) {
                 update_post_meta($att_id, '_wp_attached_file', $url);
                 update_post_meta($att_id, '_wp_attachment_image_alt', $alt);
-                $this->wpdb->update($this->posts, $set = array('guid' => $url, 'post_title' => $alt), $where = array('id' => $att_id), null, null);
+                $this->wpdb->update($this->posts, $set = array('post_content_filtered' => $url, 'post_title' => $alt), $where = array('id' => $att_id), null, null);
             }
             // insert
             else {
@@ -1059,7 +1001,7 @@ class FifuDb {
     function update_default_url($url) {
         $att_id = get_option('fifu_default_attach_id');
         if ($url != wp_get_attachment_url($att_id)) {
-            $this->wpdb->update($this->posts, $set = array('guid' => $url), $where = array('id' => $att_id), null, null);
+            $this->wpdb->update($this->posts, $set = array('post_content_filtered' => $url), $where = array('id' => $att_id), null, null);
             update_post_meta($att_id, '_wp_attached_file', $url);
         }
     }
@@ -1454,7 +1396,7 @@ class FifuDb {
 
             $this->wpdb->query("
                 INSERT INTO {$this->postmeta} (post_id, meta_key, meta_value) (
-                    SELECT p.id, '_wp_attached_file', p.guid
+                    SELECT p.id, '_wp_attached_file', p.post_content_filtered
                     FROM {$this->posts} p 
                     WHERE p.post_parent IN ({$ids}) 
                     AND p.post_author = {$this->author} 
@@ -1545,10 +1487,6 @@ class FifuDb {
         $term_ids = explode(",", $ids);
         foreach ($term_ids as $term_id) {
             $url = get_term_meta($term_id, 'fifu_image_url', true);
-            if (!$url) {
-                $result = $this->get_category_image_url($term_id);
-                $url = $result[0]->meta_value;
-            }
             $url = htmlspecialchars_decode($url);
             $aux = $this->get_ctgr_formatted_value($url, get_term_meta($term_id, 'fifu_image_alt', true), $term_id);
             array_push($value_arr, $aux);
@@ -1587,7 +1525,7 @@ class FifuDb {
 
             $this->wpdb->query("
                 INSERT INTO {$this->postmeta} (post_id, meta_key, meta_value) (
-                    SELECT p.id, '_wp_attached_file', p.guid
+                    SELECT p.id, '_wp_attached_file', p.post_content_filtered
                     FROM {$this->posts} p 
                     WHERE p.post_parent IN ({$ids}) 
                     AND p.post_author = {$this->author} 
@@ -1654,18 +1592,6 @@ class FifuDb {
         return str_replace("'", "%27", $url);
     }
 
-}
-
-function fifu_db_change_url_length() {
-    $db = new FifuDb();
-    $db->change_url_length();
-}
-
-/* dimensions: get all */
-
-function fifu_db_get_all_without_dimensions() {
-    $db = new FifuDb();
-    return $db->get_posts_without_dimensions();
 }
 
 /* dimensions: clean all */
@@ -1883,13 +1809,6 @@ function fifu_db_get_att_id($post_parent, $url, $is_ctgr) {
     return $db->get_att_id($post_parent, $url, $is_ctgr);
 }
 
-/* wordpress upgrade */
-
-function fifu_db_fix_guid() {
-    $db = new FifuDb();
-    return $db->fix_guid();
-}
-
 /* metadata */
 
 function fifu_db_prepare_meta_in() {
@@ -1922,12 +1841,5 @@ function fifu_db_get_meta_in_first() {
 function fifu_db_get_meta_out_first() {
     $db = new FifuDb();
     return $db->get_meta_out_first();
-}
-
-/* database info */
-
-function fifu_db_get_guid_size() {
-    $db = new FifuDb();
-    return $db->get_guid_size();
 }
 

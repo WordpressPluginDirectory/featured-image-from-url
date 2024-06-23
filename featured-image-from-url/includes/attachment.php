@@ -29,7 +29,7 @@ function fifu_process_url($att_url, $att_id) {
     if ($att_post->post_author != FIFU_AUTHOR)
         return $att_url;
 
-    $url = $att_post->guid;
+    $url = get_post_meta($att_id, '_wp_attached_file', true); // to avoid wp_get_attachment_url() infinite loop
 
     fifu_fix_legacy($url, $att_id);
 
@@ -451,8 +451,7 @@ function fifu_get_photon_args($w, $h) {
 
 function fifu_add_parameters_single_post($post_id) {
     $att_id = get_post_thumbnail_id($post_id);
-    $att_post = get_post($att_id);
-    $url = isset($att_post->guid) ? $att_post->guid : null;
+    $url = get_post_meta($att_id, '_wp_attached_file', true);
     if ($url)
         fifu_add_url_parameters($url, $att_id, null);
 }

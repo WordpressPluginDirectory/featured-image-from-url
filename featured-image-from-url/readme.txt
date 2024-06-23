@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/donate/?hosted_button_id=KY7MRYTANZN9A
 Tags: featured, image, url, video, woocommerce
 Requires at least: 5.6
 Tested up to: 6.5.4
-Stable tag: 4.8.1
+Stable tag: 4.8.2
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -215,10 +215,6 @@ Supports URLs from YouTube, Vimeo, Twitter, 9GAG, Cloudinary, Tumblr, Publitio, 
 
 * No, external images don't affect SEO. Click [here](https://www.searchenginejournal.com/does-using-a-cdn-improve-ranking/) to know more.
 
-= Plugin could not be activated because it triggered a fatal error
-
-* During activation, the plugin tries to change a column in the database to support URLs longer than 256 characters. If the plugin cannot be activated, it's possible that your site doesn't have enough memory to support the column resizing operation, especially if your database is too large. In this case, try to increase the memory of your site.
-
 
 == Screenshots ==
 
@@ -269,14 +265,14 @@ Supports URLs from YouTube, Vimeo, Twitter, 9GAG, Cloudinary, Tumblr, Publitio, 
 
 == Changelog ==
 
+= 4.8.2 =
+* Fix: fatal error on activation due to column resize; Fix: security issue reported by Patchstack team; Fix: Auto set featured media from post content (failing for URLs with Korean characters); Deprecated: Auto set featured media from post content → Scheduling.
+
 = 4.8.1 =
 * New: FIFU Product Gallery → Custom content (you can add a pdf, map, 360º product view, web page, etc).
 
 = 4.8.0 =
 * Fix: Auto set featured media from post content (URL validation missing); fix: CDN + Optimized Thumbnails (conflict with images from Discord).
-
-= 4.7.9 =
-* Fix: incompatibility with WooCommerce HPOS; fix: CDN + Optimized Thumbnails (not serving images from CloudFront); deprecated: integration with WordPress Importer plugin.
 
 = others =
 * [more](https://fifu.app/changelog)
@@ -284,5 +280,5 @@ Supports URLs from YouTube, Vimeo, Twitter, 9GAG, Cloudinary, Tumblr, Publitio, 
 
 == Upgrade Notice ==
 
-= 4.8.1 =
-* New: FIFU Product Gallery → Custom content (you can add a pdf, map, 360º product view, web page, etc).
+= 4.8.2 =
+* Fix: fatal error on activation due to column resize; Fix: security issue reported by Patchstack team; Fix: Auto set featured media from post content (failing for URLs with Korean characters); Deprecated: Auto set featured media from post content → Scheduling.

@@ -199,7 +199,7 @@ function fifu_get_full_image_url($att_id) {
         return null;
 
     if (fifu_is_remote_image($att_id))
-        return get_the_guid($att_id);
+        return get_post_meta($att_id, '_wp_attached_file', true);
 
     return wp_get_attachment_url($att_id);
 }

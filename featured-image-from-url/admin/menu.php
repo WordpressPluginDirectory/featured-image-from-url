@@ -477,7 +477,6 @@ function fifu_enable_fake() {
         return;
     update_option('fifu_fake_created', true, 'no');
 
-    fifu_db_change_url_length();
     $result = fifu_db_get_meta_in_first();
     if (count($result) == 0) {
         fifu_db_prepare_meta_in();

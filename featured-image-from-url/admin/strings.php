@@ -46,9 +46,6 @@ function fifu_get_strings_settings() {
     $fifu['detail']['tip'] = function () {
         _e("Tip", FIFU_SLUG);
     };
-    $fifu['detail']['suggestion'] = function () {
-        _e("Suggestion", FIFU_SLUG);
-    };
     $fifu['detail']['example'] = function () {
         _e("Example", FIFU_SLUG);
     };
@@ -1005,14 +1002,8 @@ function fifu_get_strings_settings() {
     $fifu['html']['tab']['run'] = function () {
         _e("Run it now", FIFU_SLUG);
     };
-    $fifu['html']['tab']['schedule'] = function () {
-        _e("Scheduling", FIFU_SLUG);
-    };
     $fifu['html']['tab']['important'] = function () {
         _e("Important", FIFU_SLUG);
-    };
-    $fifu['html']['tab']['requirement'] = function () {
-        _e("Requirement", FIFU_SLUG);
     };
     $fifu['html']['position'] = function () {
         _e("image/video position", FIFU_SLUG);
@@ -1057,9 +1048,6 @@ function fifu_get_strings_settings() {
     };
     $fifu['all']['requirement'] = function () {
         _e("For sites with a large number of posts, add the command \"set_time_limit(1800);\" to wp-config.php before \"Happy publishing\" line. This will prevent the process from being terminated before 30 minutes (the default time limit is 30 seconds).", FIFU_SLUG);
-    };
-    $fifu['all']['tip'] = function () {
-        _e("To schedule this process (hourly, daily, etc.), you can use the fifu_event hook with your preferred scheduling event plugin.", FIFU_SLUG);
     };
     $fifu['all']['ignore'] = function () {
         _e("ignore posts that already have a featured image/video", FIFU_SLUG);

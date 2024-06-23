@@ -148,7 +148,7 @@ function fifu_first_url_in_content($post_id) {
                 continue;
 
             $src = fifu_get_attribute('src', $tag);
-            if (!filter_var($src, FILTER_VALIDATE_URL))
+            if (!preg_match('/^https?:\/\//', $src))
                 continue;
 
             // skip
@@ -175,7 +175,7 @@ function fifu_first_url_in_content($post_id) {
     // src
     $src = fifu_get_attribute('src', $tag);
 
-    if (!filter_var($src, FILTER_VALIDATE_URL))
+    if (!preg_match('/^https?:\/\//', $src))
         return null;
 
     //query strings

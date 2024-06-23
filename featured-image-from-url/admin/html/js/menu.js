@@ -227,34 +227,6 @@ function fifu_run_delete_all_js() {
     });
 }
 
-function fifu_get_sizes($, att_id) {
-    width = jQuery($)[0].naturalWidth;
-    height = jQuery($)[0].naturalHeight;
-
-    if (width == 1 && height == 1)
-        return;
-
-    jQuery.ajax({
-        method: "POST",
-        url: restUrl + 'featured-image-from-url/v2/save_sizes_api/',
-        data: {
-            "width": width,
-            "height": height,
-            "att_id": att_id,
-            "url": jQuery($).attr('src'),
-        },
-        async: false,
-        beforeSend: function (xhr) {
-            jQuery($).removeAttr('onload');
-            jQuery($).removeAttr('fifu-att-id');
-            xhr.setRequestHeader("X-WP-Nonce", fifuScriptVars.nonce);
-        },
-        timeout: 10
-    });
-
-    return;
-}
-
 function updateMetadataCounter(transient) {
     jQuery.ajax({
         url: `${restUrl}featured-image-from-url/v2/metadata_counter_api/`,
