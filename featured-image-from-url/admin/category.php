@@ -30,9 +30,6 @@ function fifu_ctgr_edit_box($term) {
         $show_button = '';
         $show_alt = $show_image = $show_link = 'display:none;';
     }
-    $show_ignore = 'display:none;';
-
-    $check_ignore = fifu_is_on('fifu_check') ? 'checked' : '';
 
     $fifu = fifu_get_strings_meta_box();
     $adjustedUrl = fifu_cdn_adjust($url);
@@ -49,9 +46,6 @@ function fifu_ctgr_add_box() {
 
     $show_button = $url = $alt = '';
     $show_alt = $show_image = $show_link = 'display:none;';
-    $show_ignore = 'display:none;';
-
-    $check_ignore = fifu_is_on('fifu_check') ? 'checked' : '';
 
     $fifu = fifu_get_strings_meta_box();
     $adjustedUrl = fifu_cdn_adjust($url);

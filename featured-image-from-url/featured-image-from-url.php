@@ -4,11 +4,11 @@
  * Plugin Name: Featured Image from URL (FIFU)
  * Plugin URI: https://fifu.app/
  * Description: Use an external image/video/audio as featured image of a post or WooCommerce product.
- * Version: 4.8.2
+ * Version: 4.8.5
  * Author: fifu.app
  * Author URI: https://fifu.app/
  * WC requires at least: 4.0
- * WC tested up to: 9.0.1
+ * WC tested up to: 9.0.2
  * Text Domain: featured-image-from-url
  * License: GPLv3
  * License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -25,6 +25,7 @@ define('FIFU_CLOUD_DEBUG', false);
 
 $FIFU_SESSION = array();
 
+require_once (FIFU_INCLUDES_DIR . '/ajax.php');
 require_once (FIFU_INCLUDES_DIR . '/attachment.php');
 require_once (FIFU_INCLUDES_DIR . '/convert-url.php');
 require_once (FIFU_INCLUDES_DIR . '/external-post.php');
@@ -46,6 +47,7 @@ require_once (FIFU_ADMIN_DIR . '/menu.php');
 require_once (FIFU_ADMIN_DIR . '/meta-box.php');
 require_once (FIFU_ADMIN_DIR . '/rsa.php');
 require_once (FIFU_ADMIN_DIR . '/strings.php');
+require_once (FIFU_ADMIN_DIR . '/transient.php');
 require_once (FIFU_ADMIN_DIR . '/widgets.php');
 
 require_once (FIFU_ELEMENTOR_DIR . '/elementor-fifu-extension.php');
@@ -75,6 +77,9 @@ function fifu_activate($network_wide) {
 }
 
 function fifu_activate_actions() {
+    fifu_db_create_table_invalid_media_su();
+    fifu_db_maybe_create_table_meta_in();
+    fifu_db_maybe_create_table_meta_out();
 }
 
 register_deactivation_hook(__FILE__, 'fifu_deactivation');
@@ -142,7 +147,6 @@ function fifu_uninstall() {
         'buttonDescriptionClean' => $strings['button']['description']['clean'](),
         'buttonDescriptionDeactivate' => $strings['button']['description']['deactivate'](),
         'textWhy' => $strings['text']['why'](),
-        'textOptional' => $strings['text']['optional'](),
         'textEmail' => $strings['text']['email'](),
         'textReasonConflict' => $strings['text']['reason']['conflict'](),
         'textReasonPro' => $strings['text']['reason']['pro'](),

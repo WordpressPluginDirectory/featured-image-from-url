@@ -71,6 +71,8 @@ function fifu_speedup_has_video_thumb($url) {
 }
 
 function fifu_speedup_get_signed_url($url, $width, $height, $bucket_id, $storage_id, $is_video) {
+    list($width, $height) = fifu_speedup_fix_size($width, $height);
+
     if ($url)
         $url = explode('?', $url)[0];
 
@@ -145,5 +147,35 @@ function fifu_speedup_get_sizes($url) {
     $is_video = isset($parameters['video-thumb']);
 
     return array($width, $height, $is_video, $url);
+}
+
+function fifu_speedup_fix_size($width, $height) {
+    $sizes = unserialize(FIFU_SPEEDUP_SIZES);
+
+    // Check if the width is present in the available sizes
+    if (!in_array($width, $sizes)) {
+        // Look for the next higher value
+        foreach ($sizes as $size) {
+            if ($size >= $width) {
+                $width = $size;
+                break;
+            }
+        }
+
+        // If the next higher value is bigger than 1920, use 1920
+        if ($width > 1920) {
+            $width = 1920;
+        }
+    }
+
+    // Calculate the new height to maintain the aspect ratio
+    if ($height) {
+        $aspect_ratio = $height / $width;
+        $new_height = $width * $aspect_ratio;
+    } else {
+        $new_height = $height;
+    }
+
+    return array($width, $new_height);
 }
 

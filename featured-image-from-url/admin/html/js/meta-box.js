@@ -1,5 +1,5 @@
 function removeImage() {
-    jQuery("#fifu_input_alt").hide();
+    jQuery("#fifu_table_alt").hide();
     jQuery("#fifu_image").hide();
     jQuery("#fifu_upload").hide();
     jQuery("#fifu_link").hide();
@@ -55,7 +55,7 @@ function runPreview($url) {
         adjustedUrl = fifu_cdn_adjust($url);
         jQuery("#fifu_image").css('background-image', "url('" + adjustedUrl + "')");
 
-        jQuery("#fifu_input_alt").show();
+        jQuery("#fifu_table_alt").show();
         jQuery("#fifu_image").show();
         jQuery("#fifu_upload").show();
         jQuery("#fifu_link").show();
@@ -124,7 +124,7 @@ function fifu_open_lightbox() {
         evt.stopImmediatePropagation();
         let url = fifu_convert(jQuery("#fifu_input_url").val());
         let adjustedUrl = fifu_cdn_adjust(url);
-        jQuery.fancybox.open('<img src="' + adjustedUrl + '" style="max-height:600px">');
+        jQuery.fancybox.open('<img loading="lazy" src="' + adjustedUrl + '" style="max-height:600px">');
     });
 }
 

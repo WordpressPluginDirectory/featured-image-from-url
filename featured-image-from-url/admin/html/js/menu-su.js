@@ -380,7 +380,7 @@ function listAllSu(page) {
                 var bucket = data['bucket'];
                 var photo_data = data['photo_data'];
                 for (var i = 0; i < photo_data.length; i++) {
-                    imgTag = '<img id="' + photo_data[i]['storage_id'] + '" data-src="' + photo_data[i]['proxy_url'] + '" style="border-radius:5%; height:56px; width:56px; object-fit:cover; text-align:center">';
+                    imgTag = '<img loading="lazy" id="' + photo_data[i]['storage_id'] + '" src="' + photo_data[i]['proxy_url'] + '" style="border-radius:5%; height:56px; width:56px; object-fit:cover; text-align:center">';
 
                     if (photo_data[i]['is_category'])
                         local = fifuScriptCloudVars.category;
@@ -476,7 +476,6 @@ function listAllSu(page) {
                         if (table.rows().count() == 0)
                             listAllSu(0);
 
-                        jQuery(window).lazyLoadXT();
                         fifu_unblock();
                     }
                 });
@@ -493,27 +492,7 @@ function listAllSu(page) {
         if (selected.count() > MAX_ROWS)
             dt.rows(ix).deselect();
     });
-
-    jQuery('div#removeTable_filter label input').on('keyup', function () {
-        jQuery(window).lazyLoadXT();
-    });
 }
-
-jQuery(document).ready(function ($) {
-    jQuery.extend(jQuery.lazyLoadXT, {
-        srcAttr: 'data-src',
-        visibleOnly: true,
-        updateEvent: 'load orientationchange resize scroll touchmove focus hover'
-    });
-});
-
-jQuery(window).on('ajaxComplete', function () {
-    jQuery(window).lazyLoadXT();
-});
-
-jQuery(document).on("click", "a.paginate_button, select, th.sorting_asc, th.sorting_desc", function () {
-    jQuery(window).lazyLoadXT();
-});
 
 jQuery(document).ready(function ($) {
     jQuery('#addTable tbody').on('click', 'tr', function () {
@@ -593,7 +572,7 @@ function listAllFifu(page) {
         },
         success: function (data) {
             for (var i = 0; i < data.length; i++) {
-                imgTag = '<img id="' + data[i]['meta_id'] + '" data-src="' + data[i]['url'] + '" style="border-radius:5%; height:56px; width:56px; object-fit:cover; text-align:center">';
+                imgTag = '<img loading="lazy" id="' + data[i]['meta_id'] + '" src="' + data[i]['url'] + '" style="border-radius:5%; height:56px; width:56px; object-fit:cover; text-align:center">';
 
                 if (data[i]['category'] == 1)
                     local = fifuScriptCloudVars.category;
@@ -634,10 +613,6 @@ function listAllFifu(page) {
         var selected = dt.rows({selected: true});
         if (selected.count() > MAX_ROWS)
             dt.rows(ix).deselect();
-    });
-
-    jQuery('div#addTable_filter label input').on('keyup', function () {
-        jQuery(window).lazyLoadXT();
     });
 }
 
@@ -703,7 +678,6 @@ async function addSu(table) {
                             if (table.rows().count() == 0)
                                 listAllFifu(0);
                         }
-                        jQuery(window).lazyLoadXT();
                         fifu_unblock();
                     }
                 }
@@ -917,7 +891,7 @@ function listAllMediaLibrary(page) {
         },
         success: function (data) {
             for (var i = 0; i < data.length; i++) {
-                imgTag = '<img id="' + data[i]['meta_id'] + '" data-src="' + data[i]['url'] + '" style="border-radius:5%; height:56px; width:56px; object-fit:cover; text-align:center">';
+                imgTag = '<img loading="lazy" id="' + data[i]['meta_id'] + '" src="' + data[i]['url'] + '" style="border-radius:5%; height:56px; width:56px; object-fit:cover; text-align:center">';
                 table.row.add([
                     imgTag,
                     data[i]['post_title'],
@@ -947,10 +921,6 @@ function listAllMediaLibrary(page) {
         var selected = dt.rows({selected: true});
         if (selected.count() > MAX_ROWS)
             dt.rows(ix).deselect();
-    });
-
-    jQuery('div#addTable_filter label input').on('keyup', function () {
-        jQuery(window).lazyLoadXT();
     });
 }
 

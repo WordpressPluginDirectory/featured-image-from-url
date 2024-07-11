@@ -3,7 +3,7 @@
 define('PROXY2_URLS', [
     "https://drive.google.com",
     "https://drive.usercontent.google.com",
-    "https://lh3.googleusercontent.com/",
+    "https://lh3.googleusercontent.com",
     "https://s.yimg.com",
     "https://s1.yimg.com",
     "https://blockworks.co",
@@ -12,14 +12,14 @@ define('PROXY2_URLS', [
     "https://cdn.sellio.net",
     "https://cf.bstatic.com",
     "https://media-cdn.oriflame.com",
-    "https://i.ytimg.com/",
-    "https://cdn.myshoptet.com/",
-    "https://i.imgur.com/",
-    "https://a1.espncdn.com/",
-    "https://books.google.com/",
-    "https://embed-cdn.gettyimages.com/",
-    "https://media.gettyimages.com/",
-    "https://cdn.diariodeavisos.com/"
+    "https://i.ytimg.com",
+    "https://cdn.myshoptet.com",
+    "https://i.imgur.com",
+    "https://a1.espncdn.com",
+    "https://books.google.com",
+    "https://embed-cdn.gettyimages.com",
+    "https://media.gettyimages.com",
+    "https://cdn.diariodeavisos.com"
 ]);
 
 define('PROXY3_URLS', [

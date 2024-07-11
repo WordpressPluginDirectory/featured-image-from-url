@@ -3,8 +3,8 @@ Contributors: marceljm
 Donate link: https://www.paypal.com/donate/?hosted_button_id=KY7MRYTANZN9A
 Tags: featured, image, url, video, woocommerce
 Requires at least: 5.6
-Tested up to: 6.5.4
-Stable tag: 4.8.2
+Tested up to: 6.6
+Stable tag: 4.8.5
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -22,10 +22,11 @@ If you are tired of wasting time and resources with thumbnail regeneration, imag
 Use an external image as featured image of your post, page or custom post type.
 
 * External featured image
+* Optimized images
 * Image search (Unsplash)
 * Default featured image
 * Hide featured media
-* Featured image in content
+* Modify post content
 * Auto set image title
 * Column for featured image
 * **[PRO]** Image search (search engine)
@@ -33,9 +34,9 @@ Use an external image as featured image of your post, page or custom post type.
 * **[PRO]** Save in the media library
 * **[PRO]** Replace not found image
 * **[PRO]** Custom popup
+* **[PRO]** bbPress and BuddyBoss Platform integration
 * **[PRO]** Page redirection
 * **[PRO]** Cloak links
-* **[PRO]** Taxonomy image
 * **[PRO]** Same height
 
 #### Automatic featured media
@@ -47,17 +48,6 @@ Use an external image as featured image of your post, page or custom post type.
 * **[PRO]** Auto set featured image using ISBN
 * **[PRO]** Auto set screenshot as featured image
 * **[PRO]** Auto set featured image from Unsplash using tags
-
-#### Performance
-
-* CDN + optimized thumbnails
-* Lazy load
-
-#### Social
-
-* Meta tags
-* **[PRO]** Media RSS tags
-* **[PRO]** BuddyBoss Platform and bbPress
 
 #### Automation
 
@@ -127,6 +117,7 @@ Supports URLs from YouTube, Vimeo, Twitter, 9GAG, Cloudinary, Tumblr, Publitio, 
 * **[PRO]** Featured audio
 * **[PRO]** Featured slider
 * **[PRO]** Shortcode
+* **[PRO]** Taxonomy image
 
 #### Functions for developers
 
@@ -181,7 +172,7 @@ Supports URLs from YouTube, Vimeo, Twitter, 9GAG, Cloudinary, Tumblr, Publitio, 
 
 = Why the featured image is being displayed twice? =
 
-* You enabled "Featured Image in Content" option unnecessarily.
+* You enabled "Modify Post Content → add featured media" option unnecessarily.
 
 = Why the featured image is not being displayed? =
 
@@ -201,7 +192,7 @@ Supports URLs from YouTube, Vimeo, Twitter, 9GAG, Cloudinary, Tumblr, Publitio, 
 
 = What are the disadvantages of external images?
 
-* No image optimization or thumbnails by default. You can fix that with CDN + Optimized Thumbnails feature (performance settings).
+* No image optimization or thumbnails by default. You can fix that with 'Optimized Images' feature.
 
 = What are the advantages of external images?
 
@@ -265,14 +256,14 @@ Supports URLs from YouTube, Vimeo, Twitter, 9GAG, Cloudinary, Tumblr, Publitio, 
 
 == Changelog ==
 
+= 4.8.5 =
+* New free feature: Media RSS Tags (added automatically); Enhancement: menu settings reorganized; Enhancement: Hide Featured Media (post type filter added); Enhancement: WooCommerce import (can receive iframe URLs now); Fix: Clear Metadata (getting stuck); Fix: Hide Featured Media (unduly hiding duplicated image in the post content); Deprecated: Lazy Load (replaced with native WordPress lazy load); Deprecated: Auto Set Image Title (automatic when the alternative text is empty); Deprecated: bbPress and BuddyBoss Platform → Display featured image (automatic when an image URL is added); Deprecated: WooCommerce import → Priority (based on the columns order now).
+
+= 4.8.4 =
+* New feature: Modify Post Content; Enhancement: Auto Set Featured Media from Post Content (easier to use); Fix: Image Metadata and Clear Metadata (incomplete process when group_concat_max_len is too short, counter displaying negative value); Fix: image alt (empty value unduly saved in the database); Fix: security issue reported by Patchstack team; Fix: conflict with Redis Object Cache plugin (causing multiple fails); Deprecated: Featured Image in Content (replaced with Modify Post Content); Deprecated: Variable Product option (fields displayed by default now); Deprecated: Auto Set Image Title → Copy the post title to the alt/title field (can be done dynamically, without database changes); Deprecated: Meta Tags → Only image tags (default now).
+
 = 4.8.2 =
 * Fix: fatal error on activation due to column resize; Fix: security issue reported by Patchstack team; Fix: Auto set featured media from post content (failing for URLs with Korean characters); Deprecated: Auto set featured media from post content → Scheduling.
-
-= 4.8.1 =
-* New: FIFU Product Gallery → Custom content (you can add a pdf, map, 360º product view, web page, etc).
-
-= 4.8.0 =
-* Fix: Auto set featured media from post content (URL validation missing); fix: CDN + Optimized Thumbnails (conflict with images from Discord).
 
 = others =
 * [more](https://fifu.app/changelog)
@@ -280,5 +271,5 @@ Supports URLs from YouTube, Vimeo, Twitter, 9GAG, Cloudinary, Tumblr, Publitio, 
 
 == Upgrade Notice ==
 
-= 4.8.2 =
-* Fix: fatal error on activation due to column resize; Fix: security issue reported by Patchstack team; Fix: Auto set featured media from post content (failing for URLs with Korean characters); Deprecated: Auto set featured media from post content → Scheduling.
+= 4.8.5 =
+* New free feature: Media RSS Tags (added automatically); Enhancement: menu settings reorganized; Enhancement: Hide Featured Media (post type filter added); Enhancement: WooCommerce import (can receive iframe URLs now); Fix: Clear Metadata (getting stuck); Fix: Hide Featured Media (unduly hiding duplicated image in the post content); Deprecated: Lazy Load (replaced with native WordPress lazy load); Deprecated: Auto Set Image Title (automatic when the alternative text is empty); Deprecated: bbPress and BuddyBoss Platform → Display featured image (automatic when an image URL is added); Deprecated: WooCommerce import → Priority (based on the columns order now).

@@ -9,14 +9,14 @@ async function fifu_get_unsplash_urls(keywords, page) {
         // Add images to the masonry
         if (urls.length > 0) {
             urls.forEach(url => {
-                jQuery('div.masonry').append('<div class="mItem" style="max-width:400px;object-fit:content"><img src="' + url + '" style="width:100%"></div>');
+                jQuery('div.masonry').append('<div class="mItem" style="max-width:400px;object-fit:content"><img loading="lazy" src="' + url + '" style="width:100%"></div>');
             });
         }
 
         jQuery('#fifu-loading').remove();
         fifu_scrolling = false;
 
-        jQuery('div.masonry').after('<div class="fifu-pro" style="float:right;position:relative;top:-5px;left:-145px"><a class="fifu-pro-link" title="' + fifuMetaBoxVars.txt_unlock + '"><span class="dashicons dashicons-lock fifu-pro-icon"></span></a></div><center><div id="fifu-loading"><img src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyloadxt/1.1.0/loading.gif"><div>' + fifuMetaBoxVars.txt_more + '</div><div></center>');
+        jQuery('div.masonry').after('<div class="fifu-pro" style="float:right;position:relative;top:-5px;left:-145px"><a class="fifu-pro-link" title="' + fifuMetaBoxVars.txt_unlock + '"><span class="dashicons dashicons-lock fifu-pro-icon"></span></a></div><center><div id="fifu-loading"><img loading="lazy" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyloadxt/1.1.0/loading.gif"><div>' + fifuMetaBoxVars.txt_more + '</div><div></center>');
     } catch (error) {
         console.error("An error occurred:", error);
     }
@@ -33,7 +33,7 @@ function fifu_start_lightbox(keywords, unsplash, post_id, is_ctgr) {
     txt_more = typeof fifuMetaBoxVars !== 'undefined' ? fifuMetaBoxVars.txt_more : '';
 
     jQuery.fancybox.open('<div><div class="masonry"></div></div>');
-    jQuery('div.masonry').after('<center><div id="fifu-loading"><img src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyloadxt/1.1.0/loading.gif"><div>' + txt_loading + '</div><div></center>');
+    jQuery('div.masonry').after('<center><div id="fifu-loading"><img loading="lazy" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.lazyloadxt/1.1.0/loading.gif"><div>' + txt_loading + '</div><div></center>');
 
     if (!unsplash) {
         return;

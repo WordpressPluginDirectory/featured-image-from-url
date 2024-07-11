@@ -23,38 +23,12 @@ class fifu_cli extends WP_CLI_Command {
     // automatic
 
     function content($args, $assoc_args) {
-        if (!empty($assoc_args['position'])) {
-            update_option('fifu_spinner_nth', $args[0], 'no');
-            return;
-        }
         if (!empty($assoc_args['skip'])) {
             update_option('fifu_skip', $args[0], 'no');
             return;
         }
         if (!empty($assoc_args['cpt'])) {
             update_option('fifu_html_cpt', $args[0], 'no');
-            return;
-        }
-        if (!empty($assoc_args['hide'])) {
-            switch ($args[0]) {
-                case 'on':
-                    update_option('fifu_pop_first', 'toggleon', 'no'); // toggle
-                    break;
-                case 'off':
-                    update_option('fifu_pop_first', 'toggleoff', 'no'); // toggle
-                    break;
-            }
-            return;
-        }
-        if (!empty($assoc_args['remove-query'])) {
-            switch ($args[0]) {
-                case 'on':
-                    update_option('fifu_query_strings', 'toggleon', 'no'); // toggle
-                    break;
-                case 'off':
-                    update_option('fifu_query_strings', 'toggleoff', 'no'); // toggle
-                    break;
-            }
             return;
         }
         if (!empty($assoc_args['overwrite'])) {
@@ -64,28 +38,6 @@ class fifu_cli extends WP_CLI_Command {
                     break;
                 case 'off':
                     update_option('fifu_ovw_first', 'toggleoff', 'no'); // toggle
-                    break;
-            }
-            return;
-        }
-        if (!empty($assoc_args['decode'])) {
-            switch ($args[0]) {
-                case 'on':
-                    update_option('fifu_decode', 'toggleon', 'no'); // toggle
-                    break;
-                case 'off':
-                    update_option('fifu_decode', 'toggleoff', 'no'); // toggle
-                    break;
-            }
-            return;
-        }
-        if (!empty($assoc_args['check'])) {
-            switch ($args[0]) {
-                case 'on':
-                    update_option('fifu_check', 'toggleon', 'no'); // toggle
-                    break;
-                case 'off':
-                    update_option('fifu_check', 'toggleoff', 'no'); // toggle
                     break;
             }
             return;
@@ -103,59 +55,45 @@ class fifu_cli extends WP_CLI_Command {
     // featured image
 
     function image($args, $assoc_args) {
-        if (!empty($assoc_args['title-copy'])) {
+        if (!empty($assoc_args['pcontent-add'])) {
             switch ($args[0]) {
                 case 'on':
-                    update_option('fifu_auto_alt', 'toggleon', 'no'); // toggle
+                    update_option('fifu_pcontent_add', 'toggleon', 'no'); // toggle
                     break;
                 case 'off':
-                    update_option('fifu_auto_alt', 'toggleoff', 'no'); // toggle
+                    update_option('fifu_pcontent_add', 'toggleoff', 'no'); // toggle
                     break;
             }
             return;
         }
-        if (!empty($assoc_args['title-always'])) {
+        if (!empty($assoc_args['pcontent-remove'])) {
             switch ($args[0]) {
                 case 'on':
-                    update_option('fifu_dynamic_alt', 'toggleon', 'no'); // toggle
+                    update_option('fifu_pcontent_remove', 'toggleon', 'no'); // toggle
                     break;
                 case 'off':
-                    update_option('fifu_dynamic_alt', 'toggleoff', 'no'); // toggle
+                    update_option('fifu_pcontent_remove', 'toggleoff', 'no'); // toggle
                     break;
             }
             return;
         }
-        if (!empty($assoc_args['hide-page'])) {
+        if (!empty($assoc_args['pcontent-types'])) {
+            update_option('fifu_pcontent_types', $args[0], 'no');
+            return;
+        }
+        if (!empty($assoc_args['hide'])) {
             switch ($args[0]) {
                 case 'on':
-                    update_option('fifu_hide_page', 'toggleon', 'no'); // toggle
+                    update_option('fifu_hide', 'toggleon', 'no'); // toggle
                     break;
                 case 'off':
-                    update_option('fifu_hide_page', 'toggleoff', 'no'); // toggle
+                    update_option('fifu_hide', 'toggleoff', 'no'); // toggle
                     break;
             }
             return;
         }
-        if (!empty($assoc_args['hide-post'])) {
-            switch ($args[0]) {
-                case 'on':
-                    update_option('fifu_hide_post', 'toggleon', 'no'); // toggle
-                    break;
-                case 'off':
-                    update_option('fifu_hide_post', 'toggleoff', 'no'); // toggle
-                    break;
-            }
-            return;
-        }
-        if (!empty($assoc_args['hide-cpt'])) {
-            switch ($args[0]) {
-                case 'on':
-                    update_option('fifu_hide_cpt', 'toggleon', 'no'); // toggle
-                    break;
-                case 'off':
-                    update_option('fifu_hide_cpt', 'toggleoff', 'no'); // toggle
-                    break;
-            }
+        if (!empty($assoc_args['hide-types'])) {
+            update_option('fifu_hide_type', $args[0], 'no');
             return;
         }
         if (!empty($assoc_args['hide-formats'])) {
@@ -195,39 +133,6 @@ class fifu_cli extends WP_CLI_Command {
         }
         if (!empty($assoc_args['default-types'])) {
             update_option('fifu_default_cpt', $args[0], 'no');
-            return;
-        }
-        if (!empty($assoc_args['content-page'])) {
-            switch ($args[0]) {
-                case 'on':
-                    update_option('fifu_content_page', 'toggleon', 'no'); // toggle
-                    break;
-                case 'off':
-                    update_option('fifu_content_page', 'toggleoff', 'no'); // toggle
-                    break;
-            }
-            return;
-        }
-        if (!empty($assoc_args['content-post'])) {
-            switch ($args[0]) {
-                case 'on':
-                    update_option('fifu_content', 'toggleon', 'no'); // toggle
-                    break;
-                case 'off':
-                    update_option('fifu_content', 'toggleoff', 'no'); // toggle
-                    break;
-            }
-            return;
-        }
-        if (!empty($assoc_args['content-cpt'])) {
-            switch ($args[0]) {
-                case 'on':
-                    update_option('fifu_content_cpt', 'toggleon', 'no'); // toggle
-                    break;
-                case 'off':
-                    update_option('fifu_content_cpt', 'toggleoff', 'no'); // toggle
-                    break;
-            }
             return;
         }
     }
@@ -278,45 +183,6 @@ class fifu_cli extends WP_CLI_Command {
                 break;
             case 'off':
                 update_option('fifu_photon', 'toggleoff', 'no'); // toggle
-                break;
-        }
-    }
-
-    function lazy($args) {
-        switch ($args[0]) {
-            case 'on':
-                update_option('fifu_lazy', 'toggleon', 'no'); // toggle
-                break;
-            case 'off':
-                update_option('fifu_lazy', 'toggleoff', 'no'); // toggle
-                break;
-        }
-    }
-
-    // social
-
-    function social($args, $assoc_args) {
-        if (!empty($assoc_args['home'])) {
-            update_option('fifu_social_home_url', $args[0], 'no');
-            return;
-        }
-        if (!empty($assoc_args['image-only'])) {
-            switch ($args[0]) {
-                case 'on':
-                    update_option('fifu_social_image_only', 'toggleon', 'no'); // toggle
-                    break;
-                case 'off':
-                    update_option('fifu_social_image_only', 'toggleoff', 'no'); // toggle
-                    break;
-            }
-            return;
-        }
-        switch ($args[0]) {
-            case 'on':
-                update_option('fifu_social', 'toggleon', 'no'); // toggle
-                break;
-            case 'off':
-                update_option('fifu_social', 'toggleoff', 'no'); // toggle
                 break;
         }
     }

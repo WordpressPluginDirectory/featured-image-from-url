@@ -81,14 +81,14 @@ function fifu_open_quick_lightbox() {
 
         url = image_url;
         url = (url == 'about:invalid' ? '' : url);
-        media = `<img id="fifu-quick-preview" src="" post-id="${post_id}" style="max-height:600px; width:100%;">`;
+        media = `<img loading="lazy" id="fifu-quick-preview" src="" post-id="${post_id}" style="max-height:600px; width:100%;">`;
         box = `
             <table>
                 <tr>
                     <td id="fifu-left-column" style="background-color:#f6f7f7">${media}</td>
                     <td style="vertical-align:top; padding: 10px; background-color:#f6f7f7; width:250px">
-                    <div class="fifu-pro" style="float:right;position:relative;top:-30px;left:44px"><a class="fifu-pro-link" href="https://fifu.app/" target="_blank" title="${fifuColumnVars.unlock}"><span class="dashicons dashicons-lock fifu-pro-icon"></span></a></div>
-                        <div>
+                    <div class="fifu-pro" style="float:right;position:relative;top:-30px;left:35px"><a class="fifu-pro-link" href="https://fifu.app/" target="_blank" title="${fifuColumnVars.unlock}"><span class="dashicons dashicons-lock fifu-pro-icon"></span></a></div>
+                        <div style="opacity:0.5;pointer-events:none;">
                             <div style="padding-bottom:5px">
                                 <span class="dashicons dashicons-camera" style="font-size:20px;cursor:auto;" title="${fifuColumnVars.tipImage}"></span>
                                 <b>${fifuColumnVars.labelImage}</b>
@@ -104,53 +104,10 @@ function fifu_open_quick_lightbox() {
                                 <div id="gridDemoImage"></div>
                                 <table>
                                     <tr>
-                                        <th><img src="https://storage.googleapis.com/featuredimagefromurl/icons/image.png" style="opacity: 0.3; width: 55px"></th>
-                                        <th><img src="https://storage.googleapis.com/featuredimagefromurl/icons/image.png" style="opacity: 0.3; width: 55px"></th>
-                                        <th><img src="https://storage.googleapis.com/featuredimagefromurl/icons/image.png" style="opacity: 0.3; width: 55px"></th>
-                                        <th><img src="https://storage.googleapis.com/featuredimagefromurl/icons/add.png" style="opacity: 0.3; width: 55px"></th>
-                                    <tr>
-                                </table>
-                                <br>
-                            </div>
-
-                            <div style="${showVideo}">
-                                <div style="padding-bottom:5px">
-                                    <span class="dashicons dashicons-video-alt3" style="font-size:20px;cursor:auto;" title="${fifuColumnVars.tipVideo}"></span>
-                                    <b>${fifuColumnVars.labelVideo}</b>
-                                </div>
-                                <input id="fifu-quick-video-input-url" type="text" placeholder="${fifuColumnVars.urlVideo}" value="" style="width:98%"/>
-                                <br><br>
-                            </div>
-
-                            <div style="${showVideoGallery}">
-                                <div style="padding-bottom:5px">
-                                    <span class="dashicons dashicons-format-video" style="font-size:20px;cursor:auto;"></span>
-                                    <b>${fifuColumnVars.labelVideoGallery}</b>
-                                </div>
-                                <div id="gridDemoVideo"></div>
-                                <table>
-                                    <tr>
-                                        <th><img src="https://storage.googleapis.com/featuredimagefromurl/icons/video.png" style="opacity: 0.3; width: 55px"></th>
-                                        <th><img src="https://storage.googleapis.com/featuredimagefromurl/icons/video.png" style="opacity: 0.3; width: 55px"></th>
-                                        <th><img src="https://storage.googleapis.com/featuredimagefromurl/icons/video.png" style="opacity: 0.3; width: 55px"></th>
-                                        <th><img src="https://storage.googleapis.com/featuredimagefromurl/icons/add.png" style="opacity: 0.3; width: 55px"></th>
-                                    <tr>
-                                </table>
-                                <br>
-                            </div>
-
-                            <div style="${showSlider}">
-                                <div style="padding-bottom:5px">
-                                    <span class="dashicons dashicons-images-alt2" style="font-size:20px;cursor:auto;"></span>
-                                    <b>${fifuColumnVars.labelSlider}</b>
-                                </div>
-                                <div id="gridDemoSlider"></div>
-                                <table>
-                                    <tr>
-                                        <th><img src="https://storage.googleapis.com/featuredimagefromurl/icons/image.png" style="opacity: 0.3; width: 55px"></th>
-                                        <th><img src="https://storage.googleapis.com/featuredimagefromurl/icons/image.png" style="opacity: 0.3; width: 55px"></th>
-                                        <th><img src="https://storage.googleapis.com/featuredimagefromurl/icons/image.png" style="opacity: 0.3; width: 55px"></th>
-                                        <th><img src="https://storage.googleapis.com/featuredimagefromurl/icons/add.png" style="opacity: 0.3; width: 55px"></th>
+                                        <th><img loading="lazy" src="https://storage.googleapis.com/featuredimagefromurl/icons/image.png" style="opacity: 0.3; width: 55px"></th>
+                                        <th><img loading="lazy" src="https://storage.googleapis.com/featuredimagefromurl/icons/image.png" style="opacity: 0.3; width: 55px"></th>
+                                        <th><img loading="lazy" src="https://storage.googleapis.com/featuredimagefromurl/icons/image.png" style="opacity: 0.3; width: 55px"></th>
+                                        <th><img loading="lazy" src="https://storage.googleapis.com/featuredimagefromurl/icons/add.png" style="opacity: 0.3; width: 55px"></th>
                                     <tr>
                                 </table>
                                 <br>
@@ -170,7 +127,7 @@ function fifu_open_quick_lightbox() {
                             </div>
                             <br><br>
                         </div>
-                        <div style="width:100%">
+                        <div style="width:100%;opacity:0.5;pointer-events:none;">
                             <button id="fifu-clean-button" class="fifu-quick-button" type="button" style="background-color: #e7e7e7; color: black;">${fifuColumnVars.buttonClean}</button>
                             <button id="fifu-save-button" post-id="${post_id}" is-ctgr="${is_ctgr}" class="fifu-quick-button" type="button">${fifuColumnVars.buttonSave}</button>
                             <br>

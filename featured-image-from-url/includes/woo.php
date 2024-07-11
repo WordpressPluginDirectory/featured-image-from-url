@@ -27,15 +27,6 @@ function fifu_woocommerce_product_duplicate($array) {
     }
 }
 
-function fifu_woocommerce_order_item_thumbnail_filter($image, $item) {
-    if (strpos($image, 'data-sizes="auto"') !== false)
-        return str_replace('data-src', 'src', $image);
-
-    return $image;
-}
-
-add_filter('woocommerce_order_item_thumbnail', 'fifu_woocommerce_order_item_thumbnail_filter', 10, 2);
-
 function fifu_on_products_page() {
     return strpos($_SERVER['REQUEST_URI'], 'wp-admin/edit.php') !== false && strpos($_SERVER['REQUEST_URI'], 'post_type=product') !== false;
 }

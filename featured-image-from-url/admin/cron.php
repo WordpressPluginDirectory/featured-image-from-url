@@ -23,18 +23,18 @@ function fifu_create_cloud_upload_auto_hook() {
 
     fifu_create_thumbnails_list($urls, null, true);
 
-    delete_transient('fifu_cloud_upload_auto_semaphore');
+    fifu_delete_transient('fifu_cloud_upload_auto_semaphore');
 }
 
 add_action('fifu_create_cloud_upload_auto_event', 'fifu_create_cloud_upload_auto_hook');
 
 function fifu_active_job($semaphore, $minutes) {
-    $date = get_transient($semaphore);
+    $date = fifu_get_transient($semaphore);
     if (!$date)
         return false;
 
     if (gettype($date) != 'object') {
-        set_transient($semaphore, new DateTime(), 0);
+        fifu_set_transient($semaphore, new DateTime(), 0);
         return true;
     }
 

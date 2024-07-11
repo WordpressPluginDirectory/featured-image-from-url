@@ -12,6 +12,21 @@
                 <div class="box">
                     <table>
                         <tr>
+                            <td style="border-bottom:none">2024-06-29</td>
+                            <td style="border-bottom:none"><h3> MalCare WordPress Security Plugin</h3></td>
+                            <td style="border-bottom:none">plugin</td>
+                        </tr>
+                    </table>
+                    <div class="greybox" style="position: relative; top: -10px">
+                        Automatic features not working:<br>
+                        1) Go to 'MalCare → Ozone Layer → Firewall → View All'<br>
+                        2) Find a register whose path contains 'fifu-premium'<br>
+                        3) Click on the 'Add to whitelist' button<br>
+                    </div>
+                </div>
+                <div class="box">
+                    <table>
+                        <tr>
                             <td style="border-bottom:none">2024-06-10</td>
                             <td style="border-bottom:none"><h3>WooCommerce Additional Variation Images</h3></td>
                             <td style="border-bottom:none">plugin</td>
@@ -174,7 +189,7 @@
                     </table>
                     <div class="greybox" style="position: relative; top: -10px">
                         Google Drive images not displayed:<br>
-                        1) enable "FIFU Settings → Performance → CDN + Optimized Thumbnails".<br>
+                        1) enable 'FIFU Settings → Image → Optimized images'.<br>
                     </div>
                 </div>
                 <div class="box">
@@ -224,7 +239,7 @@
                     </table>
                     <div class="greybox" style="position: relative; top: -10px">
                         "Add to Wishlist" button not being displayed for featured video:<br>
-                        1) set "1" for "FIFU Settings → Featured video → Play Button → z-index";<br>
+                        1) set "1" for "FIFU Settings → Video → Play Button → z-index";<br>
                     </div>
                 </div>
                 <div class="box">
@@ -249,7 +264,7 @@
                         </tr>
                     </table>
                     <div class="greybox" style="position: relative; top: -10px">
-                        Images cropped when "CDN + Optimized Thumbnails" is enabled:<br>
+                        Images cropped when "Optimized images" is enabled:<br>
                         1) Select "Appearance → Customize → WooCommerce → Product Images → Thumbnail cropping → Uncropped".<br>
                         2) Publish.
                     </div>
@@ -366,19 +381,6 @@
                     <table>
                         <tr>
                             <td style="border-bottom:none">2023-11-01</td>
-                            <td style="border-bottom:none"><h3> Essential Grid</h3></td>
-                            <td style="border-bottom:none">plugin</td>
-                        </tr>
-                    </table>
-                    <div class="greybox" style="position: relative; top: -10px">
-                        Images not displayed due lazy load conflict:<br>
-                        1) disable "FIFU → Settings → Performance → Lazy Load".<br>
-                    </div>
-                </div>
-                <div class="box">
-                    <table>
-                        <tr>
-                            <td style="border-bottom:none">2023-11-01</td>
                             <td style="border-bottom:none"><h3> Himer
                             </h3></td>
                             <td style="border-bottom:none">theme</td>
@@ -408,7 +410,7 @@
                     </table>
                     <div class="greybox" style="position: relative; top: -10px">
                         Featured images are being displayed with different heights on homepage:<br>
-                        1) enable FIFU Settings → Featured image → Same height<br>
+                        1) enable FIFU Settings → Image → Same height<br>
                         2) add the selector div#content.content_blog<br>
                         3) add the size ratio 1:1<br>
                     </div>
@@ -518,34 +520,6 @@
                 <div class="box">
                     <table>
                         <tr>
-                            <td style="border-bottom:none">2023-02-02</td>
-                            <td style="border-bottom:none"><h3> Houzez</h3></td>
-                            <td style="border-bottom:none">theme</td>
-                        </tr>
-                    </table>
-                    <div class="greybox" style="position: relative; top: -10px">
-                        Images not displayed due lazy load conflict. Two possible solutions:<br>
-                        a) disable "Houzez → Theme Options → Optimizations → Lazy Load Images".<br>
-                        b) disable "FIFU → Settings → Performance → Lazy Load".<br>
-                    </div>
-                </div>
-                <div class="box">
-                    <table>
-                        <tr>
-                            <td style="border-bottom:none">2023-01-26</td>
-                            <td style="border-bottom:none"><h3> Slider Revolution</h3></td>
-                            <td style="border-bottom:none">plugin</td>
-                        </tr>
-                    </table>
-                    <div class="greybox" style="position: relative; top: -10px">
-                        Slider not being loaded when Lazy Load is enabled:<br>
-                        1) enter "data-src" in the "Slider Revolution → Global Settings → Modules Optimization → Third-party lazy loading data" field;<br>
-                        2) click on "Save Global Settings".
-                    </div>
-                </div>
-                <div class="box">
-                    <table>
-                        <tr>
                             <td style="border-bottom:none">2023-01-10</td>
                             <td style="border-bottom:none"><h3> YOOtheme</h3></td>
                             <td style="border-bottom:none">theme</td>
@@ -614,22 +588,6 @@
                         2) select "Disabled" for image<br>
                         3) add "fifu_image_url" with the value "%PRODUCT.image%" to "Custom fields"<br>
                         4) import a new product, wait 1 minute and the image will be displayed
-                    </div>
-                </div>
-                <div class="box">
-                    <table>
-                        <tr>
-                            <td style="border-bottom:none">2022-10-11</td>
-                            <td style="border-bottom:none"><h3> Elementor</h3></td>
-                            <td style="border-bottom:none">plugin</td>
-                        </tr>
-                    </table>
-                    <div class="greybox" style="position: relative; top: -10px">
-                        "Archive Products" widget displays a small category image when FIFU → Settings → Performance → Lazy Load is enabled:<br>
-                        1) access "Appearance → Customize → Additional CSS";<br>
-                        2) add:<br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;li.product-category>a{width:100%;}<br>
-                        3) publish.
                     </div>
                 </div>
                 <div class="box">
@@ -768,9 +726,8 @@
                         </tr>
                     </table>
                     <div class="greybox" style="position: relative; top: -10px">
-                        "CDN + Optimized Thumbnails" not working properly. Two possible solutions:<br>
-                        a) access "Appearance → Customize → WooCommerce → Product Images → EXTRA IMAGES → Extra Images Display" and select "Disabled"<br>
-                        b) disable "FIFU Settings → Performance → Lazy Load"
+                        "Optimized images" not working properly:<br>
+                        1) access "Appearance → Customize → WooCommerce → Product Images → EXTRA IMAGES → Extra Images Display" and select "Disabled"
                     </div>
                 </div>
                 <div class="box">
@@ -798,7 +755,7 @@
                     </table>
                     <div class="greybox" style="position: relative; top: -10px">
                         Fixing "Add an image with your Focus Keyword as alt text":<br>
-                        1) go to "Featured image" meta box and type some text into "alt/title attribute" field<br>
+                        1) go to "Featured image" meta box and type some text into "Alternative text" field<br>
                         2) publish/update the post<br>
                         3) refresh the page (F5)<br>
                     </div>
@@ -972,19 +929,6 @@
                 <div class="box">
                     <table>
                         <tr>
-                            <td style="border-bottom:none">2021-06-15</td>
-                            <td style="border-bottom:none"><h3> Feed</h3></td>
-                            <td style="border-bottom:none">XML</td>
-                        </tr>
-                    </table>
-                    <div class="greybox" style="position: relative; top: -10px">
-                        XML parsing error: duplicate attribute xmlns:media="http://search.yahoo.com/mrss/". <br>
-                        1) the first attribute is added by FIFU (Media RSS Tags) and the duplicated one by another component you have installed on your site, such as Rank Math SEO plugin. Find and disable the option that is adding the duplicated attribute, otherwise services like Google News may not find your images.<br>
-                    </div>
-                </div>
-                <div class="box">
-                    <table>
-                        <tr>
                             <td style="border-bottom:none">2021-04-17</td>
                             <td style="border-bottom:none"><h3> Rey + Rey Core</h3></td>
                             <td style="border-bottom:none">theme + plugin</td>
@@ -1150,20 +1094,6 @@
                 <div class="box">
                     <table>
                         <tr>
-                            <td style="border-bottom:none">2020-08-26</td>
-                            <td style="border-bottom:none"><h3> WordPress</h3></td>
-                            <td style="border-bottom:none"></td>
-                        </tr>
-                    </table>
-                    <div class="greybox" style="position: relative; top: -10px">
-                        The image URL is not in the feed:<br>
-                        1) enable "FIFU Settings → Social → Media RSS Tags";<br>
-                        2) for single posts (only) it's necessary to add "?withoutcomments=1" in the end of the feed URL.<br>
-                    </div>
-                </div>
-                <div class="box">
-                    <table>
-                        <tr>
                             <td style="border-bottom:none">2020-08-13</td>
                             <td style="border-bottom:none"><h3> WooCommerce REST API</h3></td>
                             <td style="border-bottom:none">API</td>
@@ -1176,26 +1106,6 @@
                         3) activate FIFU;<br>
                         4) run Metadata → Clear Metadata;<br>
                         5) enable Metadata → Image Metadata.<br>
-                    </div>
-                </div>
-                <div class="box">
-                    <table>
-                        <tr>
-                            <td style="border-bottom:none">2020-07-26</td>
-                            <td style="border-bottom:none"><h3> Gema Lite</h3></td>
-                            <td style="border-bottom:none">theme</td>
-                        </tr>
-                    </table>
-                    <div class="greybox" style="position: relative; top: -10px">
-                        Style issue with featured videos:<br>
-                        1) enable "FIFU Settings → Lazy Load";<br>
-                        2) disable "FIFU Settings → Video → Video Thumbnail";<br>
-                        3) access "Appearance → Gema Lite → Customize → Additional CSS";<br>
-                        4) add:<br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;div.entry-featured > img.fifu-video {width:100%;}<br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;div.card__image-wrap div {position:absolute;top:0;height:100%;}<br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;div.fifu_wrapper + img {display:none;};<br>
-                        5) publish.<br>
                     </div>
                 </div>
                 <div class="box">
@@ -1272,7 +1182,7 @@
                     </table>
                     <div class="greybox" style="position: relative; top: -10px">
                         Home page images have different heights:<br>
-                        1) enable "FIFU Settings → Featured image → Same Height";<br>
+                        1) enable "FIFU Settings → Image → Same Height";<br>
                         2) access "Selector" tab and add two selectors: "ul.g1-featured-items" and "ul.g1-collection-items";<br>
                         3) access "Size Ratio" tab and set "16:9".<br>
                     </div>
@@ -1337,7 +1247,7 @@
                     </table>
                     <div class="greybox" style="position: relative; top: -10px">
                         Product gallery thumbnails have different heights:<br>
-                        1) enable "FIFU Settings → Featured image →  Same Height";<br>
+                        1) enable "FIFU Settings → Image →  Same Height";<br>
                         2) access "Selector" tab and add "ol.flex-control-thumbs".<br>
                     </div>
                 </div>
@@ -1490,25 +1400,6 @@
                     <div class="greybox" style="position: relative; top: -10px">
                         Showing external images on "Related Posts":<br>
                         x) there is no local solution. Jetpack Related Posts documentation informs: "we do all the analysis, processing, and serving from our cloud". It means Jetpack would need to adapt its web service to work with the images provided by FIFU. So you may contact Jetpack support, install an alternative plugin for Related Posts, like <a href="https://wordpress.org/plugins/related-posts-thumbnails/">this</a>, or try this <a href="https://wordpress.org/support/topic/featured-image-from-url-with-jetpack-related-posts/">snippet</a> (untested).<br>
-                    </div>
-                </div>
-                <div class="box">
-                    <table>
-                        <tr>
-                            <td style="border-bottom:none">2019-12-12</td>
-                            <td style="border-bottom:none"><h3>PHP</h3></td>
-                            <td style="border-bottom:none">programming language</td>
-                        </tr>
-                    </table>
-                    <div class="greybox" style="position: relative; top: -10px">
-                        Fixing fatal error "Allowed memory size of [...] bytes exhausted (tried to allocate [...] bytes) in /var/www/html/wp-includes/wp-db.php":<br>
-                        1) open /var/www/html/wp-config.php file;<br>
-                        2) add this code before "Happy publishing" line: define('WP_MEMORY_LIMIT', '2048M');<br>
-                    </div>
-                    <div class="greybox" style="position: relative; top: -10px">
-                        Fixing fatal error "Maximum execution time of 30 seconds exceeded in /var/www/html/wp-includes/wp-db.php":<br>
-                        1) open /var/www/html/wp-config.php file;<br>
-                        2) add this code before "Happy publishing" line: set_time_limit(1800);<br>
                     </div>
                 </div>
                 <div class="box">

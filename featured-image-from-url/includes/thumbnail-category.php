@@ -9,9 +9,6 @@ function fifu_ctgr_add_social_tags() {
     $term_id = fifu_ctgr_get_term_id();
     if ($term_id)
         $description = wp_strip_all_tags(category_description($term_id));
-
-    if ($url && fifu_is_on('fifu_social') && fifu_is_off('fifu_social_image_only'))
-        include 'html/social.html';
 }
 
 function fifu_ctgr_get_url($term_id) {

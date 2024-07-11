@@ -49,7 +49,7 @@ class Elementor_FIFU_Widget extends \Elementor\Widget_Base {
         $image_url = esc_url($settings['fifu_input_url']);
         if ($image_url) {
             $image_url = fifu_convert($image_url);
-            echo '<div style="width:100%;text-align:center;"><img class="oembed-elementor-widget fifu-elementor-image" src="' . $image_url . '"/></div>';
+            echo '<div style="width:100%;text-align:center;"><img loading="lazy" class="oembed-elementor-widget fifu-elementor-image" src="' . $image_url . '"/></div>';
         }
     }
 
