@@ -147,7 +147,6 @@ class fifu_cli extends WP_CLI_Command {
                 update_option('fifu_fake', 'toggleon', 'no'); // toggle
                 break;
             case 'off':
-                update_option('fifu_fake_created', false, 'no');
                 update_option('fifu_fake_stop', true, 'no');
                 update_option('fifu_fake', 'toggleoff', 'no'); // toggle
                 break;

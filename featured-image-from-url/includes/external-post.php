@@ -28,44 +28,6 @@ function fifu_save_properties_ext($post_id) {
     }
 }
 
-function fifu_first_img_in_content($content) {
-    $content = html_entity_decode($content);
-    preg_match_all('/<img[^>]*>/', $content, $matches);
-    if ($matches && $matches[0]) {
-        $skip_list = get_option('fifu_skip');
-        if (!$skip_list)
-            return $matches[0][0];
-
-        return fifu_skip_urls($skip_list, $matches[0], 0);
-    }
-    return null;
-}
-
-function fifu_skip_urls($skip_list, $img_list, $nth) {
-    $i = 0;
-    foreach ($img_list as $img) {
-        if ($i < $nth) {
-            $i++;
-            continue;
-        }
-
-        $skip = false;
-        foreach (explode(',', $skip_list) as $word) {
-            if (strpos($img, $word) !== false) {
-                $skip = true;
-                break;
-            }
-        }
-
-        if ($skip) {
-            $i++;
-            continue;
-        }
-        return $img_list[$i];
-    }
-    return null;
-}
-
 function fifu_first_url_in_content($post_id) {
     $content = get_post_field('post_content', $post_id);
     $content = html_entity_decode($content);
@@ -76,36 +38,34 @@ function fifu_first_url_in_content($post_id) {
 
     preg_match_all('/<img[^>]*>/', $content, $matches);
 
-    if (!$matches[0])
+    if (sizeof($matches) == 0)
         return;
 
     // $matches
     $tag = null;
-    if (sizeof($matches) != 0) {
-        foreach ($matches[0] as $tag) {
-            if (($tag && strpos($tag, 'data:image/jpeg') !== false))
-                continue;
+    foreach ($matches[0] as $tag) {
+        if (($tag && strpos($tag, 'data:image/jpeg') !== false))
+            continue;
 
-            $src = fifu_get_attribute('src', $tag);
-            if (!preg_match('/^https?:\/\//', $src))
-                continue;
+        $src = fifu_get_attribute('src', $tag);
+        if (!preg_match('/^https?:\/\//', $src))
+            continue;
 
-            // skip
-            $skip_list = get_option('fifu_skip');
-            if ($skip_list) {
-                $skip = false;
-                foreach (explode(',', $skip_list) as $word) {
-                    if (strpos($tag, $word) !== false) {
-                        $skip = true;
-                        break;
-                    }
+        // skip
+        $skip_list = get_option('fifu_skip');
+        if ($skip_list) {
+            $skip = false;
+            foreach (explode(',', $skip_list) as $word) {
+                if (strpos($tag, $word) !== false) {
+                    $skip = true;
+                    break;
                 }
-                if ($skip)
-                    continue;
             }
-
-            break;
+            if ($skip)
+                continue;
         }
+
+        break;
     }
 
     if (!$tag)

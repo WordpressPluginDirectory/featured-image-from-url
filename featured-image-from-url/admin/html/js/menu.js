@@ -7,7 +7,7 @@ jQuery(document).ready(function () {
     var metaIntervalId = null;
 });
 
-var restUrl = fifu_get_rest_url();
+var restUrl = fifuScriptVars.restUrl;
 
 function invert(id) {
     if (jQuery("#fifu_toggle_" + id).attr("class") == "toggleon") {

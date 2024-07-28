@@ -22,6 +22,9 @@ function fifu_get_strings_settings() {
     $fifu['options']['key'] = function () {
         return __("License key", FIFU_SLUG);
     };
+    $fifu['options']['expired'] = function () {
+        return __("License Key Expired", FIFU_SLUG);
+    };
 
     // php
     $fifu['php']['message']['wait'] = function () {
@@ -192,6 +195,33 @@ function fifu_get_strings_settings() {
     $fifu['chrome']['link'] = function () {
         _e("Chrome extension", FIFU_SLUG);
     };
+    $fifu['server']['details'] = function () {
+        _e("Async requests from the FIFU server to your site may be used to split data processing into parts, avoiding execution timeouts on slower tasks and excessive memory usage on larger tasks. They also bypass the lack of a real cron system in WordPress, keeping some automatic features running even when the site is not receiving visitors.", FIFU_SLUG);
+    };
+    $fifu['server']['success'] = function () {
+        return __("Test connection with the FIFU server completed successfully.", FIFU_SLUG);
+    };
+    $fifu['server']['fail'] = function () {
+        return __("Test connection with the FIFU server failed. If you are using a firewall, please allow FIFU requests.", FIFU_SLUG);
+    };
+    $fifu['key']['success']['main'] = function () {
+        return __("Your license key was successfully registered.", FIFU_SLUG);
+    };
+    $fifu['key']['expired']['main'] = function () {
+        return __("Your license key has expired.", FIFU_SLUG);
+    };
+    $fifu['key']['invalid']['main'] = function () {
+        return __("Your license key is invalid.", FIFU_SLUG);
+    };
+    $fifu['key']['success']['details'] = function () {
+        return __("FIFU is now fully activated, and all features are unlocked.", FIFU_SLUG);
+    };
+    $fifu['key']['expired']['details'] = function () {
+        return __("Please renew or upgrade it to continue receiving updates and support.", FIFU_SLUG);
+    };
+    $fifu['key']['invalid']['details'] = function () {
+        return __("Please check the key and try again, or contact support for assistance. A valid license key is required for the plugin to work correctly and without limitations.", FIFU_SLUG);
+    };
 
     // messages
     $fifu['message']['wait'] = function () {
@@ -233,7 +263,7 @@ function fifu_get_strings_settings() {
         _e("License key", FIFU_SLUG);
     };
     $fifu['tab']['renewal'] = function () {
-        _e("Renew yearly plan", FIFU_SLUG);
+        _e("Renew or upgrade", FIFU_SLUG);
     };
     $fifu['tab']['cloud'] = function () {
         _e("Cloud", FIFU_SLUG);
@@ -1059,6 +1089,9 @@ function fifu_get_strings_settings() {
     // debug
     $fifu['debug']['desc'] = function () {
         _e("When FIFU is in debug mode, JavaScript and CSS files are not cached.", FIFU_SLUG);
+    };
+    $fifu['debug']['tables'] = function () {
+        _e("It also allows the development team to read a few entries in the database that are related to images.", FIFU_SLUG);
     };
 
     // api
@@ -2616,9 +2649,6 @@ function fifu_get_strings_plugins() {
     $fifu['settings'] = function () {
         return __("Settings", FIFU_SLUG);
     };
-    $fifu['expired'] = function () {
-        return __("Your license key has expired. Renew it here", FIFU_SLUG);
-    };
 
     return $fifu;
 }
@@ -2727,6 +2757,9 @@ function fifu_get_strings_notice() {
     // options
     $fifu['notice']['key'] = function () {
         return __("Please submit your activation key to use the plugin without limitations.", FIFU_SLUG);
+    };
+    $fifu['notice']['expired'] = function () {
+        return __("Your license key has expired. Please renew or upgrade it to continue receiving updates and support.", FIFU_SLUG);
     };
 
     return $fifu;

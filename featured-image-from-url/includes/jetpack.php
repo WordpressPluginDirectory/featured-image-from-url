@@ -12,12 +12,15 @@ function fifu_resize_jetpack_image_size($size, $url) {
         $h = (int) $aux[1];
         $new_h = intval($size * $h / $w);
         $clean_url = explode('?', $url)[0];
-        return "{$clean_url}?resize={$size},{$new_h}";
+        if ($new_h == 0)
+            return "{$clean_url}?w={$size}&ssl=1";
+        else
+            return "{$clean_url}?resize={$size},{$new_h}&ssl=1";
     }
 
     $del = strpos($url, "?") !== false ? "&" : "?";
 
-    return "{$url}{$del}w={$size}&resize={$size}";
+    return "{$url}{$del}w={$size}&resize={$size}&ssl=1";
 }
 
 function fifu_jetpack_get_set($url, $is_slider) {
@@ -75,4 +78,3 @@ function fifu_jetpack_photon_url($url, $args) {
         return add_query_arg($args, $photon_url);
     return $photon_url;
 }
-

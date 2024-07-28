@@ -3,8 +3,8 @@ Contributors: marceljm
 Donate link: https://www.paypal.com/donate/?hosted_button_id=KY7MRYTANZN9A
 Tags: featured, image, url, video, woocommerce
 Requires at least: 5.6
-Tested up to: 6.6
-Stable tag: 4.8.5
+Tested up to: 6.6.1
+Stable tag: 4.8.7
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -223,47 +223,37 @@ Supports URLs from YouTube, Vimeo, Twitter, 9GAG, Cloudinary, Tumblr, Publitio, 
 
 7. Widgets for Elementor
 
-8. Settings → Featured image
+8. Settings → Help
 
-9. Settings → Featured video
+9. Settings → Image
 
-10. Settings → Featured slider
+10. Settings → Video
 
-11. Settings → Featured audio
+11. Settings → Slider
 
-12. Settings → Shortcode
+12. Settings → Audio
 
 13. Settings → Automatic
 
-14. Settings → Social
+14. Settings → WooCommerce
 
-15. Settings → Performance
+15. Settings → WP All Import
 
-16. Settings → WooCommerce
+16. Settings → Metadata
 
-17. Settings → WP All Import
-
-18. Settings → REST API
-
-19. Settings → Admin
-
-20. Settings → Metadata
-
-21. Developers
-
-22. FIFU Cloud
+17. Settings → Developers
 
 
 == Changelog ==
 
+= 4.8.7 =
+* Enhancement: Debug Mode (when enabled, database entries related to images can be inspected by support); Fix: Hide Featured Media (not working); Fix: menu settings not working due wrong REST route.
+
+= 4.8.6 =
+* Fix: metadata operations were much slower than expected; Fix: WordPress native lazy load was causing performance issues.
+
 = 4.8.5 =
 * New free feature: Media RSS Tags (added automatically); Enhancement: menu settings reorganized; Enhancement: Hide Featured Media (post type filter added); Enhancement: WooCommerce import (can receive iframe URLs now); Fix: Clear Metadata (getting stuck); Fix: Hide Featured Media (unduly hiding duplicated image in the post content); Deprecated: Lazy Load (replaced with native WordPress lazy load); Deprecated: Auto Set Image Title (automatic when the alternative text is empty); Deprecated: bbPress and BuddyBoss Platform → Display featured image (automatic when an image URL is added); Deprecated: WooCommerce import → Priority (based on the columns order now).
-
-= 4.8.4 =
-* New feature: Modify Post Content; Enhancement: Auto Set Featured Media from Post Content (easier to use); Fix: Image Metadata and Clear Metadata (incomplete process when group_concat_max_len is too short, counter displaying negative value); Fix: image alt (empty value unduly saved in the database); Fix: security issue reported by Patchstack team; Fix: conflict with Redis Object Cache plugin (causing multiple fails); Deprecated: Featured Image in Content (replaced with Modify Post Content); Deprecated: Variable Product option (fields displayed by default now); Deprecated: Auto Set Image Title → Copy the post title to the alt/title field (can be done dynamically, without database changes); Deprecated: Meta Tags → Only image tags (default now).
-
-= 4.8.2 =
-* Fix: fatal error on activation due to column resize; Fix: security issue reported by Patchstack team; Fix: Auto set featured media from post content (failing for URLs with Korean characters); Deprecated: Auto set featured media from post content → Scheduling.
 
 = others =
 * [more](https://fifu.app/changelog)
@@ -271,5 +261,5 @@ Supports URLs from YouTube, Vimeo, Twitter, 9GAG, Cloudinary, Tumblr, Publitio, 
 
 == Upgrade Notice ==
 
-= 4.8.5 =
-* New free feature: Media RSS Tags (added automatically); Enhancement: menu settings reorganized; Enhancement: Hide Featured Media (post type filter added); Enhancement: WooCommerce import (can receive iframe URLs now); Fix: Clear Metadata (getting stuck); Fix: Hide Featured Media (unduly hiding duplicated image in the post content); Deprecated: Lazy Load (replaced with native WordPress lazy load); Deprecated: Auto Set Image Title (automatic when the alternative text is empty); Deprecated: bbPress and BuddyBoss Platform → Display featured image (automatic when an image URL is added); Deprecated: WooCommerce import → Priority (based on the columns order now).
+= 4.8.7 =
+* Enhancement: Debug Mode (when enabled, database entries related to images can be inspected by support); Fix: Hide Featured Media (not working); Fix: menu settings not working due wrong REST route.

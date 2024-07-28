@@ -224,7 +224,7 @@ function fifu_get_html($url, $alt, $width, $height) {
         $css = 'display:none';
     }
 
-    return sprintf('<img loading="lazy" src="%s" alt="%s" title="%s" style="%s" data-large_image="%s" data-large_image_width="%s" data-large_image_height="%s" onerror="%s" width="%s" height="%s">', $url, $alt, $alt, $css, $url, "800", "600", "jQuery(this).hide();", $width, $height);
+    return sprintf('<img src="%s" alt="%s" title="%s" style="%s" data-large_image="%s" data-large_image_width="%s" data-large_image_height="%s" onerror="%s" width="%s" height="%s">', $url, $alt, $alt, $css, $url, "800", "600", "jQuery(this).hide();", $width, $height);
 }
 
 add_filter('the_content', 'fifu_remove_content_image');
@@ -301,7 +301,7 @@ function fifu_optimize_content($content) {
 
         $url = fifu_cdn_adjust($url);
 
-        if (fifu_jetpack_blocked($url) || strpos($url, 'data:image') === 0)
+        if (!$url || fifu_jetpack_blocked($url) || strpos($url, 'data:image') === 0)
             continue;
 
         $new_url = fifu_jetpack_photon_url($url, null);

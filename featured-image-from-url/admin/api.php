@@ -810,7 +810,6 @@ function fifu_enable_fake_api(WP_REST_Request $request) {
 }
 
 function fifu_disable_fake_api(WP_REST_Request $request) {
-    update_option('fifu_fake_created', false, 'no');
     update_option('fifu_fake_stop', true, 'no');
     return json_encode(array());
 }
@@ -973,7 +972,7 @@ function fifu_test_execution_time() {
         sleep(1);
         //flush();
     }
-    error_log(number_format(microtime(true,) - $start_time, 4));
+    error_log(number_format(microtime(true) - $start_time, 4));
     return json_encode(array());
 }
 

@@ -4,11 +4,11 @@
  * Plugin Name: Featured Image from URL (FIFU)
  * Plugin URI: https://fifu.app/
  * Description: Use an external image/video/audio as featured image of a post or WooCommerce product.
- * Version: 4.8.5
+ * Version: 4.8.7
  * Author: fifu.app
  * Author URI: https://fifu.app/
  * WC requires at least: 4.0
- * WC tested up to: 9.0.2
+ * WC tested up to: 9.1.4
  * Text Domain: featured-image-from-url
  * License: GPLv3
  * License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -38,6 +38,7 @@ require_once (FIFU_INCLUDES_DIR . '/woo.php');
 
 require_once (FIFU_ADMIN_DIR . '/api.php');
 require_once (FIFU_ADMIN_DIR . '/db.php');
+require_once (FIFU_ADMIN_DIR . '/debug.php');
 require_once (FIFU_ADMIN_DIR . '/category.php');
 require_once (FIFU_ADMIN_DIR . '/column.php');
 require_once (FIFU_ADMIN_DIR . '/cron.php');
@@ -92,7 +93,7 @@ add_action('upgrader_process_complete', 'fifu_upgrade', 10, 2);
 
 function fifu_upgrade($upgrader_object, $options) {
     $current_plugin_path_name = plugin_basename(__FILE__);
-    if ($options['action'] == 'update' && $options['type'] == 'plugin') {
+    if (isset($options['action']) && $options['action'] == 'update' && $options['type'] == 'plugin') {
         if (isset($options['plugins'])) {
             foreach ((array) $options['plugins'] as $each_plugin) {
                 if ($each_plugin == $current_plugin_path_name) {

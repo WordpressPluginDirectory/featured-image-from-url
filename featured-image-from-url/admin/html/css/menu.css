@@ -9,7 +9,6 @@
     padding-top: 0px;
     border-radius: 100px 45px 0px 0px;
     height: 48px !important;
-    background: repeating-linear-gradient(-55deg,#23282d,#23282d 2px,#32373c 2px,#32373c 5px);
     background-color:#23282d;
     float:left;
     width:100%;
@@ -222,6 +221,7 @@ div.polaroid {
 .fifu-cloud-details {
     float:right;
     background-color: #fcfcfc;
+    display:none;
 }
 
 .fifu-cloud-details-icon {

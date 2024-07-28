@@ -9,6 +9,8 @@ define('FIFU_SLUG', 'featured-image-from-url');
 add_action('admin_menu', 'fifu_insert_menu');
 
 function fifu_insert_menu() {
+    $fifu = fifu_get_strings_settings();
+
     if (strpos($_SERVER['REQUEST_URI'], 'featured-image-from-url') !== false || strpos($_SERVER['REQUEST_URI'], 'fifu') !== false) {
         wp_enqueue_script('font-awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js');
         wp_enqueue_style('jquery-ui-style1', 'https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css');
@@ -36,8 +38,6 @@ function fifu_insert_menu() {
             'nonce' => wp_create_nonce('wp_rest'),
         ]);
     }
-
-    $fifu = fifu_get_strings_settings();
 
     add_menu_page('Featured Image from URL', 'FIFU', 'manage_options', 'featured-image-from-url', 'fifu_get_menu_html', 'dashicons-camera', 57);
     add_submenu_page('featured-image-from-url', 'FIFU Settings', $fifu['options']['settings'](), 'manage_options', 'featured-image-from-url');
@@ -137,14 +137,6 @@ function fifu_support_data() {
     // css
     wp_enqueue_style('fifu-base-ui-css', plugins_url('/html/css/base-ui.css', __FILE__), array(), fifu_version_number_enq());
     wp_enqueue_style('fifu-menu-css', plugins_url('/html/css/menu.css', __FILE__), array(), fifu_version_number_enq());
-    wp_enqueue_script('fifu-rest-route-js', plugins_url('/html/js/rest-route.js', __FILE__), array('jquery'), fifu_version_number_enq());
-
-    // register custom variables for the AJAX script
-    wp_localize_script('fifu-rest-route-js', 'fifuScriptVars', [
-        'restUrl' => esc_url_raw(rest_url()),
-        'homeUrl' => esc_url_raw(home_url()),
-        'nonce' => wp_create_nonce('wp_rest'),
-    ]);
 
     $skip = esc_attr(get_option('fifu_skip'));
     $html_cpt = esc_attr(get_option('fifu_html_cpt'));
@@ -398,7 +390,7 @@ function fifu_update_option($input, $field) {
         return;
     }
 
-    $arr_int = array('fifu_fake_created', 'fifu_spinner_nth');
+    $arr_int = array('fifu_spinner_nth');
     if (in_array($field, $arr_int)) {
         if (filter_var($value, FILTER_VALIDATE_INT))
             update_option($field, $value);
@@ -419,10 +411,6 @@ function fifu_update_option($input, $field) {
 
 function fifu_enable_fake() {
     fifu_db_clear_meta_out();
-
-    if (get_option('fifu_fake_created') && get_option('fifu_fake_created') != null)
-        return;
-    update_option('fifu_fake_created', true, 'no');
 
     $result = fifu_db_get_meta_in_first();
     if (count($result) == 0) {
@@ -452,10 +440,6 @@ function fifu_enable_fake() {
 }
 
 function fifu_disable_fake() {
-    if (!get_option('fifu_fake_created') && get_option('fifu_fake_created') != null)
-        return;
-    update_option('fifu_fake_created', false, 'no');
-
     $result = fifu_db_get_meta_out_first();
     if (count($result) == 0) {
         fifu_db_prepare_meta_out();

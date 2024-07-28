@@ -1,4 +1,4 @@
-var restUrl = fifu_get_rest_url();
+var restUrl =fifuScriptVars.restUrl;
 
 function signUp() {
     var firstName = jQuery('#su_first_name').val();
