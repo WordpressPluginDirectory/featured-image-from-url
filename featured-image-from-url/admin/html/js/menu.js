@@ -65,14 +65,50 @@ jQuery(function () {
 
 function save(formName, url) {
     var frm = jQuery(formName);
+    showMessage('Processing...', fifuScriptVars.saving + '...', 'processing');
     jQuery.ajax({
         type: frm.attr('method'),
         url: url,
         data: frm.serialize(),
         success: function (data) {
-            //alert('saved');
+            updateMessage('Success', fifuScriptVars.saved, 'success');
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            updateMessage('Error', fifuScriptVars.error + ' ' + errorThrown, 'error');
         }
     });
+}
+
+function showMessage(title, message, state) {
+    var dialog = jQuery("#dialog-message");
+    jQuery("#dialog-message-content").text(message);
+
+    // Add class based on state
+    if (state === 'success') {
+        dialog.removeClass('custom-dialog-error custom-dialog-processing').addClass('custom-dialog-success');
+    } else if (state === 'error') {
+        dialog.removeClass('custom-dialog-success custom-dialog-processing').addClass('custom-dialog-error');
+    } else {
+        dialog.removeClass('custom-dialog-success custom-dialog-error').addClass('custom-dialog-processing');
+    }
+
+    dialog.css({
+        display: 'block'
+    }).fadeIn(300);
+}
+
+function updateMessage(title, message, state) {
+    var dialog = jQuery("#dialog-message");
+    jQuery("#dialog-message-content").text(message);
+
+    // Add class based on state
+    if (state === 'success') {
+        dialog.removeClass('custom-dialog-error custom-dialog-processing').addClass('custom-dialog-success');
+    } else if (state === 'error') {
+        dialog.removeClass('custom-dialog-success custom-dialog-processing').addClass('custom-dialog-error');
+    }
+
+    dialog.delay(2000).fadeOut(300);
 }
 
 function fifu_default_js() {

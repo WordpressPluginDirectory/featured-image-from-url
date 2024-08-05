@@ -184,6 +184,9 @@ function fifu_get_menu_html() {
         'homeUrl' => esc_url_raw(home_url()),
         'nonce' => wp_create_nonce('wp_rest'),
         'wait' => $fifu['php']['message']['wait'](),
+        'saving' => $fifu['word']['saving'](),
+        'saved' => $fifu['word']['saved'](),
+        'error' => $fifu['word']['error'](),
     ]);
 
     $skip = esc_attr(get_option('fifu_skip'));

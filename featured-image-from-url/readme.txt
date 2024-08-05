@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/donate/?hosted_button_id=KY7MRYTANZN9A
 Tags: featured, image, url, video, woocommerce
 Requires at least: 5.6
 Tested up to: 6.6.1
-Stable tag: 4.8.7
+Stable tag: 4.8.8
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -246,14 +246,14 @@ Supports URLs from YouTube, Vimeo, Twitter, 9GAG, Cloudinary, Tumblr, Publitio, 
 
 == Changelog ==
 
+= 4.8.8 =
+* Enhancement: a dialog has been added to the settings to notify you when an option is saved; Fix: img tag was breaking when the post title contained HTML.
+
 = 4.8.7 =
 * Enhancement: Debug Mode (when enabled, database entries related to images can be inspected by support); Fix: Hide Featured Media (not working); Fix: menu settings not working due wrong REST route.
 
 = 4.8.6 =
 * Fix: metadata operations were much slower than expected; Fix: WordPress native lazy load was causing performance issues.
-
-= 4.8.5 =
-* New free feature: Media RSS Tags (added automatically); Enhancement: menu settings reorganized; Enhancement: Hide Featured Media (post type filter added); Enhancement: WooCommerce import (can receive iframe URLs now); Fix: Clear Metadata (getting stuck); Fix: Hide Featured Media (unduly hiding duplicated image in the post content); Deprecated: Lazy Load (replaced with native WordPress lazy load); Deprecated: Auto Set Image Title (automatic when the alternative text is empty); Deprecated: bbPress and BuddyBoss Platform → Display featured image (automatic when an image URL is added); Deprecated: WooCommerce import → Priority (based on the columns order now).
 
 = others =
 * [more](https://fifu.app/changelog)
@@ -261,5 +261,5 @@ Supports URLs from YouTube, Vimeo, Twitter, 9GAG, Cloudinary, Tumblr, Publitio, 
 
 == Upgrade Notice ==
 
-= 4.8.7 =
-* Enhancement: Debug Mode (when enabled, database entries related to images can be inspected by support); Fix: Hide Featured Media (not working); Fix: menu settings not working due wrong REST route.
+= 4.8.8 =
+* Enhancement: a dialog has been added to the settings to notify you when an option is saved; Fix: img tag was breaking when the post title contained HTML.

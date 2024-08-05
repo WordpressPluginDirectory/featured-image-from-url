@@ -141,6 +141,15 @@ function fifu_get_strings_settings() {
     $fifu['word']['troubleshooting'] = function () {
         _e("Troubleshooting", FIFU_SLUG);
     };
+    $fifu['word']['saving'] = function () {
+        return __("Saving", FIFU_SLUG);
+    };
+    $fifu['word']['saved'] = function () {
+        return __("Saved", FIFU_SLUG);
+    };
+    $fifu['word']['error'] = function () {
+        return __("Error", FIFU_SLUG);
+    };
 
     // where
     $fifu['where']['page'] = function () {

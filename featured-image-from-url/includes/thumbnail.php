@@ -74,7 +74,7 @@ function fifu_add_social_tags() {
     $post_id = get_the_ID();
     $url = fifu_main_image_url($post_id, true);
     $url = $url ? $url : get_the_post_thumbnail_url($post_id, 'large');
-    $title = str_replace("'", "&#39;", get_the_title($post_id));
+    $title = str_replace("'", "&#39;", strip_tags(get_the_title($post_id)));
     $description = str_replace("'", "&#39;", wp_strip_all_tags(get_post_field('post_excerpt', $post_id)));
 
     if ($url) {
@@ -181,7 +181,7 @@ function fifu_replace($html, $post_id, $post_thumbnail_id, $size, $attr = null) 
     $delimiter = fifu_get_delimiter('src', $html);
     $alt = get_post_meta($post_id, 'fifu_image_alt', true);
     if (!$alt) {
-        $alt = get_the_title($post_id);
+        $alt = strip_tags(get_the_title($post_id));
         $custom_alt = 'alt=' . $delimiter . $alt . $delimiter . ' title=' . $delimiter . $alt . $delimiter;
         $html = preg_replace('/alt=[\'\"][^[\'\"]*[\'\"]/', $custom_alt, $html);
         $html = fifu_check_alt_attribute($html, $custom_alt);
