@@ -35,9 +35,6 @@ function fifu_get_strings_settings() {
     $fifu['button']['submit'] = function () {
         _e("Submit", FIFU_SLUG);
     };
-    $fifu['button']['ok'] = function () {
-        _e("OK", FIFU_SLUG);
-    };
     $fifu['button']['clipboard'] = function () {
         _e("Copy to clipboard", FIFU_SLUG);
     };
@@ -300,6 +297,9 @@ function fifu_get_strings_settings() {
     $fifu['title']['isbn'] = function () {
         _e("Auto set featured image from ISBN", FIFU_SLUG);
     };
+    $fifu['title']['asin'] = function () {
+        _e("Auto set product images from ASIN", FIFU_SLUG);
+    };
     $fifu['title']['customfield'] = function () {
         _e("Auto set featured image from custom field", FIFU_SLUG);
     };
@@ -415,7 +415,7 @@ function fifu_get_strings_settings() {
         _e("Lightbox and Zoom", FIFU_SLUG);
     };
     $fifu['title']['category'] = function () {
-        _e("Category Images Auto Set", FIFU_SLUG);
+        _e("Auto set category images", FIFU_SLUG);
     };
     $fifu['title']['order-email'] = function () {
         _e("Add image to order email", FIFU_SLUG);
@@ -554,9 +554,6 @@ function fifu_get_strings_settings() {
     };
     $fifu['dev']['args'] = function () {
         _e("All you need is to provide the post ID and the image URL(s). FIFU plugin will handle the rest by setting the custom fields and creating the metadata.", FIFU_SLUG);
-    };
-    $fifu['dev']['plugins'] = function () {
-        _e("Plugins utilizing FIFU integration functions:", FIFU_SLUG);
     };
     $fifu['dev']['field']['image'] = function () {
         _e("Featured image", FIFU_SLUG);
@@ -700,9 +697,6 @@ function fifu_get_strings_settings() {
     };
     $fifu['height']['selector']['desc'] = function () {
         _e("Examples of selectors...", FIFU_SLUG);
-    };
-    $fifu['height']['default']['desc'] = function () {
-        _e("Default selectors:", FIFU_SLUG);
     };
     $fifu['height']['ignore']['desc'] = function () {
         _e("Ignore images...", FIFU_SLUG);
@@ -850,6 +844,35 @@ function fifu_get_strings_settings() {
         _e("If you already have the ISBN saved in your database, specify its custom field name here. The plugin will access that and import the value. For example, if the ISBN is saved in the SKU field, you can add \"_sku,\" which is the field where the SKU is stored.", FIFU_SLUG);
     };
 
+    // asin
+    $fifu['asin']['desc'] = function () {
+        _e("Set product images automatically. The plugin checks every minute for post types without images and uses the ASIN and Amazon's Product Advertising API to retrieve the image URLs. For WooCommerce products, the URLs will be saved as the featured image and gallery, while for other post types, the URLs will be saved as a featured slider.", FIFU_SLUG);
+    };
+    $fifu['asin']['tab']['auto'] = function () {
+        _e("Auto set", FIFU_SLUG);
+    };
+    $fifu['asin']['tab']['custom'] = function () {
+        _e("Custom field", FIFU_SLUG);
+    };
+    $fifu['asin']['tab']['credentials'] = function () {
+        _e("Credentials", FIFU_SLUG);
+    };
+    $fifu['asin']['custom']['desc'] = function () {
+        _e("If you already have the ASIN saved in your database, specify its custom field name here. The plugin will access that and import the value. For example, if the ASIN is saved in the SKU field, you can add \"_sku,\" which is the field where the SKU is stored.", FIFU_SLUG);
+    };
+    $fifu['asin']['label']['partner'] = function () {
+        return _e("Partner tag", FIFU_SLUG);
+    };
+    $fifu['asin']['label']['access'] = function () {
+        return _e("Access key", FIFU_SLUG);
+    };
+    $fifu['asin']['label']['secret'] = function () {
+        return _e("Secret key", FIFU_SLUG);
+    };
+    $fifu['asin']['label']['locale'] = function () {
+        return _e("Locale", FIFU_SLUG);
+    };
+
     // customfield
     $fifu['customfield']['desc'] = function () {
         _e("Set featured images automatically. The plugin checks every minute for post types without featured images and performs searches on the informed custom fields to retrieve the image URLs. With that, you can integrate FIFU with any third-party plugin or theme that stores image URLs in the database.", FIFU_SLUG);
@@ -946,7 +969,7 @@ function fifu_get_strings_settings() {
         _e("Define the URL of a default image to be displayed when you create or update a post without a featured image.", FIFU_SLUG);
     };
     $fifu['default']['tab']['url'] = function () {
-        _e("Image URL", FIFU_SLUG);
+        _e("Default featured image", FIFU_SLUG);
     };
     $fifu['default']['tab']['cpt'] = function () {
         _e("Post type filter", FIFU_SLUG);
@@ -956,6 +979,9 @@ function fifu_get_strings_settings() {
     };
     $fifu['default']['cpt']['info'] = function () {
         _e("After adding or removing a post type, you need to restart the feature by disabling and enabling the toggle below.", FIFU_SLUG);
+    };
+    $fifu['default']['placeholder']['url'] = function () {
+        _e("Image URL", FIFU_SLUG);
     };
 
     // pcontent
@@ -1178,6 +1204,9 @@ function fifu_get_strings_settings() {
     };
     $fifu['api']['custom']['isbn'] = function () {
         _e("ISBN", FIFU_SLUG);
+    };
+    $fifu['api']['custom']['asin'] = function () {
+        _e("ASIN", FIFU_SLUG);
     };
     $fifu['api']['custom']['finder'] = function () {
         _e("Media finder (webpage URL)", FIFU_SLUG);
@@ -1505,6 +1534,9 @@ function fifu_get_strings_settings() {
     $fifu['import']['custom']['isbn'] = function () {
         _e("ISBN", FIFU_SLUG);
     };
+    $fifu['import']['custom']['asin'] = function () {
+        _e("ASIN", FIFU_SLUG);
+    };
     $fifu['import']['custom']['finder'] = function () {
         _e("Media finder (webpage URL)", FIFU_SLUG);
     };
@@ -1794,6 +1826,9 @@ function fifu_get_strings_meta_box() {
     $fifu['placeholder']['isbn'] = function () {
         _e("ISBN", FIFU_SLUG);
     };
+    $fifu['placeholder']['asin'] = function () {
+        _e("ASIN", FIFU_SLUG);
+    };
     $fifu['placeholder']['embed'] = function () {
         _e("Embed code", FIFU_SLUG);
     };
@@ -1842,6 +1877,9 @@ function fifu_get_strings_meta_box_php() {
     };
     $fifu['title']['post']['isbn'] = function () {
         return __("ISBN", FIFU_SLUG);
+    };
+    $fifu['title']['post']['asin'] = function () {
+        return __("ASIN", FIFU_SLUG);
     };
     $fifu['title']['post']['finder'] = function () {
         return __("Media finder", FIFU_SLUG);
@@ -1906,6 +1944,9 @@ function fifu_get_strings_wai() {
     };
     $fifu['title']['isbn'] = function () {
         return __("ISBN", FIFU_SLUG);
+    };
+    $fifu['title']['asin'] = function () {
+        return __("ASIN", FIFU_SLUG);
     };
     $fifu['title']['finder'] = function () {
         return __("Media finder (webpage URL)", FIFU_SLUG);
@@ -2108,17 +2149,8 @@ function fifu_get_strings_cloud() {
     $fifu['title']['price'] = function () {
         return _e("Pricing", FIFU_SLUG);
     };
-    $fifu['title']['getting'] = function () {
-        return _e("Getting started", FIFU_SLUG);
-    };
-    $fifu['title']['signup'] = function () {
-        return _e("Sign up", FIFU_SLUG);
-    };
-    $fifu['title']['login'] = function () {
-        return _e("Log in", FIFU_SLUG);
-    };
-    $fifu['title']['logout'] = function () {
-        return _e("Log out", FIFU_SLUG);
+    $fifu['title']['account'] = function () {
+        return _e("Account", FIFU_SLUG);
     };
     $fifu['title']['cancel'] = function () {
         return _e("Close account", FIFU_SLUG);
@@ -2146,9 +2178,6 @@ function fifu_get_strings_cloud() {
     $fifu['tabs']['welcome'] = function () {
         return _e("Welcome", FIFU_SLUG);
     };
-    $fifu['tabs']['login'] = function () {
-        return _e("Log in", FIFU_SLUG);
-    };
     $fifu['tabs']['send'] = function () {
         return _e("Upload", FIFU_SLUG);
     };
@@ -2173,13 +2202,13 @@ function fifu_get_strings_cloud() {
         _e("You'll receive an access link via email.", FIFU_SLUG);
     };
     $fifu['ws']['down'] = function () {
-        return __("web service is down", FIFU_SLUG);
+        return __("Web service is down", FIFU_SLUG);
     };
     $fifu['ws']['connection']['ok'] = function () {
-        return __("connected", FIFU_SLUG);
+        return __("Connected", FIFU_SLUG);
     };
     $fifu['ws']['connection']['fail'] = function () {
-        return __("not connected", FIFU_SLUG);
+        return __("Not connected", FIFU_SLUG);
     };
 
     // table
@@ -2218,12 +2247,6 @@ function fifu_get_strings_cloud() {
     };
     $fifu['table']['dialog']['cancel'] = function () {
         return __("Cancel", FIFU_SLUG);
-    };
-    $fifu['table']['dialog']['ok'] = function () {
-        return __("OK", FIFU_SLUG);
-    };
-    $fifu['table']['dialog']['sure'] = function () {
-        return __("Are you sure?", FIFU_SLUG);
     };
     $fifu['table']['dialog']['yes'] = function () {
         return __("Yes", FIFU_SLUG);
@@ -2283,26 +2306,6 @@ function fifu_get_strings_cloud() {
     };
     $fifu['support']['hotlink-desc'] = function () {
         _e("Protecting your website's content, including text and image URLs, from unauthorized access and extraction by bots can be a challenging task. Once this data is obtained, it can be replicated elsewhere, diverting the rightful visitors to other platforms. Fortunately, FIFU Cloud offers a solution with hotlink protection. This feature restricts other websites (excluding social media platforms) from displaying your images. While it may not completely solve the problem, it significantly hinders the unauthorized usage of your content, as posts with blocked images are less appealing to those attempting to extract information.", FIFU_SLUG);
-    };
-
-    // getting started
-    $fifu['getting']['signup']['title'] = function () {
-        _e("Sign up", FIFU_SLUG);
-    };
-    $fifu['getting']['login']['title'] = function () {
-        _e("Log in", FIFU_SLUG);
-    };
-    $fifu['getting']['upload']['title'] = function () {
-        _e("Upload", FIFU_SLUG);
-    };
-    $fifu['getting']['signup']['description'] = function () {
-        _e("Email confirmation + Stripe subscription", FIFU_SLUG);
-    };
-    $fifu['getting']['login']['description'] = function () {
-        _e("Two-factor authentication app", FIFU_SLUG);
-    };
-    $fifu['getting']['upload']['description'] = function () {
-        _e("Selected images", FIFU_SLUG);
     };
 
     // pricing
@@ -2405,20 +2408,11 @@ function fifu_get_strings_cloud() {
     $fifu['label']['email'] = function () {
         _e("Email", FIFU_SLUG);
     };
-    $fifu['label']['2fa'] = function () {
-        _e("2FA Code", FIFU_SLUG);
-    };
     $fifu['label']['website'] = function () {
         _e("Site", FIFU_SLUG);
     };
     $fifu['label']['title']['email'] = function () {
         _e("Enter your email", FIFU_SLUG);
-    };
-    $fifu['label']['title']['2fa'] = function () {
-        _e("Enter the code from Google Authenticator", FIFU_SLUG);
-    };
-    $fifu['label']['title']['connected'] = function () {
-        _e("Keep me always connected", FIFU_SLUG);
     };
 
     // pro
@@ -2430,69 +2424,8 @@ function fifu_get_strings_cloud() {
     $fifu['reset']['button'] = function () {
         _e("Reset credentials", FIFU_SLUG);
     };
-    $fifu['reset']['resetting'] = function () {
-        _e("Resetting your credentials", FIFU_SLUG);
-    };
-    $fifu['reset']['smartphone'] = function () {
-        _e("1. Get your smartphone", FIFU_SLUG);
-    };
-    $fifu['reset']['authenticator'] = function () {
-        _e("2. Open the Google Authenticator app", FIFU_SLUG);
-    };
-    $fifu['reset']['scan'] = function () {
-        _e("3. Scan this new QR Code", FIFU_SLUG);
-    };
-    $fifu['reset']['email'] = function () {
-        _e("4. Access your email and confirm the reset", FIFU_SLUG);
-    };
-
-    // login
-    $fifu['login']['button'] = function () {
-        _e("Log in", FIFU_SLUG);
-    };
-    $fifu['login']['first'] = function () {
-        _e("First log in", FIFU_SLUG);
-    };
-    $fifu['login']['email'] = function () {
-        _e("1. Access your email and confirm your subscription", FIFU_SLUG);
-    };
-    $fifu['login']['smartphone'] = function () {
-        _e("2. Get your smartphone", FIFU_SLUG);
-    };
-    $fifu['login']['authenticator'] = function () {
-        _e("3. Open the Google Authenticator app", FIFU_SLUG);
-    };
-    $fifu['login']['scan'] = function () {
-        _e("4. Scan this QR Code", FIFU_SLUG);
-    };
-    $fifu['login']['2fa'] = function () {
-        _e("5. Enter the 6-digit code in the 2FA Code field", FIFU_SLUG);
-    };
-    $fifu['login']['click'] = function () {
-        _e("6. Click the log in button", FIFU_SLUG);
-    };
-
-    // logout
-    $fifu['logout']['button'] = function () {
-        _e("Log out", FIFU_SLUG);
-    };
 
     // signup
-    $fifu['signup']['first']['field'] = function () {
-        _e("First name", FIFU_SLUG);
-    };
-    $fifu['signup']['first']['message'] = function () {
-        _e("Please enter your first name", FIFU_SLUG);
-    };
-    $fifu['signup']['last']['field'] = function () {
-        _e("Last name", FIFU_SLUG);
-    };
-    $fifu['signup']['last']['message'] = function () {
-        _e("Please enter your last name", FIFU_SLUG);
-    };
-    $fifu['signup']['email']['field'] = function () {
-        _e("Email", FIFU_SLUG);
-    };
     $fifu['signup']['email']['message'] = function () {
         _e("Please enter your email", FIFU_SLUG);
     };
@@ -2546,23 +2479,6 @@ function fifu_get_strings_cloud() {
     };
     $fifu['close']['delete'] = function () {
         _e("All the images you uploaded to FIFU Cloud will be deleted. Are you sure?", FIFU_SLUG);
-    };
-
-    // reset dialog
-    $fifu['reset']['dialog']['intro'] = function () {
-        _e("After that, you will need", FIFU_SLUG);
-    };
-    $fifu['reset']['dialog']['smartphone'] = function () {
-        _e("1. Get your smartphone", FIFU_SLUG);
-    };
-    $fifu['reset']['dialog']['authenticator'] = function () {
-        _e("2. Open the Google Authenticator app", FIFU_SLUG);
-    };
-    $fifu['reset']['dialog']['scan'] = function () {
-        _e("3. Scan a new QR Code", FIFU_SLUG);
-    };
-    $fifu['reset']['dialog']['email'] = function () {
-        _e("4. Access your email and confirm the reset", FIFU_SLUG);
     };
 
     // delete dialog

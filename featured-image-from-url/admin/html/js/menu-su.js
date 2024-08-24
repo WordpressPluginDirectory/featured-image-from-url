@@ -1,12 +1,10 @@
-var restUrl =fifuScriptVars.restUrl;
+var restUrl = fifuScriptVars.restUrl;
 
 function signUp() {
-    var firstName = jQuery('#su_first_name').val();
-    var lastName = jQuery('#su_last_name').val();
     var email = jQuery('#su_email').val();
     var site = jQuery('#su_site').val();
 
-    if (!firstName || !lastName || !email || !site)
+    if (!email || !site)
         return;
 
     var code = null;
@@ -17,8 +15,6 @@ function signUp() {
         method: "POST",
         url: restUrl + 'featured-image-from-url/v2/sign_up/',
         data: {
-            "first_name": firstName,
-            "last_name": lastName,
             "email": email,
         },
         async: true,
@@ -30,27 +26,15 @@ function signUp() {
 
             // duplicated
             if (code == -7 || code == -25)
-                message(data, 'signup');
+                showFifuCloudDialog(data['message']);
 
             // activation code
             if (code == 3)
-                message(data, 'login');
+                showFifuCloudDialog(data['message']);
 
-            if (code > 0) {
-                remove_sign_up();
-
-                jQuery('#qrcode').children().remove();
-                var qrcode = new QRCode(document.getElementById("qrcode"), {width: 150, height: 150});
-                qrcode.makeCode('otpauth://totp/FIFU-Cloud:' + email + '?secret=' + data['qrcode'] + '&issuer=FIFU-Cloud');
-
-                jQuery("#su_login_email").val(email);
-
-                jQuery('#qrcode').show();
-                jQuery('#qrcode-info-reset').hide();
-                jQuery('#qrcode-info-signup').show();
-
+            if (code > 0)
                 fifuScriptCloudVars.signUpComplete = true;
-            }
+
             fifu_unblock();
         },
         error: function (jqXHR, textStatus, errorThrown) {
@@ -61,98 +45,6 @@ function signUp() {
         }
     });
     return code;
-}
-
-function login() {
-    var email = jQuery('#su_login_email').val();
-    var site = jQuery('#su_login_site').val();
-    var tfa = jQuery('#su_login_2fa').val();
-    var always_connected = jQuery('#su_login_always_connected')[0].checked;
-
-    if (!email || !site)
-        return;
-
-    var code = null;
-
-    fifu_block();
-
-    jQuery.ajax({
-        method: "POST",
-        url: restUrl + 'featured-image-from-url/v2/login/',
-        data: {
-            "email": email,
-            "tfa": tfa,
-            "always-connected": always_connected,
-        },
-        async: true,
-        beforeSend: function (xhr) {
-            xhr.setRequestHeader('X-WP-Nonce', fifuScriptVars.nonce);
-        },
-        success: function (data) {
-            code = data['code'];
-
-            if (code > 0) {
-                Cookies.set('fifu-tfa', data['fifu_tfa_hash'], {expires: 365});
-
-                fifu_hide_log_in();
-
-                jQuery('#qrcode').hide();
-                jQuery('#qrcode-info-signup').hide();
-                jQuery('#qrcode-info-reset').hide();
-                jQuery('#login_response_message').hide();
-                jQuery('#su_login_reset').removeAttr('disabled');
-
-                setTimeout(function () {
-                    jQuery("#tabs-top").tabs("option", "active", 2);
-                    listAllFifu(0);
-                    fifu_enable_edition_buttons();
-                }, 100);
-            } else
-                fifu_show_login();
-        },
-        error: function (jqXHR, textStatus, errorThrown) {
-            console.log(jqXHR);
-            console.log(textStatus);
-            console.log(errorThrown);
-        },
-        complete: function (data) {
-            fifu_unblock();
-        }
-    });
-    return code;
-}
-
-function logout() {
-    fifu_block();
-    jQuery.ajax({
-        method: "POST",
-        url: restUrl + 'featured-image-from-url/v2/logout/',
-        data: {
-            "tfa": Cookies.get('fifu-tfa'),
-        },
-        async: true,
-        beforeSend: function (xhr) {
-            xhr.setRequestHeader('X-WP-Nonce', fifuScriptVars.nonce);
-        },
-        success: function (data) {
-            code = data['code'];
-
-            if (code == 8) {
-                jQuery("#su_login_email").val('');
-                jQuery('#su_login_reset').removeAttr('disabled');
-                fifu_show_login();
-                fifu_disable_edition_buttons();
-            }
-        },
-        error: function (jqXHR, textStatus, errorThrown) {
-            console.log(jqXHR);
-            console.log(textStatus);
-            console.log(errorThrown);
-        },
-        complete: function (data) {
-            fifu_unblock();
-        }
-    });
 }
 
 function cancel() {
@@ -164,9 +56,6 @@ function payment_info() {
     jQuery.ajax({
         method: "POST",
         url: restUrl + 'featured-image-from-url/v2/payment_info/',
-        data: {
-            "tfa": Cookies.get('fifu-tfa'),
-        },
         async: true,
         beforeSend: function (xhr) {
             xhr.setRequestHeader('X-WP-Nonce', fifuScriptVars.nonce);
@@ -195,9 +84,6 @@ function check_connection() {
     jQuery.ajax({
         method: "POST",
         url: restUrl + 'featured-image-from-url/v2/connected/',
-        data: {
-            "tfa": Cookies.get('fifu-tfa'),
-        },
         async: true,
         beforeSend: function (xhr) {
             xhr.setRequestHeader('X-WP-Nonce', fifuScriptVars.nonce);
@@ -205,47 +91,32 @@ function check_connection() {
         success: function (data) {
             if (data == null || data['code'] == 0) {
                 data = new Object();
-                data['message'] = fifuScriptCloudVars.down;
-                data['color'] = '#dd4c40';
-                message(data, 'login');
-
-                fifu_disable_edition_buttons();
+                fifu_disable_edition_buttons(fifuScriptCloudVars.down);
                 fifu_show_login();
-                jQuery('#su_login_button').prop('disabled', true);
-                jQuery('#su_login_reset').prop('disabled', true);
+                jQuery('#su_reset_button').prop('disabled', true);
 
                 fifu_unblock();
                 return;
             } else {
                 fifu_enable_edition_buttons();
                 fifu_hide_log_in();
-                jQuery('#su_login_button').prop('disabled', false);
-                jQuery('#su_login_reset').prop('disabled', false);
+                jQuery('#su_reset_button').prop('disabled', false);
             }
 
             code = data['code'];
 
-            jQuery("#qrcode").hide();
-            jQuery("#qrcode-info-reset").hide();
-            jQuery("#qrcode-info-signup").hide();
-
             if (code == 7) {
                 fifu_hide_log_in();
                 fifu_enable_edition_buttons();
-                data['message'] = fifuScriptCloudVars.connected;
-                message(data, 'logout');
             } else {
                 fifu_show_login();
                 fifu_disable_edition_buttons();
-                data['message'] = fifuScriptCloudVars.notConnected;
-                message(data, 'login');
             }
         },
         error: function (jqXHR, textStatus, errorThrown) {
             fifu_disable_edition_buttons();
             fifu_show_login();
-            jQuery('#su_login_button').prop('disabled', true);
-            jQuery('#su_login_reset').prop('disabled', true);
+            jQuery('#su_reset_button').prop('disabled', true);
 
             console.log(jqXHR);
             console.log(textStatus);
@@ -258,8 +129,8 @@ function check_connection() {
 }
 
 function resetCredentials() {
-    var email = jQuery('#su_login_email').val();
-    var site = jQuery('#su_login_site').val();
+    var email = jQuery('#su_email').val();
+    var site = jQuery('#su_site').val();
 
     if (!email || !site)
         return;
@@ -281,17 +152,9 @@ function resetCredentials() {
         success: function (data) {
             code = data['code'];
             if (code > 0) {
-                jQuery('#qrcode').children().remove();
-                var qrcode = new QRCode(document.getElementById("qrcode"), {width: 150, height: 150});
-                qrcode.makeCode('otpauth://totp/FIFU-Cloud:' + email + '?secret=' + data['qrcode'] + '&issuer=FIFU-Cloud');
-                jQuery('#qrcode').show();
-                jQuery('#qrcode-info-reset').show();
-                jQuery('#qrcode-info-signup').hide();
-                jQuery('#su_login_reset').attr('disabled', 'true');
-
-                remove_sign_up();
+                jQuery('#su_reset_button').attr('disabled', 'true');
             }
-            message(data, 'login');
+            showFifuCloudDialog(data['message']);
             fifu_unblock();
         },
         error: function (jqXHR, textStatus, errorThrown) {
@@ -305,7 +168,11 @@ function resetCredentials() {
 }
 
 function listAllSu(page) {
-    console.log(page);
+    if (!fifuScriptCloudVars.signUpComplete)
+        fifu_disable_edition_buttons();
+    else
+        check_connection();
+
     update = false;
 
     var table = jQuery('#removeTable').DataTable({
@@ -356,18 +223,12 @@ function listAllSu(page) {
 
     table.clear();
 
-    if (!fifuScriptCloudVars.signUpComplete)
-        fifu_disable_edition_buttons();
-    else
-        check_connection();
-
     fifu_block();
 
     jQuery.ajax({
         method: "POST",
         url: restUrl + 'featured-image-from-url/v2/list_all_su/',
         data: {
-            "tfa": Cookies.get('fifu-tfa'),
             "page": page,
         },
         async: true,
@@ -448,7 +309,6 @@ function listAllSu(page) {
                     url: restUrl + 'featured-image-from-url/v2/delete/',
                     data: {
                         "selected": arr,
-                        "tfa": Cookies.get('fifu-tfa'),
                     },
                     async: true,
                     beforeSend: function (xhr) {
@@ -462,8 +322,6 @@ function listAllSu(page) {
                             fifu_show_login();
                             fifu_disable_edition_buttons();
                         }
-                        // else
-                        //     message(data, 'delete');
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
                         console.log(jqXHR);
@@ -504,7 +362,11 @@ const MAX_ROWS = 1000;
 const MAX_ROWS_BY_REQUEST = MAX_ROWS / 10;
 
 function listAllFifu(page) {
-    console.log(page);
+    if (!fifuScriptCloudVars.signUpComplete)
+        fifu_disable_edition_buttons();
+    else
+        check_connection();
+
     update = false;
 
     var table = jQuery('#addTable').DataTable({
@@ -553,11 +415,6 @@ function listAllFifu(page) {
         ]
     });
     table.clear();
-
-    if (!fifuScriptCloudVars.signUpComplete)
-        fifu_disable_edition_buttons();
-    else
-        check_connection();
 
     fifu_block();
     jQuery.ajax({
@@ -643,7 +500,6 @@ async function addSu(table) {
                 url: restUrl + 'featured-image-from-url/v2/create_thumbnails_list/',
                 data: {
                     "selected": arr,
-                    "tfa": Cookies.get('fifu-tfa'),
                 },
                 async: true,
                 beforeSend: function (xhr) {
@@ -655,8 +511,6 @@ async function addSu(table) {
                         fifu_show_login();
                         fifu_disable_edition_buttons();
                     }
-                    // else
-                    //     message(data, 'add');
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
                     console.log(jqXHR);
@@ -692,10 +546,6 @@ function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-function remove_sign_up() {
-    jQuery("#sign-up-box").remove();
-}
-
 function message(data, box) {
     selector = "#" + box + "_response_message";
     jQuery(selector).css('background-color', data['color']);
@@ -707,32 +557,7 @@ function message(data, box) {
     jQuery(selector).show();
 }
 
-function confirmResetCredentials() {
-    if (jQuery("#su_login_email").val())
-        jQuery("#su-dialog-reset-credentials").dialog("open");
-}
-
 jQuery(function () {
-    jQuery("#su-dialog-reset-credentials").dialog({
-        autoOpen: false,
-        modal: true,
-        width: "300px",
-        buttons: {
-            [fifuScriptCloudVars.dialogOk]: function () {
-                resetCredentials();
-                jQuery(this).dialog("close");
-            },
-            [fifuScriptCloudVars.dialogCancel]: function () {
-                jQuery(this).dialog("close");
-            }
-        },
-        open: function (event, ui) {
-            jQuery(this).parent().find('.ui-dialog-titlebar').empty();
-            jQuery(this).parent().find('.ui-dialog-titlebar').append('<i class="fa fa-exclamation-triangle"></i> ' + fifuScriptCloudVars.dialogSure);
-            jQuery(this).parent().children().children('.ui-dialog-titlebar-close').hide();
-        },
-    });
-
     jQuery("#su-dialog-cancel").dialog({
         autoOpen: false,
         modal: true,
@@ -744,9 +569,6 @@ jQuery(function () {
                 jQuery.ajax({
                     method: "POST",
                     url: restUrl + 'featured-image-from-url/v2/cancel/',
-                    data: {
-                        "tfa": Cookies.get('fifu-tfa'),
-                    },
                     async: true,
                     beforeSend: function (xhr) {
                         xhr.setRequestHeader('X-WP-Nonce', fifuScriptVars.nonce);
@@ -792,38 +614,26 @@ function fifu_unblock() {
 }
 
 function fifu_show_login() {
-    jQuery("#log-in-box").show();
-    jQuery("#log-out-box").hide();
     jQuery("#payment-info-box").hide();
     jQuery("#cancel-box").hide();
-    jQuery("#su_login_2fa").val('');
     jQuery("#upload-auto-box").hide();
 }
 
 function fifu_hide_log_in() {
-    jQuery("#log-in-box").hide();
-    jQuery("#log-out-box").show();
     jQuery("#payment-info-box").show();
     jQuery("#cancel-box").show();
     jQuery("#upload-auto-box").show();
 }
 
-function fifu_disable_edition_buttons() {
+function fifu_disable_edition_buttons(text) {
     jQuery("button#cloud-add").attr('disabled', 'true');
     jQuery("button#cloud-del").attr('disabled', 'true');
-    data = new Array();
-    data['message'] = fifuScriptCloudVars.notConnected;
-    data['color'] = '#ea4335';
-    message(data, 'add');
-    message(data, 'delete');
-    message(data, 'billing');
+    showFifuCloudDialog(text ? text : fifuScriptCloudVars.notConnected);
 }
 
 function fifu_enable_edition_buttons() {
     jQuery("button#cloud-add").removeAttr('disabled');
     jQuery("button#cloud-del").attr('disabled');
-    jQuery('#add_response_message').hide();
-    jQuery('#delete_response_message').hide();
     jQuery('#billing_response_message').hide();
 }
 
@@ -925,6 +735,11 @@ function listAllMediaLibrary(page) {
 }
 
 function listDailyCount() {
+    if (!fifuScriptCloudVars.signUpComplete)
+        fifu_disable_edition_buttons();
+    else
+        check_connection();
+
     var table = jQuery('#billingTable').DataTable({
         "language": {"emptyTable": fifuScriptCloudVars.noData},
         destroy: true,
@@ -938,19 +753,11 @@ function listDailyCount() {
 
     table.clear();
 
-    if (!fifuScriptCloudVars.signUpComplete)
-        fifu_disable_edition_buttons();
-    else
-        check_connection();
-
     fifu_block();
 
     jQuery.ajax({
         method: "POST",
         url: restUrl + 'featured-image-from-url/v2/list_daily_count/',
-        data: {
-            "tfa": Cookies.get('fifu-tfa'),
-        },
         async: true,
         beforeSend: function (xhr) {
             xhr.setRequestHeader('X-WP-Nonce', fifuScriptVars.nonce);
@@ -1010,7 +817,6 @@ function set_upload_auto() {
         method: "POST",
         url: restUrl + 'featured-image-from-url/v2/cloud_upload_auto/',
         data: {
-            "tfa": Cookies.get('fifu-tfa'),
             "toggle": toggle,
         },
         async: true,
@@ -1043,7 +849,6 @@ function set_hotlink() {
         method: "POST",
         url: restUrl + 'featured-image-from-url/v2/cloud_hotlink/',
         data: {
-            "tfa": Cookies.get('fifu-tfa'),
             "toggle": toggle,
         },
         async: true,

@@ -59,7 +59,6 @@ function fifu_cloud() {
     wp_enqueue_script('fifu-cookie', 'https://cdnjs.cloudflare.com/ajax/libs/js-cookie/latest/js.cookie.min.js');
     wp_enqueue_style('fifu-menu-su-css', plugins_url('/html/css/menu-su.css', __FILE__), array(), fifu_version_number_enq());
     wp_enqueue_script('fifu-menu-su-js', plugins_url('/html/js/menu-su.js', __FILE__), array('jquery', 'jquery-ui'), fifu_version_number_enq());
-    wp_enqueue_script('fifu-qrcode', plugins_url('/html/js/qrcode.js', __FILE__), array('jquery'), fifu_version_number_enq());
 
     wp_enqueue_style('fifu-base-ui-css', plugins_url('/html/css/base-ui.css', __FILE__), array(), fifu_version_number_enq());
     wp_enqueue_style('fifu-menu-css', plugins_url('/html/css/menu.css', __FILE__), array(), fifu_version_number_enq());
@@ -84,8 +83,6 @@ function fifu_cloud() {
         'link' => $fifucloud['table']['link'](),
         'dialogDelete' => $fifucloud['table']['dialog']['delete'](),
         'dialogCancel' => $fifucloud['table']['dialog']['cancel'](),
-        'dialogOk' => $fifucloud['table']['dialog']['ok'](),
-        'dialogSure' => $fifucloud['table']['dialog']['sure'](),
         'dialogYes' => $fifucloud['table']['dialog']['yes'](),
         'dialogNo' => $fifucloud['table']['dialog']['no'](),
         'category' => $fifucloud['table']['category'](),

@@ -22,20 +22,14 @@ function invert(id) {
 jQuery(function () {
     var url = window.location.href;
 
-    //forms with id started by...
-    jQuery("form[id^=fifu_form]").each(function (i, el) {
-        //onsubmit
-        jQuery(this).submit(function () {
-            save(this);
-        });
-    });
-
     jQuery("#tabs-top").tabs();
     jQuery("#fifu_input_slider_speed").spinner({min: 0});
     jQuery("#fifu_input_slider_pause").spinner({min: 0});
     jQuery("#fifu_input_auto_set_width").spinner({min: 0});
     jQuery("#fifu_input_auto_set_height").spinner({min: 0});
     jQuery("#fifu_input_crop_delay").spinner({min: 0, step: 50});
+    jQuery("#tabsApi").addClass("ui-tabs-vertical ui-helper-clearfix");
+    jQuery("#tabsApi li").removeClass("ui-corner-top").addClass("ui-corner-left");
     jQuery("#tabsApi").tabs();
     jQuery("#tabsCrop").tabs();
     jQuery("#tabsMedia").tabs();
@@ -51,6 +45,7 @@ jQuery(function () {
     jQuery("#tabsTags").tabs();
     jQuery("#tabsScreenshot").tabs();
     jQuery("#tabsIsbn").tabs();
+    jQuery("#tabsAsin").tabs();
     jQuery("#tabsCustomfield").tabs();
     jQuery("#tabsFinder").tabs();
     jQuery("#tabsVideo").tabs();
@@ -58,10 +53,41 @@ jQuery(function () {
     jQuery("#tabsCli").tabs();
     jQuery("#tabsGallery").tabs();
 
+    //forms with id started by...
+    jQuery("form[id^=fifu_form]").each(function (i, el) {
+        jQuery(this).find("input[type=text]").on("change", function () {
+            save(this);
+        });
+
+        //onchange
+        jQuery(this).change(function () {
+            save(this);
+        });
+        if (isClickable(el.id)) {
+            let timer;
+            //onclick
+            jQuery(this).click(function () {
+                clearTimeout(timer);
+                timer = setTimeout(() => {
+                    save(this);
+                }, 500);
+            });
+        } else {
+            //onsubmit
+            jQuery(this).submit(function () {
+                save(this);
+            });
+        }
+    });
+
     // show settings
     window.scrollTo(0, 0);
     jQuery('.wrap').css('opacity', 1);
 });
+
+function isClickable(id) {
+    return false;
+}
 
 function save(formName, url) {
     var frm = jQuery(formName);

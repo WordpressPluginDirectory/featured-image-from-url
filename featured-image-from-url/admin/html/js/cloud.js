@@ -16,7 +16,6 @@ jQuery(document).ready(function () {
     jQuery('div.wrap div.header-box div.updated').remove();
 
     if (fifuScriptCloudVars.signUpComplete) {
-        remove_sign_up();
         check_connection();
     } else {
         fifu_show_login();
@@ -68,4 +67,16 @@ function save(formName, url) {
             //alert('saved');
         }
     });
+}
+
+function showFifuCloudDialog(text) {
+    let dialog = jQuery("#dialog-message");
+
+    if ([fifuScriptCloudVars.notConnected, fifuScriptCloudVars.down].includes(text)) {
+        dialog.removeClass('custom-dialog-processing custom-dialog-success').addClass('custom-dialog-error').text(text);
+        dialog.css({display: 'block'}).fadeIn(300).delay(2000).fadeOut(300);
+    } else {
+        dialog.removeClass('custom-dialog-error custom-dialog-success').addClass('custom-dialog-processing').text(text);
+        dialog.css({display: 'block'}).fadeIn(300).delay(5000).fadeOut(300);
+    }
 }

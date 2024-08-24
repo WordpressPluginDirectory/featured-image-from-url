@@ -1285,3 +1285,9 @@ a.ui-button:active,
     -webkit-box-shadow: 0px 0px 5px #666666;
     box-shadow: 0px 0px 5px #666666;
 }
+
+.ui-tabs-vertical { width: 99%; }
+.ui-tabs-vertical .ui-tabs-nav { float: left }
+.ui-tabs-vertical .ui-tabs-nav li { clear: left; width: 99%; border-bottom-width: 1px !important;}
+.ui-tabs-vertical .ui-tabs-nav li a { display:block; width: 155px;}
+.ui-tabs-vertical .ui-tabs-panel { float: left; width: 650px;}

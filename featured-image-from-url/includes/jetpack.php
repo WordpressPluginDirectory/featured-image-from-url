@@ -39,6 +39,9 @@ function fifu_jetpack_blocked($url) {
     if (fifu_is_photon_url($url))
         return true;
 
+    if (substr($url, -5) === '.avif')
+        return true;
+
     $blocklist = array('localhost', 'amazon-adsystem.com', 'sapo.io', 'i.guim.co.uk', 'image.influenster.com', 'api.screenshotmachine.com', 'img.brownsfashion.com', 'fbcdn.net', 'nitrocdn.com', 'brightspotcdn.com', 'realtysouth.com', 'tiktokcdn.com', 'fdcdn.akamaized.net', 'blockchainstock.azureedge.net', 'aa.com.tr', 'cdn.discordapp.com', 'download.schneider-electric.com', 'cdn.fbsbx.com', 'cdn.fifu.app', 'cloud.fifu.app', 'images.placeholders.dev');
     foreach ($blocklist as $domain) {
         if (strpos($url, $domain) !== false)
@@ -78,3 +81,4 @@ function fifu_jetpack_photon_url($url, $args) {
         return add_query_arg($args, $photon_url);
     return $photon_url;
 }
+

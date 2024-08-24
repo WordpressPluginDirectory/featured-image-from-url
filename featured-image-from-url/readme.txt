@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/donate/?hosted_button_id=KY7MRYTANZN9A
 Tags: featured, image, url, video, woocommerce
 Requires at least: 5.6
 Tested up to: 6.6.1
-Stable tag: 4.8.8
+Stable tag: 4.9.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -44,6 +44,7 @@ Use an external image as featured image of your post, page or custom post type.
 * Auto set featured media from post content
 * **[PRO]** Auto set featured image using post title and a search engine
 * **[PRO]** Auto set featured media using web page address
+* **[PRO]** Auto set product images from ASIN
 * **[PRO]** Auto set featured image from custom field
 * **[PRO]** Auto set featured image using ISBN
 * **[PRO]** Auto set screenshot as featured image
@@ -246,14 +247,14 @@ Supports URLs from YouTube, Vimeo, Twitter, 9GAG, Cloudinary, Tumblr, Publitio, 
 
 == Changelog ==
 
+= 4.9.0 =
+* Enhancements: FIFU Cloud (easier sign-up and credential reset, automatic login, and a few improvements in the user interface); Fix: Optimized Images (conflict with AVIF images).
+
+= 4.8.9 =
+* New feature: Auto set product images from ASIN; Enhancements: Settings (saves text fields automatically now, icons added); Enhancement: FIFU Cloud (easier login).
+
 = 4.8.8 =
 * Enhancement: a dialog has been added to the settings to notify you when an option is saved; Fix: img tag was breaking when the post title contained HTML.
-
-= 4.8.7 =
-* Enhancement: Debug Mode (when enabled, database entries related to images can be inspected by support); Fix: Hide Featured Media (not working); Fix: menu settings not working due wrong REST route.
-
-= 4.8.6 =
-* Fix: metadata operations were much slower than expected; Fix: WordPress native lazy load was causing performance issues.
 
 = others =
 * [more](https://fifu.app/changelog)
@@ -261,5 +262,5 @@ Supports URLs from YouTube, Vimeo, Twitter, 9GAG, Cloudinary, Tumblr, Publitio, 
 
 == Upgrade Notice ==
 
-= 4.8.8 =
-* Enhancement: a dialog has been added to the settings to notify you when an option is saved; Fix: img tag was breaking when the post title contained HTML.
+= 4.9.0 =
+* Enhancements: FIFU Cloud (easier sign-up and credential reset, automatic login, and a few improvements in the user interface); Fix: Optimized Images (conflict with AVIF images).

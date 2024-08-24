@@ -169,7 +169,7 @@ tr.color:nth-child(even) {
     content: '';
     position: absolute;
     left: 0;
-    top: 30%;
+    top: 25%;
     width: 0;
     height: 0;
     border: 12px solid transparent;
