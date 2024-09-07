@@ -20,7 +20,8 @@ define('PROXY2_URLS', [
     "https://embed-cdn.gettyimages.com",
     "https://media.gettyimages.com",
     "https://cdn.diariodeavisos.com",
-    "https://forum.rolug.ro"
+    "https://forum.rolug.ro",
+    "https://assets.ellosgroup.com"
 ]);
 
 define('PROXY3_URLS', [

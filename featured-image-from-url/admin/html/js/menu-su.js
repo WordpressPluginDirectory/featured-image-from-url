@@ -66,7 +66,7 @@ function payment_info() {
                 fifu_show_login();
                 fifu_disable_edition_buttons();
             } else
-                message(data, 'payment_info');
+                showFifuCloudDialog(data['message']);
         },
         error: function (jqXHR, textStatus, errorThrown) {
             console.log(jqXHR);
@@ -546,17 +546,6 @@ function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-function message(data, box) {
-    selector = "#" + box + "_response_message";
-    jQuery(selector).css('background-color', data['color']);
-    jQuery(selector).css('border-radius', '3px');
-    jQuery(selector).css('padding', '6px');
-    jQuery(selector).css('color', 'white');
-    jQuery(selector).css('font-size', '15px');
-    jQuery(selector).val(data['message']);
-    jQuery(selector).show();
-}
-
 jQuery(function () {
     jQuery("#su-dialog-cancel").dialog({
         autoOpen: false,
@@ -579,7 +568,7 @@ jQuery(function () {
                             fifu_show_login();
                             fifu_disable_edition_buttons();
                         } else
-                            message(data, 'cancel');
+                            showFifuCloudDialog(data['message']);
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
                         console.log(jqXHR);
@@ -600,29 +589,30 @@ jQuery(function () {
 
 function fifu_block() {
     jQuery('#tabs-top').block({message: '', css: {backgroundColor: 'none', border: 'none', color: 'white'}});
-    jQuery('button').attr('disabled', 'true');
 }
 
 function fifu_block_progress() {
     jQuery('#tabs-top').block({message: '<progress id="progressBar" max="100" value="0" style="width:100%;height:32px;background-color:#23282d"></progress>', css: {backgroundColor: 'none', border: 'none', color: 'white'}});
-    jQuery('button').attr('disabled', 'true');
 }
 
 function fifu_unblock() {
     jQuery('#tabs-top').unblock();
-    jQuery('button').removeAttr('disabled');
 }
 
 function fifu_show_login() {
-    jQuery("#payment-info-box").hide();
-    jQuery("#cancel-box").hide();
+    jQuery("#su-payment-info-button").attr('disabled', true);
+    jQuery("#su-cancel-button").attr('disabled', true);
     jQuery("#upload-auto-box").hide();
+    jQuery("#hotlink-box").hide();
+    jQuery("#su-sign-up-button").removeAttr('disabled');
 }
 
 function fifu_hide_log_in() {
-    jQuery("#payment-info-box").show();
-    jQuery("#cancel-box").show();
+    jQuery("#su-payment-info-button").removeAttr('disabled');
+    jQuery("#su-cancel-button").removeAttr('disabled');
     jQuery("#upload-auto-box").show();
+    jQuery("#hotlink-box").show();
+    jQuery("#su-sign-up-button").attr('disabled', true);
 }
 
 function fifu_disable_edition_buttons(text) {
@@ -634,7 +624,6 @@ function fifu_disable_edition_buttons(text) {
 function fifu_enable_edition_buttons() {
     jQuery("button#cloud-add").removeAttr('disabled');
     jQuery("button#cloud-del").attr('disabled');
-    jQuery('#billing_response_message').hide();
 }
 
 function listAllMediaLibrary(page) {
@@ -746,7 +735,7 @@ function listDailyCount() {
         "columns": [{"width": "15%"}, {"width": "85%"}],
         "autoWidth": false,
         "order": [[0, 'desc']],
-        dom: 'lfrtBip',
+        dom: '',
         select: false,
         "iDisplayLength": 30,
     });
@@ -769,20 +758,12 @@ function listDailyCount() {
                 jQuery('#billing-start').html(data['start_date'].split('+')[0]);
                 jQuery('#billing-end').html(data['end_date'].split('+')[0]);
                 jQuery('#billing-average').html(data['quantity']);
-                jQuery('#billing-cost').html('US$ ' + data['amount_due']);
+                jQuery('#billing-cost').html('€ ' + data['amount_due']);
                 for (var i = 0; i < dc_data.length; i++) {
                     table.row.add([
                         dc_data[i]['date'],
                         dc_data[i]['quantity'],
                     ]);
-                }
-
-                jQuery(".tier-row").remove();
-                tiers = data['tiers'];
-                current_tier = data['current_tier'];
-                for (let key in tiers) {
-                    icon = (parseFloat(key) == current_tier) ? '<i class="fa-solid fa-arrow-left"></i>' : '';
-                    jQuery("#tiers-table").append(`<tr class="color tier-row"><td>${tiers[key]}</td><td>$${key}</td><td>${icon}</td></tr>`);
                 }
 
                 table.draw(true);
@@ -791,7 +772,7 @@ function listDailyCount() {
                 if (data['code'] == -20) {
                     fifu_show_login();
                     fifu_disable_edition_buttons();
-                    message(data, 'billing');
+                    showFifuCloudDialog(data['message']);
                 }
             }
         },

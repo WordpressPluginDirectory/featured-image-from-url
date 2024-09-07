@@ -7,13 +7,15 @@ add_filter('admin_head', 'fifu_admin_add_css_js');
 add_action('admin_footer', 'fifu_footer');
 
 function fifu_column() {
-    add_filter('manage_posts_columns', 'fifu_column_head');
-    add_filter('manage_pages_columns', 'fifu_column_head');
-    add_filter('manage_edit-product_cat_columns', 'fifu_column_head');
-    fifu_column_custom_post_type();
-    add_action('manage_posts_custom_column', 'fifu_column_content', 10, 2);
-    add_action('manage_pages_custom_column', 'fifu_column_content', 10, 2);
-    add_action('manage_product_cat_custom_column', 'fifu_ctgr_column_content', 10, 3);
+    if (is_user_logged_in() && current_user_can('publish_posts')) {
+        add_filter('manage_posts_columns', 'fifu_column_head');
+        add_filter('manage_pages_columns', 'fifu_column_head');
+        add_filter('manage_edit-product_cat_columns', 'fifu_column_head');
+        fifu_column_custom_post_type();
+        add_action('manage_posts_custom_column', 'fifu_column_content', 10, 2);
+        add_action('manage_pages_custom_column', 'fifu_column_content', 10, 2);
+        add_action('manage_product_cat_custom_column', 'fifu_ctgr_column_content', 10, 3);
+    }
 }
 
 function fifu_admin_add_css_js() {

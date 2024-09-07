@@ -27,13 +27,6 @@ span.ui-dialog-title {
     background: #f9f9f9 !important;
 }
 
-.response_message {
-    position: relative;
-    float: right;
-    top: -10px;
-    padding: 9px;
-}
-
 /* dialog */
 .custom-dialog {
     position: fixed;

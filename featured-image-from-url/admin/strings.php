@@ -2152,9 +2152,6 @@ function fifu_get_strings_cloud() {
     $fifu['title']['account'] = function () {
         return _e("Account", FIFU_SLUG);
     };
-    $fifu['title']['cancel'] = function () {
-        return _e("Close account", FIFU_SLUG);
-    };
     $fifu['title']['hotlink'] = function () {
         return _e("Hotlink protection", FIFU_SLUG);
     };
@@ -2195,12 +2192,6 @@ function fifu_get_strings_cloud() {
     };
 
     // info
-    $fifu['icon']['cancel'] = function () {
-        _e("You'll receive a confirmation link via email.", FIFU_SLUG);
-    };
-    $fifu['icon']['payment'] = function () {
-        _e("You'll receive an access link via email.", FIFU_SLUG);
-    };
     $fifu['ws']['down'] = function () {
         return __("Web service is down", FIFU_SLUG);
     };
@@ -2313,10 +2304,10 @@ function fifu_get_strings_cloud() {
         _e("Quantity of images", FIFU_SLUG);
     };
     $fifu['pricing']['desc'] = function () {
-        _e("Pay for daily average of stored images in FIFU Cloud every 30 days.", FIFU_SLUG);
+        _e("€0.001 per image. Payment is based on the daily average of stored images in FIFU Cloud, billed every 30 days.", FIFU_SLUG);
     };
     $fifu['pricing']['thumbnails'] = function () {
-        _e("You don't pay for the multiple image thumbnails generated automatically by the service. FIFU Cloud only considers the number uploaded images to the cloud.", FIFU_SLUG);
+        _e("You don't pay for the multiple thumbnails generated for each image.", FIFU_SLUG);
     };
     $fifu['pricing']['example'] = function () {
         _e("Price calculation example", FIFU_SLUG);
@@ -2335,9 +2326,6 @@ function fifu_get_strings_cloud() {
     };
     $fifu['pricing']['table']['price'] = function () {
         _e("Price per image", FIFU_SLUG);
-    };
-    $fifu['pricing']['table']['tier'] = function () {
-        _e("Yours", FIFU_SLUG);
     };
     $fifu['pricing']['table']['total'] = function () {
         _e("Total price", FIFU_SLUG);
@@ -2366,13 +2354,10 @@ function fifu_get_strings_cloud() {
 
     // billing
     $fifu['billing']['desc'] = function () {
-        _e("FIFU Cloud charges for daily average of stored images within each 30-day period. Data updated hourly.", FIFU_SLUG);
+        _e("FIFU Cloud charges based on the average number of stored images within each 30-day period. The data below is updated hourly.", FIFU_SLUG);
     };
     $fifu['billing']['current'] = function () {
         _e("Current 30-day period", FIFU_SLUG);
-    };
-    $fifu['billing']['tiers'] = function () {
-        _e("Tiers", FIFU_SLUG);
     };
     $fifu['billing']['column']['start'] = function () {
         _e("Start date", FIFU_SLUG);
@@ -2467,7 +2452,7 @@ function fifu_get_strings_cloud() {
 
     // update
     $fifu['update']['button'] = function () {
-        _e("Update", FIFU_SLUG);
+        _e("Update payment method", FIFU_SLUG);
     };
 
     // close
