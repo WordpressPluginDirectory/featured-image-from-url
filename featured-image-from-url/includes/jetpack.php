@@ -3,24 +3,70 @@
 define('FIFU_JETPACK_SIZES', serialize(array(75, 100, 150, 240, 320, 500, 640, 800, 1024, 1280, 1600)));
 
 function fifu_resize_jetpack_image_size($size, $url) {
-    $size = (int) $size;
+    if (strpos($url, 'wp.fifu.app/') !== false) {
+        // Parse the URL to extract its components
+        $parts = parse_url($url);
+        $path_parts = explode('/', trim($parts['path'], '/'));
+        $path_count = count($path_parts);
 
-    if (strpos($url, 'resize=')) {
-        $aux = explode('resize=', $url)[1];
-        $aux = explode(',', $aux);
-        $w = isset($aux[0]) ? (int) $aux[0] : 0;
-        $h = isset($aux[1]) ? (int) $aux[1] : 0;
-        $new_h = $w ? intval($size * $h / $w) : 0;
-        $clean_url = explode('?', $url)[0];
-        if ($new_h == 0)
-            return "{$clean_url}?w={$size}&ssl=1";
-        else
-            return "{$clean_url}?resize={$size},{$new_h}&ssl=1";
+        // Extract query parameters (if any)
+        $query = isset($parts['query']) ? $parts['query'] : '';
+        parse_str($query, $query_params);
+
+        // Add or update the size parameter in the query
+        $query_params['w'] = $size;
+        $query_params['h'] = 0;
+        $query_params['c'] = 0;
+
+        if ($path_count >= 4) {
+            // The second-to-last element is the signature
+            $signature_index = $path_count - 2;
+
+            // Remove the signature from the path
+            unset($path_parts[$signature_index]);
+
+            // Rebuild the path without the signature
+            $new_path = '/' . implode('/', $path_parts);
+
+            // Rebuild the query string
+            $new_query = http_build_query($query_params);
+
+            // Create the unsigned URL to calculate a new signature
+            $unsigned_url = '//' . $parts['host'] . $new_path . ($new_query ? '?' . $new_query : '');
+
+            // Generate a new signature
+            $new_signature = fifu_get_signature($unsigned_url, 'fifu');
+
+            // Insert the new signature into the second-to-last position
+            array_splice($path_parts, $signature_index, 0, $new_signature);
+
+            // Rebuild the path with the new signature
+            $final_path = '/' . implode('/', $path_parts);
+
+            // Return the complete URL with the new signature
+            return $parts['scheme'] . '://' . $parts['host'] . $final_path . ($new_query ? '?' . $new_query : '');
+        }
+        return $url;
+    } else {
+        $size = (int) $size;
+
+        if (strpos($url, 'resize=')) {
+            $aux = explode('resize=', $url)[1];
+            $aux = explode(',', $aux);
+            $w = isset($aux[0]) ? (int) $aux[0] : 0;
+            $h = isset($aux[1]) ? (int) $aux[1] : 0;
+            $new_h = $w ? intval($size * $h / $w) : 0;
+            $clean_url = explode('?', $url)[0];
+            if ($new_h == 0)
+                return "{$clean_url}?w={$size}&ssl=1";
+            else
+                return "{$clean_url}?resize={$size},{$new_h}&ssl=1";
+        }
+
+        $del = strpos($url, "?") !== false ? "&" : "?";
+
+        return "{$url}{$del}w={$size}&resize={$size}&ssl=1";
     }
-
-    $del = strpos($url, "?") !== false ? "&" : "?";
-
-    return "{$url}{$del}w={$size}&resize={$size}&ssl=1";
 }
 
 function fifu_jetpack_get_set($url, $is_slider) {
@@ -42,7 +88,7 @@ function fifu_jetpack_blocked($url) {
     if (substr($url, -5) === '.avif')
         return true;
 
-    $blocklist = array('localhost', 'plus.unsplash.com', 'amazon-adsystem.com', 'sapo.io', 'i.guim.co.uk', 'image.influenster.com', 'api.screenshotmachine.com', 'img.brownsfashion.com', 'fbcdn.net', 'nitrocdn.com', 'brightspotcdn.com', 'realtysouth.com', 'tiktokcdn.com', 'fdcdn.akamaized.net', 'blockchainstock.azureedge.net', 'aa.com.tr', 'cdn.discordapp.com', 'download.schneider-electric.com', 'images.twojjs.com', 'preview.redd.it', 'external-preview.redd.it', 'i.redd.it', 'cdn.fbsbx.com', 'canva.com', 'cdn.fifu.app', 'cloud.fifu.app', 'images.placeholders.dev');
+    $blocklist = array('localhost', 'amazon-adsystem.com', 'sapo.io', 'i.guim.co.uk', 'image.influenster.com', 'api.screenshotmachine.com', 'img.brownsfashion.com', 'fbcdn.net', 'nitrocdn.com', 'brightspotcdn.com', 'realtysouth.com', 'tiktokcdn.com', 'fdcdn.akamaized.net', 'blockchainstock.azureedge.net', 'aa.com.tr', 'cdn.discordapp.com', 'download.schneider-electric.com', 'images.twojjs.com', 'preview.redd.it', 'external-preview.redd.it', 'i.redd.it', 'cdn.fbsbx.com', 'canva.com', 'cdn.fifu.app', 'cloud.fifu.app', 'images.placeholders.dev');
     foreach ($blocklist as $domain) {
         if (strpos($url, $domain) !== false)
             return true;
@@ -112,7 +158,7 @@ function fifu_pubcdn_get_image_url($att_id, $image_url, $qp) {
 
     $main_domain = explode('/', get_home_url())[2];
 
-    $encoded_url = rtrim(strtr(base64_encode($image_url), '+/', '-_'), '=');
+    $encoded_url = fifu_base64($image_url);
     $new_url = "//wp.fifu.app/" . $main_domain . "/" . $encoded_url . "/" . $post_slug . ".webp" . $qp;
     $signature = fifu_get_signature($new_url, 'fifu');
     return 'https:' . str_replace($encoded_url, $encoded_url . '/' . $signature, $new_url);
