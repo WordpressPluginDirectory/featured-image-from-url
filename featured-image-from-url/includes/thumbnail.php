@@ -34,8 +34,8 @@ function fifu_add_js() {
         for ($i = 0; $i <= 3; $i++) {
             echo "<link rel='dns-prefetch' href='https://i{$i}.wp.com/'>";
             echo "<link rel='preconnect' href='https://i{$i}.wp.com/' crossorigin>";
-            echo "<link rel='dns-prefetch' href='https://wp.fifu.app/'>";
-            echo "<link rel='preconnect' href='https://wp.fifu.app/' crossorigin>";
+            // echo "<link rel='dns-prefetch' href='https://wp.fifu.app/'>";
+            // echo "<link rel='preconnect' href='https://wp.fifu.app/' crossorigin>";
         }
     }
 
@@ -340,7 +340,7 @@ function fifu_optimize_content($content) {
 
         $content = str_replace($imgItem, $newImgItem, $content);
 
-        fifu_update_cdn_stats();
+        // fifu_update_cdn_stats();
     }
 
     $content = fifu_remove_source_tags($content);
@@ -510,4 +510,20 @@ function fifu_wpseo_schema_graph($graph, $context) {
 }
 
 add_filter('wpseo_schema_graph', 'fifu_wpseo_schema_graph', 10, 2);
+
+add_filter('rank_math/opengraph/facebook/image', function ($image_url) {
+    // prevent Rank Math from removing query parameters
+    if (fifu_is_on('fifu_photon') && fifu_is_remote_image_url($image_url)) {
+        return str_replace('https://', 'http://', $image_url);
+    }
+    return $image_url;
+});
+
+add_filter('rank_math/opengraph/twitter/image', function ($image_url) {
+    // prevent Rank Math from removing query parameters
+    if (fifu_is_on('fifu_photon') && fifu_is_remote_image_url($image_url)) {
+        return str_replace('https://', 'http://', $image_url);
+    }
+    return $image_url;
+});
 
