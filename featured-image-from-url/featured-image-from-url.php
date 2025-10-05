@@ -4,11 +4,11 @@
  * Plugin Name: Featured Image from URL (FIFU)
  * Plugin URI: https://fifu.app/
  * Description: Use remote media as the featured image and beyond.
- * Version: 5.2.6
+ * Version: 5.2.9
  * Author: fifu.app
  * Author URI: https://fifu.app/
  * WC requires at least: 4.0
- * WC tested up to: 10.1.2
+ * WC tested up to: 10.2.2
  * Text Domain: featured-image-from-url
  * License: GPLv3
  * License URI: https://www.gnu.org/licenses/gpl-3.0.html
@@ -20,13 +20,18 @@ define('FIFU_ADMIN_DIR', FIFU_PLUGIN_DIR . 'admin');
 define('FIFU_ELEMENTOR_DIR', FIFU_PLUGIN_DIR . 'elementor');
 define('FIFU_GRAVITY_DIR', FIFU_PLUGIN_DIR . 'gravity-forms');
 define('FIFU_LANGUAGES_DIR', WP_CONTENT_DIR . '/uploads/fifu/languages/');
-define('FIFU_DELETE_ALL_URLS', false);
 define('FIFU_CLOUD_DEBUG', false);
+
+if (!defined('FIFU_DELETE_ALL_URLS')) {
+    define('FIFU_DELETE_ALL_URLS', false);
+}
 
 $FIFU_SESSION = array();
 
 // Required includes with error handling
 $required_includes = [
+    FIFU_INCLUDES_DIR . '/util.php',
+    FIFU_INCLUDES_DIR . '/structured-data.php',
     FIFU_INCLUDES_DIR . '/attachment.php',
     FIFU_INCLUDES_DIR . '/convert-url.php',
     FIFU_INCLUDES_DIR . '/external-post.php',
@@ -34,7 +39,6 @@ $required_includes = [
     FIFU_INCLUDES_DIR . '/speedup.php',
     FIFU_INCLUDES_DIR . '/thumbnail.php',
     FIFU_INCLUDES_DIR . '/thumbnail-category.php',
-    FIFU_INCLUDES_DIR . '/util.php',
     FIFU_INCLUDES_DIR . '/woo.php'
 ];
 
@@ -59,9 +63,11 @@ $required_admin = [
     FIFU_ADMIN_DIR . '/meta-box.php',
     FIFU_ADMIN_DIR . '/rsa.php',
     FIFU_ADMIN_DIR . '/strings.php',
+    FIFU_ADMIN_DIR . '/review.php',
     FIFU_ADMIN_DIR . '/sheet-editor.php',
     FIFU_ADMIN_DIR . '/transient.php',
     FIFU_ADMIN_DIR . '/widgets.php',
+    FIFU_ADMIN_DIR . '/wpml.php'
 ];
 
 foreach ($required_admin as $file) {
@@ -96,6 +102,9 @@ function fifu_activate($network_wide) {
             switch_to_blog($blog_id);
             fifu_activate_actions();
             fifu_set_author();
+            // record installed time per site for review timing
+            if (!get_option('fifu_installed_time'))
+                update_option('fifu_installed_time', time());
             restore_current_blog();
         }
         // Execute network-wide operations on main site
@@ -106,6 +115,9 @@ function fifu_activate($network_wide) {
         fifu_set_author();
         // Set redirect transient only for non-multisite
         set_transient('fifu_redirect_to_settings', true, 30);
+        // record installed time for review timing
+        if (!get_option('fifu_installed_time'))
+            update_option('fifu_installed_time', time());
     }
 }
 
@@ -169,6 +181,7 @@ add_filter('network_admin_plugin_action_links_' . plugin_basename(__FILE__), 'fi
 function fifu_action_links($links) {
     $strings = fifu_get_strings_plugins();
     $links[] = '<a href="' . esc_url(get_admin_url(null, 'admin.php?page=featured-image-from-url')) . '">' . $strings['settings']() . '</a>';
+    $links[] = '<a href="https://fifu.app/" target="_blank" rel="noopener noreferrer">' . $strings['upgrade']() . '</a>';
     return $links;
 }
 
@@ -176,9 +189,11 @@ add_filter('plugin_row_meta', 'fifu_row_meta', 10, 4);
 
 function fifu_row_meta($plugin_meta, $plugin_file, $plugin_data, $status) {
     if (strpos($plugin_file, 'featured-image-from-url.php') !== false) {
+        $strings = fifu_get_strings_plugins();
         $email = '<a style="color:#2271b1">support@fifu.app</a>';
         $new_links = array(
             'email' => $email,
+            'rate' => '<a href="https://wordpress.org/support/plugin/featured-image-from-url/reviews/?filter=5#new-post" target="_blank" rel="noopener noreferrer">' . $strings['rate']() . '</a>',
         );
         $plugin_meta = array_merge($plugin_meta, $new_links);
     }
@@ -223,3 +238,4 @@ add_action('before_woocommerce_init', function () {
         \Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility('custom_order_tables', __FILE__, true);
     }
 });
+
