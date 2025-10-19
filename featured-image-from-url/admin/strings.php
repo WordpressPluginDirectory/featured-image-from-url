@@ -1326,7 +1326,7 @@ function fifu_get_strings_settings() {
 
     // bbpress
     $fifu['bbpress']['desc'] = function () {
-        _e("Enable the addition of featured images to forums, topics, and replies.", FIFU_SLUG);
+        _e("Enable the addition of remote images to forums, topics, replies, and activities.", FIFU_SLUG);
     };
 
     // taxonomy
